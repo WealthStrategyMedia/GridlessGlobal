@@ -4,8 +4,8 @@ Marketing and services site for Gridless Global — energy generation, solar, el
 roofing and construction.
 
 Built with [Astro](https://astro.build) 5 and Tailwind CSS 4, output as a fully static
-site so it runs comfortably on Netlify's free tier. The only server-side code is two
-Netlify Functions, for payments and (optionally) form intake.
+site so it runs comfortably on Netlify's free tier. Payments run client-side against
+Tweeble's public API, so nothing server-side is required to take a payment.
 
 ---
 
@@ -30,14 +30,15 @@ The dev server prints its URL (usually <http://localhost:4321>).
 | `npm run audit` | Check `dist/` for broken links, missing alt text, duplicate ids, missing meta |
 | `npm run assets` | Regenerate brand assets from `Context/` (see below) |
 | `npm run measure-map` | Re-measure the services map hotspots |
+| `npm run sync:payment-form` | Refresh the Tweeble payment-form snapshot |
 
 ---
 
-## What still needs connecting
+## Forms and payments
 
-Two things are deliberately built but not live, because they need credentials:
+Payments are **live**, through Tweeble. Forms are built but still need an intake endpoint.
 
-### 1. Forms
+### 1. Forms — not connected yet
 
 Every form — contact, quote, newsletter — is complete, validated and accessible. Until an
 intake endpoint is configured they validate normally and then tell the visitor plainly
@@ -67,26 +68,58 @@ relay instead — set `PUBLIC_FORMS_ENDPOINT=/api/forms`, plus `FORMS_UPSTREAM_U
 
 No markup changes are needed either way.
 
-### 2. Payments
+### 2. Payments — live
 
-`/pay` collects everything a checkout session needs and posts it to `/api/checkout`
-(`netlify/functions/create-checkout-session.mts`). That function validates the request,
-then hands off to the payment provider. Card details are never handled by this site.
+`/pay` is wired to a **Tweeble payment form** and works now. No environment variables and
+no server-side code are involved: Tweeble's API sends `Access-Control-Allow-Origin: *`, so
+the browser posts straight to their submit endpoint and follows the hosted checkout URL
+that comes back. Card details are only ever entered on Tweeble's hosted page.
 
-Today it returns **503 with a readable message**, which the payment form displays, because
-no credentials are set. **To switch it on:**
+We render our own UI rather than Tweeble's embed script, so the form matches the rest of
+the site. The contract is:
 
+```jsonc
+// POST https://www.tweeble.com/api/public/<tenant>/payment-forms/<form>/submit
+{
+  "amount": 1249.50,                  // dollars, omitted when pricing is fixed
+  "f_2d9bbc81": "Project deposit",    // What is this payment for?  (required)
+  "f_b9c4b4d2": "INV-10482",          // Invoice or job number      (required)
+  "f_f022fb2b": "Jordan Rivera",      // Name on the account        (required)
+  "f_10a2fa01": "jordan@example.com", // Email for receipt          (required)
+  "f_40577d23": "Deposit for…",       // Note                       (optional)
+  "website_url": "",                  // honeypot — must stay empty
+  "sourceUrl": "https://…/pay"
+}
+// 200 → { "checkoutUrl": "…" }   browser is redirected here
+// 4xx → { "error": "…" }         shown to the payer verbatim
 ```
-PAYMENTS_PROVIDER = stripe
-STRIPE_SECRET_KEY = sk_live_…
+
+Those `f_…` ids belong to this specific form and change if it is rebuilt in Tweeble, so
+they are never hard-coded. They come from a committed snapshot of the form definition.
+
+**After editing the form in Tweeble**, refresh the snapshot:
+
+```bash
+npm run sync:payment-form
 ```
 
-That is the only change required — the Stripe Checkout integration is already written and
-tested. A `tweeble` branch is stubbed in the same file for the planned Tweeble
-integration; fill in the request shape once their API is documented.
+That rewrites `src/data/payment-form.json` with the current fields, required flags,
+minimum amount, submit URL and button label — all of which our form renders from. If a
+field is renamed, the build fails with a message naming the field, rather than silently
+posting an incomplete submission.
 
-> On a local `npm run preview` the function does not run, so the form reports that
-> checkout is unavailable in this environment. That is expected — it works on a deploy.
+To point the site at a different Tweeble form, set `TWEEBLE_PAYMENT_FORM_URL` and re-run
+the sync.
+
+> **Note:** "Invoice or job number" is marked **required** in Tweeble, so our form requires
+> it too, with a hint suggesting the property address for payers who have no invoice. To
+> make it optional, change it in Tweeble and re-run the sync.
+>
+> **Unused alternative:** `netlify/functions/create-checkout-session.mts` (at
+> `/api/checkout`) is a complete Stripe Checkout implementation from before Tweeble was
+> chosen. Nothing calls it. Keep it if Stripe may return; otherwise it and its redirect in
+> `netlify.toml` can be deleted. `/pay/complete` is likewise only used by that path —
+> Tweeble handles its own post-payment page.
 
 See [`.env.example`](.env.example) for the full list of variables.
 
@@ -114,6 +147,7 @@ public/images/               Generated, web-optimised brand assets
 scripts/
   prepare-assets.mjs         Derives every brand asset from Context/
   measure-map.mjs            Re-measures the services map hotspots
+  sync-payment-form.mjs      Snapshots the live Tweeble payment form
   check-links.mjs            Post-build audit of dist/
 src/
   components/                UI components (Header, Footer, ServicesMap, forms, …)
@@ -124,6 +158,8 @@ src/
     services-energy.ts       Energy and advisory services
     services-trades.ts       Trades and construction services
     services.ts              Assembles the above + map hotspot geometry
+    payments.ts              Tweeble payment config and field mapping
+    payment-form.json        Committed snapshot of the live payment form
   layouts/                   BaseLayout, LegalLayout
   lib/form-client.ts         Shared form validation and submission runtime
   pages/                     Routes; services/[slug].astro generates 25 pages

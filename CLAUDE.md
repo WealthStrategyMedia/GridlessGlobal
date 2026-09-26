@@ -88,15 +88,29 @@ Note: once a model is running, this environment's screenshot capture stops
 producing frames for that tab. That is a capture limitation, not a site bug —
 verify those pages with `get_page_text` and DOM measurements instead.
 
-## Not yet connected
+## Payments (live)
 
-Forms and payments are complete but intentionally inert until credentials exist. Both
-degrade to a clear, honest message rather than failing silently — preserve that behaviour.
+`/pay` posts directly from the browser to a Tweeble payment form and redirects to the
+`checkoutUrl` it returns. No server-side code and no environment variables are involved —
+Tweeble sends `Access-Control-Allow-Origin: *`. Do not reroute this through a Netlify
+function; the direct path costs no invocations and works on any static host.
 
-- Forms: set `PUBLIC_FORMS_ENDPOINT`. See `src/lib/form-client.ts`.
-- Payments: set `PAYMENTS_PROVIDER=stripe` and `STRIPE_SECRET_KEY`. See
-  `netlify/functions/create-checkout-session.mts`. A `tweeble` branch is stubbed for the
-  planned integration.
+Tweeble's field ids (`f_…`) are form-specific and must never be hard-coded. They come from
+`src/data/payment-form.json`, a committed snapshot refreshed with
+`npm run sync:payment-form`, and are resolved **by label** in `src/data/payments.ts` so a
+renamed field fails the build loudly instead of posting an incomplete submission.
+
+`amount` goes to Tweeble in **dollars**, not cents. Errors come back as `{ error }` and are
+payer-appropriate — show them verbatim.
+
+`netlify/functions/create-checkout-session.mts` (`/api/checkout`) is a complete but now
+**unused** Stripe implementation, as is `/pay/complete`. Leave them unless asked.
+
+## Forms (not yet connected)
+
+Forms are complete but intentionally inert until an intake endpoint exists; they degrade
+to a clear, honest message rather than failing silently — preserve that behaviour. Set
+`PUBLIC_FORMS_ENDPOINT` to switch them on. See `src/lib/form-client.ts`.
 
 ## Placeholders to replace before launch
 
