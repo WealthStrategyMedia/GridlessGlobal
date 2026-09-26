@@ -1,0 +1,48 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { site } from '~/data/site';
+---
+<LegalLayout
+  title="Accessibility"
+  description={`How ${site.name} approaches accessibility on this website, and how to report a barrier.`}
+  updated="26 September 2026"
+  draft={false}
+>
+  <h2>Our commitment</h2>
+  <p>
+    We want this site to be usable by everyone, including people using screen readers, keyboard-only
+    navigation, magnification or reduced-motion settings. We aim to meet WCAG 2.1 Level AA.
+  </p>
+
+  <h2>What we have built in</h2>
+  <ul>
+    <li>A skip link to the main content, and a visible focus indicator on every interactive element.</li>
+    <li>Full keyboard operation, including the navigation menus, the interactive services map and every form.</li>
+    <li>Meaningful alternative text on images, and decorative graphics hidden from assistive technology.</li>
+    <li>Semantic headings, landmarks and lists so page structure is navigable.</li>
+    <li>Form fields with real labels, inline error messages tied to their field, and errors announced on submission.</li>
+    <li>Colour contrast checked against WCAG AA for body and interface text.</li>
+    <li>Animation that respects the operating-system "reduce motion" setting, and content that never depends on animation to become visible.</li>
+    <li>Frequently asked questions that expand natively, so they work with JavaScript unavailable.</li>
+  </ul>
+
+  <h2>Known limitations</h2>
+  <p>
+    The services map is a detailed illustration. Its clickable regions are exposed as labelled links
+    and are reachable by keyboard, but the artwork itself carries information visually. Every service
+    on the map is also listed as a text card directly beneath it, and in the site navigation, so no
+    content is reachable only through the image.
+  </p>
+
+  <h2>Tell us about a barrier</h2>
+  <p>
+    If something on this site is difficult or impossible for you to use, we would genuinely like to
+    know - it is the fastest way for us to fix it. Contact
+    <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phoneHref}>{site.phone}</a>,
+    and describe the page and what went wrong.
+  </p>
+  <p>
+    We aim to respond within two business days, and we can supply information in an alternative
+    format on request.
+  </p>
+</LegalLayout>

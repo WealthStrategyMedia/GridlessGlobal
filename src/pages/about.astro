@@ -1,0 +1,175 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import Button from '~/components/Button.astro';
+import { site } from '~/data/site';
+import type { IconName } from '~/components/icons';
+
+const values: { icon: IconName; title: string; body: string }[] = [
+  {
+    icon: 'gauge',
+    title: 'Measure, then recommend',
+    body: 'Every proposal traces back to metered data, a site survey or a tariff analysis. If we have not measured it, we will tell you that too.',
+  },
+  {
+    icon: 'shield-check',
+    title: 'Own the outcome',
+    body: 'Self-performing the trades means there is nobody to blame when something slips. That is deliberate - it keeps us honest about schedules.',
+  },
+  {
+    icon: 'users',
+    title: 'Plain answers',
+    body: 'Energy is full of jargon that obscures weak economics. We would rather explain why a project does not pencil than sell it anyway.',
+  },
+  {
+    icon: 'leaf',
+    title: 'Build for decades',
+    body: 'Thirty-year assets deserve thirty-year thinking. We specify for lifetime performance, not for the lowest number on the first invoice.',
+  },
+];
+
+const capabilities = [
+  { value: 'Utility scale', label: 'Solar, hydro, thermal, storage and microgrid development, EPC and operations' },
+  { value: 'Commercial', label: 'Portfolio audits, on-site generation, demand management, carbon and ESG' },
+  { value: 'Residential', label: 'Solar, batteries, EV charging, electrical, roofing, siding and construction' },
+  { value: 'Advisory', label: 'Grant writing, carbon credits, training, workshops and speaker services' },
+];
+
+const milestones = [
+  {
+    title: 'One company, every trade',
+    body: 'Most energy firms sell hardware and subcontract the rest. We built the electrical, roofing and construction divisions in-house precisely because that hand-off is where projects go wrong - the roofer will not touch the panels, the solar company will not touch the roof, and the homeowner is left refereeing.',
+  },
+  {
+    title: 'Generation and the meter, together',
+    body: 'Developing utility-scale plants and wiring a family home look like different businesses. They are not. The same physics, the same interconnection rules and the same economics apply, and working at both ends means the lessons travel in both directions.',
+  },
+  {
+    title: 'Funding is part of engineering',
+    body: 'A project that is technically sound and financially unfunded is just a drawing. Grant writing, incentive capture and carbon monetisation sit alongside engineering in our scope because they frequently decide whether anything gets built.',
+  },
+];
+---
+<BaseLayout
+  title="About Us"
+  description={`${site.name} designs, builds, finances and maintains energy systems end to end - utility-scale generation through to residential solar, electrical, roofing and construction.`}
+>
+  <PageHero
+    eyebrow="About Gridless Global"
+    title="Energy is a system, not a product"
+    lead="We build and operate power at every scale, and we keep the trades in-house so the engineering survives contact with the job site."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
+    icon="globe"
+  />
+
+  <!-- Mission -->
+  <section class="shell py-14 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,.8fr)] lg:gap-16">
+      <div class="prose-gg max-w-none">
+        <p class="eyebrow">Who we are</p>
+        <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">
+          A transition to clean energy is an investment in our future
+        </h2>
+        <p class="mt-6 text-[1.02rem]">
+          That line sits on our own artwork, and we take it literally: an investment has to return
+          something. Gridless Global exists to make energy projects that actually pay - for the
+          homeowner replacing a roof, for the manufacturer staring at a demand charge, and for the
+          community that would rather own its generation than rent it.
+        </p>
+        <p class="mt-5 text-[1.02rem]">
+          We work across the whole space because the boundaries between its parts are artificial. A
+          solar array is a roofing problem and an electrical problem before it is an energy problem.
+          A battery is a tariff problem. A microgrid is a controls problem. Treating those as
+          separate trades is how projects end up over budget and underperforming, so we brought them
+          under one roof instead.
+        </p>
+        <p class="mt-5 text-[1.02rem]">
+          What that means in practice: <strong>licensed electricians, roofers and builders on staff</strong>,
+          engineering that starts from measured data, and funding work - grants, incentives, carbon -
+          treated as part of the design rather than an afterthought.
+        </p>
+      </div>
+
+      <div class="panel rounded-4xl p-8">
+        <p class="eyebrow">Where we operate</p>
+        <dl class="mt-6 space-y-6">
+          {
+            capabilities.map((item) => (
+              <div>
+                <dt class="font-display text-[1.05rem] font-bold text-signal-400">{item.value}</dt>
+                <dd class="mt-1.5 text-[0.88rem] leading-relaxed text-ink-muted">{item.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="rule my-7"></div>
+        <Button href="/services" variant="outline" size="sm" full icon="arrow-right">
+          See all services
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we are built -->
+  <section class="shell py-14 lg:py-20">
+    <div class="mb-10 max-w-2xl">
+      <p class="eyebrow">How we are put together</p>
+      <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">Three deliberate decisions</h2>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-3">
+      {
+        milestones.map((item, i) => (
+          <article class="panel reveal rounded-4xl p-8" style={`--reveal-delay:${i * 80}ms`}>
+            <span class="flex h-11 w-11 items-center justify-center rounded-full border border-gold-500/35 bg-gold-500/10 font-display text-[0.85rem] font-bold text-gold-400">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-6 font-display text-[1.2rem] font-bold leading-snug">{item.title}</h3>
+            <p class="mt-3 text-[0.92rem] leading-relaxed text-ink-muted">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="shell py-14 lg:py-20">
+    <div class="panel overflow-hidden rounded-4xl p-8 sm:p-12 lg:p-16">
+      <div class="max-w-2xl">
+        <p class="eyebrow">What we hold to</p>
+        <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">The way we work</h2>
+      </div>
+
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:gap-12">
+        {
+          values.map((value, i) => (
+            <div class="reveal flex gap-5" style={`--reveal-delay:${i * 80}ms`}>
+              <span class="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border border-signal-500/25 bg-signal-500/10 text-signal-400">
+                <Icon name={value.icon} size={24} />
+              </span>
+              <div>
+                <h3 class="font-display text-[1.12rem] font-bold">{value.title}</h3>
+                <p class="mt-2 text-[0.92rem] leading-relaxed text-ink-muted">{value.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    class="pb-8"
+    title="Bring us a problem, not a product list"
+    body="Tell us what the building is doing, what it costs you and what you wish it did instead. The specification comes after that conversation, not before it."
+    primaryLabel="Start the conversation"
+    primaryHref="/contact"
+  />
+</BaseLayout>
+
+<style>
+  .h-13 { height: 3.25rem; }
+  .w-13 { width: 3.25rem; }
+</style>

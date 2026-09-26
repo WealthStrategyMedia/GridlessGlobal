@@ -1,0 +1,56 @@
+---
+/**
+ * Wrapper every form shares: the honeypot, the status banner target and the
+ * standing notice that online intake is not connected yet.
+ */
+import Icon from '~/components/Icon.astro';
+
+interface Props {
+  /** Sent to the intake endpoint as `formType`. */
+  kind: string;
+  class?: string;
+  /** Suppress the "not connected yet" notice (used in tight spaces). */
+  hideNotice?: boolean;
+}
+
+const { kind, class: className = '', hideNotice = false } = Astro.props;
+const connected = Boolean((import.meta.env.PUBLIC_FORMS_ENDPOINT ?? '').trim());
+---
+<form data-gg-form={kind} class={className} novalidate>
+  {
+    !connected && !hideNotice && (
+      <p class="mb-6 flex items-start gap-3 rounded-2xl border border-gold-500/25 bg-gold-500/[0.07] px-4 py-3 text-[0.82rem] leading-relaxed text-gold-200/90">
+        <Icon name="info" size={17} class="mt-px shrink-0" />
+        <span>
+          <strong class="font-semibold">Online intake goes live shortly.</strong> The form works and
+          validates, but submissions are not delivered yet. Call or email us and we will take your
+          details directly.
+        </span>
+      </p>
+    )
+  }
+
+  <slot />
+
+  <!-- Honeypot: hidden from people, irresistible to bots. Clipped rather than
+       pushed off-screen, so it can never extend the page's scrollable area. -->
+  <div class="gg-honeypot" aria-hidden="true">
+    <label>
+      Do not fill this in
+      <input type="text" name="company_website" data-honeypot tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+
+  <div data-form-status class="hidden"></div>
+</form>
+
+<style is:global>
+  .gg-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

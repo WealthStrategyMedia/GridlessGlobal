@@ -1,0 +1,128 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import NewsletterForm from './forms/NewsletterForm.astro';
+import { site, footerNav } from '~/data/site';
+import type { IconName } from './icons';
+
+const year = new Date().getFullYear();
+const badges = [
+  { icon: 'leaf' as IconName, label: 'Sustainable' },
+  { icon: 'shield-check' as IconName, label: 'Reliable' },
+  { icon: 'sparkles' as IconName, label: 'Innovative' },
+  { icon: 'users' as IconName, label: 'Community' },
+];
+---
+<footer class="relative mt-24 border-t border-white/[0.08] bg-navy-950">
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/60 to-transparent"
+  >
+  </div>
+
+  <div class="shell py-16 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,2.4fr)]">
+      <!-- Brand column -->
+      <div>
+        <Logo size="lg" showTagline />
+        <p class="mt-6 max-w-md text-[0.95rem] leading-relaxed text-ink-muted">
+          {site.description}
+        </p>
+
+        <ul class="mt-7 space-y-3 text-[0.9rem] text-ink-muted">
+          <li>
+            <a href={site.phoneHref} class="flex items-center gap-3 transition-colors hover:text-ink">
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
+                <Icon name="phone" size={16} class="text-signal-400" />
+              </span>
+              {site.phone}
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${site.email}`} class="flex items-center gap-3 transition-colors hover:text-ink">
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
+                <Icon name="mail" size={16} class="text-brand-400" />
+              </span>
+              {site.email}
+            </a>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
+              <Icon name="map-pin" size={16} class="text-gold-400" />
+            </span>
+            <span>
+              {site.address.line1}, {site.address.line2}<br />
+              {site.address.city}, {site.address.region} {site.address.postal}
+            </span>
+          </li>
+        </ul>
+
+        <div class="mt-7 flex gap-3">
+          {
+            site.social.map((s) => (
+              <a
+                href={s.href}
+                rel="noopener noreferrer"
+                target="_blank"
+                aria-label={s.label}
+                class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-ink-muted transition-all hover:-translate-y-0.5 hover:border-brand-400/50 hover:text-ink"
+              >
+                <Icon name={s.icon as IconName} size={17} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Link columns -->
+      <div class="grid gap-9 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          footerNav.map((col) => (
+            <div>
+              <p class="eyebrow mb-4">{col.heading}</p>
+              <ul class="space-y-2.5">
+                {col.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="text-[0.88rem] text-ink-muted transition-colors hover:text-brand-300"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="rule my-12"></div>
+
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-center">
+      <NewsletterForm />
+      <ul class="flex flex-wrap items-center gap-x-8 gap-y-4 lg:justify-end">
+        {
+          badges.map((b) => (
+            <li class="flex items-center gap-2.5 text-[0.82rem] font-medium tracking-wide text-ink-muted">
+              <Icon name={b.icon} size={18} class="text-signal-400" />
+              {b.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="rule my-10"></div>
+
+    <div class="flex flex-col gap-4 text-[0.8rem] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+      <div class="flex flex-wrap gap-x-7 gap-y-2">
+        <a href="/privacy" class="transition-colors hover:text-ink">Privacy Policy</a>
+        <a href="/terms" class="transition-colors hover:text-ink">Terms of Service</a>
+        <a href="/accessibility" class="transition-colors hover:text-ink">Accessibility</a>
+        <a href="/sitemap-index.xml" class="transition-colors hover:text-ink">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>

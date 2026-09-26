@@ -1,0 +1,35 @@
+{
+  "name": "gridless-global-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build && node scripts/check-links.mjs",
+    "build:fast": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "audit": "node scripts/check-links.mjs",
+    "assets": "node scripts/prepare-assets.mjs",
+    "measure-map": "node scripts/measure-map.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@tailwindcss/vite": "^4.1.13",
+    "astro": "^5.14.1",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true,
+    "sharp@0.34.5": true
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.0.0"
+  }
+}

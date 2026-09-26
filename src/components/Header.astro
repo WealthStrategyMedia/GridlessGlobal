@@ -1,0 +1,321 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { site, primaryNav } from '~/data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href + '/'));
+---
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-gold-500 focus:px-5 focus:py-2.5 focus:font-display focus:text-sm focus:font-semibold focus:text-navy-950"
+>
+  Skip to content
+</a>
+
+<!-- Utility bar -->
+<div class="hidden border-b border-white/[0.06] bg-navy-950/80 lg:block">
+  <div class="shell flex h-10 items-center justify-between text-[0.78rem] text-ink-faint">
+    <p class="flex items-center gap-2">
+      <Icon name="bolt" size={14} class="text-signal-400" />
+      <span>{site.tagline}</span>
+    </p>
+    <div class="flex items-center gap-6">
+      <a href={site.phoneHref} class="flex items-center gap-2 transition-colors hover:text-ink">
+        <Icon name="phone" size={14} />{site.phone}
+      </a>
+      <a href={`mailto:${site.email}`} class="flex items-center gap-2 transition-colors hover:text-ink">
+        <Icon name="mail" size={14} />{site.email}
+      </a>
+      <span class="flex items-center gap-2"><Icon name="clock" size={14} />{site.hours}</span>
+    </div>
+  </div>
+</div>
+
+<header
+  id="site-header"
+  class="sticky top-0 z-50 border-b border-white/[0.07] bg-navy-950/70 backdrop-blur-xl transition-[background-color,box-shadow] duration-300"
+>
+  <!-- `relative` anchors the mega-menu panel to the full header width rather
+       than to its trigger, which would push it off the left of the viewport. -->
+  <div class="shell relative flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
+    <!-- The responsive display classes live on wrapper spans, not on <Logo>
+         itself: Logo sets `inline-flex`, and Tailwind emits `inline-flex` after
+         `hidden`, so a `hidden` passed into the component would lose and both
+         lockups would render. -->
+    <a href="/" class="shrink-0" aria-label={`${site.name} home`}>
+      <span class="hidden sm:block"><Logo size="md" /></span>
+      <span class="block sm:hidden"><Logo size="sm" markOnly /></span>
+    </a>
+
+    <!-- Desktop navigation -->
+    <nav class="hidden items-center gap-1 xl:flex" aria-label="Primary">
+      {
+        primaryNav.map((item) =>
+          item.columns ? (
+            <div class="group/mega" data-mega>
+              <button
+                type="button"
+                class:list={[
+                  'flex items-center gap-1.5 rounded-full px-4 py-2.5 font-display text-[0.88rem] font-medium transition-colors',
+                  isActive(item.href) ? 'text-ink' : 'text-ink-muted hover:text-ink',
+                ]}
+                aria-expanded="false"
+                aria-haspopup="true"
+                data-mega-trigger
+              >
+                {item.label}
+                <Icon
+                  name="chevron-down"
+                  size={15}
+                  class="transition-transform duration-300 group-data-[open]/mega:rotate-180"
+                />
+              </button>
+
+              <div
+                class="invisible absolute inset-x-0 top-full z-50 translate-y-1 pt-3 opacity-0 transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)] group-data-[open]/mega:visible group-data-[open]/mega:translate-y-0 group-data-[open]/mega:opacity-100"
+                data-mega-panel
+              >
+                <div class="panel rounded-4xl p-7 shadow-[0_40px_90px_-30px_rgba(1,11,22,.95)]">
+                  <div class="grid grid-cols-4 gap-7">
+                    {item.columns.map((col) => (
+                      <div>
+                        <p class="eyebrow mb-4">{col.heading}</p>
+                        <ul class="space-y-0.5">
+                          {col.links.map((link) => (
+                            <li>
+                              <a
+                                href={link.href}
+                                class="group/link block rounded-xl px-3 py-2 transition-colors hover:bg-white/[0.06]"
+                              >
+                                <span class="block text-[0.86rem] font-medium text-ink transition-colors group-hover/link:text-brand-300">
+                                  {link.label}
+                                </span>
+                                {link.description && (
+                                  <span class="mt-0.5 block text-[0.75rem] text-ink-faint">
+                                    {link.description}
+                                  </span>
+                                )}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                  <div class="rule my-6"></div>
+                  <div class="flex items-center justify-between gap-4">
+                    <p class="text-[0.82rem] text-ink-faint">
+                      Not sure where to start? An energy analysis ranks every option by payback.
+                    </p>
+                    <div class="flex shrink-0 gap-3">
+                      <Button href="/services" variant="outline" size="sm" icon="arrow-right">
+                        All services
+                      </Button>
+                      <Button href="/quote" variant="gold" size="sm" icon="arrow-right">
+                        Free estimate
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={item.href}
+              class:list={[
+                'rounded-full px-4 py-2.5 font-display text-[0.88rem] font-medium transition-colors',
+                isActive(item.href) ? 'text-ink' : 'text-ink-muted hover:text-ink',
+              ]}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          )
+        )
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href={site.phoneHref}
+        class="hidden items-center gap-2 rounded-full border border-white/15 px-4 py-2.5 font-display text-[0.85rem] font-medium text-ink transition-colors hover:border-brand-400/60 md:flex xl:hidden 2xl:flex"
+      >
+        <Icon name="phone" size={16} class="text-signal-400" />
+        <span class="hidden 2xl:inline">{site.phone}</span>
+        <span class="2xl:hidden">Call</span>
+      </a>
+      <span class="hidden sm:block">
+        <Button href="/quote" variant="gold" size="sm" icon="arrow-right">Get a Free Quote</Button>
+      </span>
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-ink transition-colors hover:border-brand-400/60 xl:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <Icon name="menu" size={20} class="nav-open-icon" />
+        <Icon name="close" size={20} class="nav-close-icon hidden" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div
+  id="mobile-nav"
+  class="fixed inset-0 z-40 hidden overflow-y-auto overscroll-contain bg-navy-950/97 pt-[4.5rem] backdrop-blur-xl xl:hidden"
+>
+  <nav class="shell py-8" aria-label="Mobile">
+    <ul class="space-y-2">
+      {
+        primaryNav.map((item) =>
+          item.columns ? (
+            <li class="rounded-3xl border border-white/10 bg-white/[0.03]">
+              <button
+                type="button"
+                class="flex w-full items-center justify-between px-5 py-4 text-left font-display text-lg font-semibold text-ink"
+                aria-expanded="false"
+                data-accordion-trigger
+              >
+                {item.label}
+                <Icon name="chevron-down" size={20} class="transition-transform duration-300" />
+              </button>
+              <div class="hidden px-5 pb-5" data-accordion-panel>
+                {item.columns.map((col) => (
+                  <div class="mb-5 last:mb-0">
+                    <p class="eyebrow mb-2.5">{col.heading}</p>
+                    <ul class="grid grid-cols-1 gap-1 sm:grid-cols-2">
+                      {col.links.map((link) => (
+                        <li>
+                          <a
+                            href={link.href}
+                            class="block rounded-xl px-3 py-2.5 text-[0.92rem] text-ink-muted transition-colors hover:bg-white/[0.06] hover:text-ink"
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <a
+                  href="/services"
+                  class="mt-2 inline-flex items-center gap-2 font-display text-sm font-semibold text-gold-400"
+                >
+                  View the services map <Icon name="arrow-right" size={16} />
+                </a>
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                class="block rounded-3xl border border-white/10 bg-white/[0.03] px-5 py-4 font-display text-lg font-semibold text-ink"
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        )
+      }
+    </ul>
+
+    <div class="mt-8 grid gap-3 sm:grid-cols-2">
+      <Button href="/quote" variant="gold" size="lg" full icon="arrow-right">Get a Free Quote</Button>
+      <Button href={site.phoneHref} variant="outline" size="lg" full icon="phone" iconPosition="start">
+        {site.phone}
+      </Button>
+    </div>
+
+    <div class="mt-8 space-y-2 text-sm text-ink-faint">
+      <p class="flex items-center gap-2"><Icon name="mail" size={16} />{site.email}</p>
+      <p class="flex items-center gap-2"><Icon name="clock" size={16} />{site.hours}</p>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // --- Sticky header shadow ------------------------------------------------
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    header?.classList.toggle('shadow-[0_18px_50px_-24px_rgba(1,11,22,1)]', window.scrollY > 8);
+    header?.classList.toggle('bg-navy-950/92', window.scrollY > 8);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // --- Desktop mega menu ---------------------------------------------------
+  // Opens on hover and on click/keyboard, so it works for pointer and
+  // keyboard users alike.
+  document.querySelectorAll<HTMLElement>('[data-mega]').forEach((mega) => {
+    const trigger = mega.querySelector<HTMLButtonElement>('[data-mega-trigger]');
+    let closeTimer: number | undefined;
+
+    const open = () => {
+      window.clearTimeout(closeTimer);
+      mega.dataset.open = '';
+      trigger?.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      delete mega.dataset.open;
+      trigger?.setAttribute('aria-expanded', 'false');
+    };
+    const closeSoon = () => {
+      closeTimer = window.setTimeout(close, 140);
+    };
+
+    mega.addEventListener('mouseenter', open);
+    mega.addEventListener('mouseleave', closeSoon);
+    mega.addEventListener('focusin', open);
+    mega.addEventListener('focusout', (e) => {
+      if (!mega.contains(e.relatedTarget as Node)) close();
+    });
+    trigger?.addEventListener('click', () => {
+      'open' in mega.dataset ? close() : open();
+    });
+    mega.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'Escape') {
+        close();
+        trigger?.focus();
+      }
+    });
+  });
+
+  // --- Mobile drawer -------------------------------------------------------
+  const toggle = document.getElementById('nav-toggle');
+  const drawer = document.getElementById('mobile-nav');
+
+  const setDrawer = (open: boolean) => {
+    drawer?.classList.toggle('hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    toggle?.querySelector('.nav-open-icon')?.classList.toggle('hidden', open);
+    toggle?.querySelector('.nav-close-icon')?.classList.toggle('hidden', !open);
+  };
+
+  toggle?.addEventListener('click', () => setDrawer(drawer?.classList.contains('hidden') ?? true));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !drawer?.classList.contains('hidden')) setDrawer(false);
+  });
+  // A resize past the desktop breakpoint should not leave the body locked.
+  window.matchMedia('(min-width: 1280px)').addEventListener('change', (e) => {
+    if (e.matches) setDrawer(false);
+  });
+
+  // --- Mobile accordion ----------------------------------------------------
+  document.querySelectorAll<HTMLButtonElement>('[data-accordion-trigger]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const panel = trigger.nextElementSibling as HTMLElement | null;
+      const open = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!open));
+      panel?.classList.toggle('hidden', open);
+      trigger.querySelector('svg:last-of-type')?.classList.toggle('rotate-180', !open);
+    });
+  });
+</script>

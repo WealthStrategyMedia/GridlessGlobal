@@ -1,0 +1,86 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { site } from '~/data/site';
+---
+<LegalLayout
+  title="Terms of Service"
+  description={`The terms that govern use of the ${site.name} website and the services offered through it.`}
+  updated="26 September 2026"
+>
+  <h2>Agreement</h2>
+  <p>
+    These terms govern your use of this website. Work we perform for you is governed by a separate
+    signed contract or proposal, which takes precedence over anything on this page.
+  </p>
+
+  <h2>Estimates and proposals</h2>
+  <p>
+    Figures shown on this site, including savings ranges, paybacks and capacity guidance, are
+    illustrative. They are not offers and not guarantees. A binding price comes only from a written
+    proposal issued after a site assessment, and remains valid for the period stated on it.
+  </p>
+  <p>
+    Savings and production estimates depend on weather, occupancy, utility tariffs, equipment
+    condition and regulation, all of which change. Actual results will differ.
+  </p>
+
+  <h2>Payments</h2>
+  <ul>
+    <li>Online payments are processed by a third-party provider under their own terms.</li>
+    <li>Invoices are due on the terms stated on the invoice. Late payment may attract interest and collection costs to the extent permitted by law.</li>
+    <li>Deposits secure scheduling and materials procurement. Refundability is set out in your contract.</li>
+    <li>We do not store card details.</li>
+  </ul>
+
+  <h2>Licensing and insurance</h2>
+  <p>
+    Electrical, construction and roofing work is performed by appropriately licensed personnel and we
+    carry insurance and bonding as required in the jurisdictions in which we operate. Documentation
+    is available on request and is supplied with proposals.
+  </p>
+
+  <h2>Scheduling and access</h2>
+  <p>
+    Work depends on safe site access, permit issuance, utility scheduling and weather. We will keep
+    you informed of changes. Delays caused by third parties, including permitting authorities and
+    utilities, are outside our control.
+  </p>
+
+  <h2>Warranties</h2>
+  <p>
+    Workmanship and equipment warranties are set out in your contract and in the manufacturer
+    documentation supplied at handover. Warranties may be voided by unauthorised modification,
+    neglect of required maintenance, or damage from causes outside normal use.
+  </p>
+
+  <h2>Intellectual property</h2>
+  <p>
+    The content, branding and artwork on this site belong to {site.legalName} and may not be
+    reproduced without permission.
+  </p>
+
+  <h2>Limitation of liability</h2>
+  <p>
+    To the fullest extent permitted by law, we are not liable for indirect or consequential losses
+    arising from use of this website. Nothing here limits liability that cannot lawfully be limited,
+    including for death or personal injury caused by negligence.
+  </p>
+
+  <h2>Third-party links</h2>
+  <p>
+    This site may link to third-party resources. We do not control those sites and are not
+    responsible for their content or practices.
+  </p>
+
+  <h2>Governing law</h2>
+  <p>
+    These terms are governed by the laws of the state of {site.address.region}, United States, without
+    regard to conflict of law principles.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about these terms: <a href={`mailto:${site.email}`}>{site.email}</a> or
+    <a href={site.phoneHref}>{site.phone}</a>.
+  </p>
+</LegalLayout>

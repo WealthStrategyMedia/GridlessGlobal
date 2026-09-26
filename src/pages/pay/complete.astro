@@ -1,0 +1,61 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Button from '~/components/Button.astro';
+import Icon from '~/components/Icon.astro';
+import { site } from '~/data/site';
+---
+<BaseLayout
+  title="Payment Received"
+  description="Your payment to Gridless Global has been received."
+  noindex
+>
+  <section class="aurora grid-lines relative">
+    <div class="shell flex min-h-[70vh] items-center justify-center py-20">
+      <div class="panel w-full max-w-2xl rounded-4xl p-9 text-center sm:p-14">
+        <span
+          class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-signal-500/40 bg-signal-500/12 text-signal-400"
+        >
+          <Icon name="check-circle" size={40} />
+        </span>
+
+        <h1 class="mt-8 font-display text-3xl font-extrabold sm:text-4xl">Thank you - payment received</h1>
+        <p class="mt-5 text-[1.02rem] leading-relaxed text-ink-muted">
+          A receipt is on its way to the email address you provided. If anything looks wrong, our
+          accounts team will sort it out quickly.
+        </p>
+
+        <div
+          class="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 text-left"
+          id="reference-box"
+          hidden
+        >
+          <p class="text-[0.78rem] uppercase tracking-wider text-ink-faint">Reference</p>
+          <p class="mt-1.5 break-all font-mono text-[0.88rem] text-ink" id="reference-value"></p>
+          <p class="mt-2 text-[0.8rem] text-ink-faint">
+            Quote this if you need to contact us about the payment.
+          </p>
+        </div>
+
+        <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+          <Button href="/" variant="gold" size="lg" icon="arrow-right">Back to home</Button>
+          <Button href={`mailto:${site.supportEmail}`} variant="outline" size="lg" icon="mail" iconPosition="start">
+            Contact accounts
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // The provider appends its session id on return; surface it as a reference.
+    const sessionId = new URLSearchParams(window.location.search).get('session_id');
+    if (sessionId && !sessionId.includes('{')) {
+      const box = document.getElementById('reference-box');
+      const value = document.getElementById('reference-value');
+      if (box && value) {
+        value.textContent = sessionId;
+        box.hidden = false;
+      }
+    }
+  </script>
+</BaseLayout>

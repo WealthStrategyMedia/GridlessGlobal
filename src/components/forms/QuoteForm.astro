@@ -1,0 +1,286 @@
+---
+import FormShell from './FormShell.astro';
+import Field from './Field.astro';
+import Icon from '~/components/Icon.astro';
+import { services } from '~/data/services';
+
+const steps = [
+  { id: 1, title: 'What you need', icon: 'sparkles' as const },
+  { id: 2, title: 'Your property', icon: 'home' as const },
+  { id: 3, title: 'Your details', icon: 'users' as const },
+];
+
+// Grouped so the checkbox grid reads sensibly rather than as one long list.
+const interestGroups = [
+  { heading: 'Solar & storage', slugs: ['solar-installation', 'solar-upgrades', 'solar-removal-reinstall', 'energy-storage', 'backup-power'] },
+  { heading: 'Analysis & savings', slugs: ['energy-analysis', 'energy-bill-savings', 'energy-management', 'demand-side-management'] },
+  { heading: 'Advisory', slugs: ['carbon-credits', 'energy-grant-writing', 'education-hub'] },
+  { heading: 'Trades & construction', slugs: ['electrical', 'ev-charging', 'roofing', 'siding', 'construction', 'handyman'] },
+];
+const titleFor = (slug: string) => services.find((s) => s.slug === slug)?.title ?? slug;
+---
+<div class="panel rounded-4xl p-7 sm:p-10">
+  <!-- Progress -->
+  <ol class="mb-9 flex items-center gap-2 sm:gap-4" data-quote-progress>
+    {
+      steps.map((step, i) => (
+        <li class="flex flex-1 items-center gap-2 sm:gap-4">
+          <div class="flex items-center gap-3" data-step-indicator={step.id}>
+            <span
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] font-display text-sm font-bold text-ink-faint transition-all duration-300 data-[state=active]:border-gold-400 data-[state=active]:bg-gold-500 data-[state=active]:text-navy-950 data-[state=done]:border-signal-500/60 data-[state=done]:bg-signal-500/20 data-[state=done]:text-signal-300"
+              data-step-bubble
+              data-state={i === 0 ? 'active' : 'todo'}
+            >
+              <Icon name={step.icon} size={18} />
+            </span>
+            <span class="hidden font-display text-[0.85rem] font-semibold text-ink-faint transition-colors data-[state=active]:text-ink sm:block" data-step-label data-state={i === 0 ? 'active' : 'todo'}>
+              {step.title}
+            </span>
+          </div>
+          {i < steps.length - 1 && <span class="h-px flex-1 bg-white/12" />}
+        </li>
+      ))
+    }
+  </ol>
+
+  <FormShell kind="quote">
+    <!-- Step 1 -->
+    <fieldset data-quote-step="1">
+      <legend class="sr-only">What you need</legend>
+      <h2 class="font-display text-2xl font-bold">What can we quote for you?</h2>
+      <p class="mt-2 text-[0.92rem] text-ink-muted">
+        Pick everything that applies. Bundling work into one project is almost always cheaper than
+        scheduling it separately.
+      </p>
+
+      <div class="mt-6">
+        <Field
+          name="segment"
+          label="This is for"
+          type="select"
+          required
+          options={[
+            { value: 'residential', label: 'My home' },
+            { value: 'commercial', label: 'My business or facility' },
+            { value: 'community', label: 'A community, HOA or multifamily property' },
+            { value: 'utility', label: 'A utility-scale or development project' },
+          ]}
+        />
+      </div>
+
+      <div class="mt-7 space-y-6">
+        {
+          interestGroups.map((group) => (
+            <div>
+              <p class="eyebrow mb-3">{group.heading}</p>
+              <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {group.slugs.map((slug) => (
+                  <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.86rem] text-ink-muted transition-all hover:border-brand-400/40 hover:bg-white/[0.06] hover:text-ink has-[:checked]:border-gold-400/60 has-[:checked]:bg-gold-500/10 has-[:checked]:text-ink">
+                    <input
+                      type="checkbox"
+                      name={`interest_${slug}`}
+                      data-label={titleFor(slug)}
+                      class="h-4.5 w-4.5 shrink-0 rounded accent-gold-500"
+                    />
+                    {titleFor(slug)}
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-8 flex justify-end">
+        <button type="button" data-quote-next class="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-7 py-3.5 font-display font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-12px_rgba(248,184,40,.9)]">
+          Continue <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+    </fieldset>
+
+    <!-- Step 2 -->
+    <fieldset data-quote-step="2" class="hidden">
+      <legend class="sr-only">Your property</legend>
+      <h2 class="font-display text-2xl font-bold">Tell us about the property</h2>
+      <p class="mt-2 text-[0.92rem] text-ink-muted">
+        Rough figures are fine - this is what lets us give you a realistic range rather than a
+        placeholder number.
+      </p>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <Field name="address" label="Property address" required autocomplete="street-address" placeholder="123 Main Street" class="sm:col-span-2" />
+        <Field name="city" label="City" required autocomplete="address-level2" placeholder="Dallas" />
+        <Field name="state" label="State" required autocomplete="address-level1" placeholder="TX" />
+        <Field name="postal" label="ZIP code" required autocomplete="postal-code" inputmode="numeric" placeholder="75201" />
+        <Field name="squareFeet" label="Approximate square footage" type="number" min="0" inputmode="numeric" placeholder="2400" />
+        <Field
+          name="monthlyBill"
+          label="Typical monthly energy spend"
+          type="select"
+          options={[
+            { value: 'under-150', label: 'Under $150' },
+            { value: '150-300', label: '$150 - $300' },
+            { value: '300-600', label: '$300 - $600' },
+            { value: '600-1500', label: '$600 - $1,500' },
+            { value: '1500-5000', label: '$1,500 - $5,000' },
+            { value: 'over-5000', label: 'Over $5,000' },
+          ]}
+        />
+        <Field
+          name="roofAge"
+          label="Approximate roof age"
+          type="select"
+          options={[
+            { value: 'under-5', label: 'Under 5 years' },
+            { value: '5-15', label: '5 - 15 years' },
+            { value: '15-25', label: '15 - 25 years' },
+            { value: 'over-25', label: 'Over 25 years' },
+            { value: 'unknown', label: 'Not sure' },
+          ]}
+        />
+        <Field
+          name="timeline"
+          label="When would you like to start?"
+          type="select"
+          required
+          class="sm:col-span-2"
+          options={[
+            { value: 'asap', label: 'As soon as possible' },
+            { value: '1-3-months', label: 'Within 1 - 3 months' },
+            { value: '3-6-months', label: 'Within 3 - 6 months' },
+            { value: '6-plus-months', label: '6 months or more' },
+            { value: 'researching', label: 'Just researching for now' },
+          ]}
+        />
+      </div>
+
+      <div class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+        <button type="button" data-quote-prev class="inline-flex items-center justify-center gap-2.5 rounded-full border border-white/20 px-7 py-3.5 font-display font-semibold text-ink transition-colors hover:border-brand-400/60">
+          <Icon name="arrow-left" size={18} /> Back
+        </button>
+        <button type="button" data-quote-next class="inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-7 py-3.5 font-display font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-12px_rgba(248,184,40,.9)]">
+          Continue <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+    </fieldset>
+
+    <!-- Step 3 -->
+    <fieldset data-quote-step="3" class="hidden">
+      <legend class="sr-only">Your details</legend>
+      <h2 class="font-display text-2xl font-bold">Where should we send it?</h2>
+      <p class="mt-2 text-[0.92rem] text-ink-muted">
+        You will hear from a real member of the team within one business day - no call centre.
+      </p>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <Field name="firstName" label="First name" required autocomplete="given-name" />
+        <Field name="lastName" label="Last name" required autocomplete="family-name" />
+        <Field name="email" label="Email" type="email" required autocomplete="email" />
+        <Field name="phone" label="Phone" type="tel" required autocomplete="tel" />
+        <Field
+          name="contactPreference"
+          label="Best way to reach you"
+          type="select"
+          class="sm:col-span-2"
+          options={[
+            { value: 'phone', label: 'Phone call' },
+            { value: 'email', label: 'Email' },
+            { value: 'text', label: 'Text message' },
+          ]}
+        />
+        <Field
+          name="notes"
+          label="Anything else we should know?"
+          type="textarea"
+          rows={4}
+          class="sm:col-span-2"
+          placeholder="Existing equipment, known problems, access constraints, deadlines..."
+        />
+        <div class="sm:col-span-2">
+          <Field name="consent" label="Consent" type="checkbox" required>
+            I agree to be contacted about this request and accept the
+            <a href="/privacy" class="text-brand-300 underline underline-offset-2">privacy policy</a>.
+          </Field>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
+        <button type="button" data-quote-prev class="inline-flex items-center justify-center gap-2.5 rounded-full border border-white/20 px-7 py-3.5 font-display font-semibold text-ink transition-colors hover:border-brand-400/60">
+          <Icon name="arrow-left" size={18} /> Back
+        </button>
+        <button type="submit" class="inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-8 py-3.5 font-display font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-12px_rgba(248,184,40,.9)]">
+          Request my free quote <Icon name="arrow-right" size={18} />
+        </button>
+      </div>
+    </fieldset>
+  </FormShell>
+</div>
+
+<script>
+  import { validateSection } from '~/lib/form-client';
+
+  const form = document.querySelector<HTMLFormElement>('form[data-gg-form="quote"]');
+  if (form) {
+    const stepEls = Array.from(form.querySelectorAll<HTMLFieldSetElement>('[data-quote-step]'));
+    const bubbles = document.querySelectorAll<HTMLElement>('[data-step-bubble]');
+    const labels = document.querySelectorAll<HTMLElement>('[data-step-label]');
+    let current = 0;
+
+    const render = () => {
+      stepEls.forEach((el, i) => el.classList.toggle('hidden', i !== current));
+      bubbles.forEach((b, i) => {
+        b.dataset.state = i === current ? 'active' : i < current ? 'done' : 'todo';
+      });
+      labels.forEach((l, i) => {
+        l.dataset.state = i === current ? 'active' : i < current ? 'done' : 'todo';
+      });
+      // Only scroll once the user has actually moved between steps.
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    form.querySelectorAll<HTMLButtonElement>('[data-quote-next]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const invalid = validateSection(stepEls[current]);
+        if (invalid) {
+          invalid.focus();
+          return;
+        }
+        if (current < stepEls.length - 1) {
+          current += 1;
+          render();
+        }
+      })
+    );
+
+    form.querySelectorAll<HTMLButtonElement>('[data-quote-prev]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        if (current > 0) {
+          current -= 1;
+          render();
+        }
+      })
+    );
+
+    // Enter should advance a step, not submit from step one.
+    form.addEventListener('keydown', (e) => {
+      const target = e.target as HTMLElement;
+      if (e.key === 'Enter' && current < stepEls.length - 1 && target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        stepEls[current].querySelector<HTMLButtonElement>('[data-quote-next]')?.click();
+      }
+    });
+
+    // If the shared runtime finds an invalid field on a hidden step, show it.
+    form.addEventListener(
+      'submit',
+      () => {
+        const invalidStep = stepEls.findIndex((el) => el.querySelector('[aria-invalid="true"]'));
+        if (invalidStep >= 0 && invalidStep !== current) {
+          current = invalidStep;
+          render();
+        }
+      },
+      false
+    );
+  }
+</script>

@@ -1,0 +1,67 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import QuoteForm from '~/components/forms/QuoteForm.astro';
+import Icon from '~/components/Icon.astro';
+import { site } from '~/data/site';
+
+const promises = [
+  { title: 'No obligation', body: 'A quote is a quote. Nobody will pressure you into signing on the day.' },
+  { title: 'Real numbers', body: 'Estimates are built from your usage and your property, not a per-square-foot average.' },
+  { title: 'Incentives applied', body: 'Credits, rebates and grants are worked into the figure, not bolted on as a maybe.' },
+  { title: 'One business day', body: 'You will hear from a specialist who has actually read your submission.' },
+];
+---
+<BaseLayout
+  title="Request a Free Quote"
+  description="Get a free, no-obligation estimate from Gridless Global for solar, storage, energy analysis, electrical, roofing, construction and more."
+>
+  <PageHero
+    eyebrow="Free estimate"
+    title="Tell us what you need"
+    lead="Three short steps. The more you can tell us about the property, the more precise the number we can come back with."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Request a Quote' }]}
+    icon="file-text"
+    accentClass="text-gold-400"
+  />
+
+  <section class="shell py-14 lg:py-20">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,.75fr)] lg:gap-14">
+      <QuoteForm />
+
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <div class="panel rounded-4xl p-7">
+          <p class="eyebrow">What you can expect</p>
+          <ul class="mt-6 space-y-6">
+            {
+              promises.map((promise) => (
+                <li>
+                  <p class="flex items-center gap-2.5 font-display text-[0.98rem] font-bold text-ink">
+                    <Icon name="check-circle" size={19} class="shrink-0 text-signal-400" />
+                    {promise.title}
+                  </p>
+                  <p class="mt-1.5 pl-7 text-[0.87rem] leading-relaxed text-ink-muted">{promise.body}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="panel mt-5 rounded-4xl p-7">
+          <p class="eyebrow">Prefer to talk?</p>
+          <p class="mt-3 text-[0.9rem] leading-relaxed text-ink-muted">
+            Some projects are easier to scope in five minutes on the phone than in any form.
+          </p>
+          <a
+            href={site.phoneHref}
+            class="mt-5 flex items-center gap-3 rounded-2xl border border-white/12 bg-white/[0.04] px-5 py-4 transition-colors hover:border-brand-400/50"
+          >
+            <Icon name="phone" size={19} class="text-signal-400" />
+            <span class="font-display font-semibold text-ink">{site.phone}</span>
+          </a>
+          <p class="mt-3 text-[0.8rem] text-ink-faint">{site.hours}</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

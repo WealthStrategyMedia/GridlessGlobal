@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import type { Faq } from '~/data/services';
+
+interface Props {
+  items: Faq[];
+  title?: string;
+  eyebrow?: string;
+  class?: string;
+}
+
+const { items, title = 'Common questions', eyebrow = 'Good to know', class: className = '' } = Astro.props;
+---
+<section class={className} aria-labelledby="faq-heading">
+  <div class="grid gap-10 lg:grid-cols-[minmax(0,.85fr)_minmax(0,1.6fr)] lg:gap-16">
+    <div>
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="faq-heading" class="mt-3 font-display text-3xl font-bold sm:text-4xl">{title}</h2>
+      <p class="mt-4 text-[0.95rem] leading-relaxed text-ink-muted">
+        Something not covered here? Ask us directly - we would rather answer it properly than have you guess.
+      </p>
+      <a
+        href="/contact"
+        class="mt-6 inline-flex items-center gap-2 font-display text-[0.88rem] font-semibold text-brand-300 transition-colors hover:text-brand-200"
+      >
+        Ask a question <Icon name="arrow-right" size={16} />
+      </a>
+    </div>
+
+    <!-- <details> keeps this usable with no JavaScript at all. -->
+    <div class="space-y-3">
+      {
+        items.map((item, i) => (
+          <details
+            class="group panel reveal overflow-hidden rounded-3xl transition-colors open:border-brand-400/30"
+            style={`--reveal-delay:${Math.min(i, 6) * 60}ms`}
+            name="faq"
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-5 px-6 py-5 font-display text-[1.02rem] font-semibold text-ink [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-ink-muted transition-all duration-300 group-open:rotate-45 group-open:border-brand-400/50 group-open:text-brand-300">
+                <Icon name="plus" size={16} />
+              </span>
+            </summary>
+            <div class="px-6 pb-6 text-[0.93rem] leading-relaxed text-ink-muted">{item.a}</div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

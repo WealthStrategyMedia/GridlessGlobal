@@ -1,0 +1,93 @@
+---
+import LegalLayout from '~/layouts/LegalLayout.astro';
+import { site } from '~/data/site';
+---
+<LegalLayout
+  title="Privacy Policy"
+  description={`How ${site.name} collects, uses and protects personal information.`}
+  updated="26 September 2026"
+>
+  <h2>Overview</h2>
+  <p>
+    {site.legalName} ("we", "us") provides energy, electrical and construction services. This policy
+    explains what personal information we collect through this website, why we collect it, and the
+    choices you have.
+  </p>
+
+  <h2>Information we collect</h2>
+  <p>We collect only what we need to respond to you and deliver work you have asked for.</p>
+  <ul>
+    <li><strong>Information you give us.</strong> Name, email, phone number, property address, and details about your project submitted through our contact, quote or payment forms.</li>
+    <li><strong>Payment information.</strong> Card details are entered on our payment provider's hosted page and are never transmitted to or stored on our servers. We receive only a confirmation, the amount and a reference.</li>
+    <li><strong>Technical information.</strong> Standard server logs such as IP address, browser type and pages visited, used to keep the site secure and working.</li>
+  </ul>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>To respond to enquiries, prepare estimates and deliver contracted work.</li>
+    <li>To process payments and issue receipts.</li>
+    <li>To submit permit, interconnection, incentive and grant applications on your behalf, where you have engaged us to do so.</li>
+    <li>To send service updates, and marketing messages only where you have opted in.</li>
+    <li>To meet legal, tax and regulatory obligations.</li>
+  </ul>
+
+  <h2>Sharing</h2>
+  <p>We do not sell personal information. We share it only where it is necessary:</p>
+  <ul>
+    <li>With service providers acting on our behalf, such as our payment processor and hosting provider, under contractual confidentiality obligations.</li>
+    <li>With utilities, permitting authorities and funding bodies where you have asked us to act for you.</li>
+    <li>Where required by law or to protect our legal rights.</li>
+  </ul>
+
+  <h2>Retention</h2>
+  <p>
+    Enquiry records are kept for as long as needed to respond and for a reasonable period afterwards.
+    Project and financial records are retained for the period required by tax, warranty and regulatory
+    obligations.
+  </p>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li>You can unsubscribe from marketing email at any time using the link in any message.</li>
+    <li>You can ask us for a copy of the personal information we hold about you, or ask us to correct or delete it, subject to the records we are legally required to keep.</li>
+    <li>You can ask us to stop contacting you entirely.</li>
+  </ul>
+  <p>
+    To make any of these requests, email
+    <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phoneHref}>{site.phone}</a>.
+  </p>
+
+  <h2>Cookies</h2>
+  <p>
+    This site uses only what is necessary to function. If analytics or marketing cookies are added
+    later, this policy will be updated and consent will be requested before they are set.
+  </p>
+
+  <h2>Security</h2>
+  <p>
+    The site is served over HTTPS, and payment handling is delegated to a PCI-compliant processor. No
+    system is perfectly secure, but we take reasonable technical and organisational measures to
+    protect the information we hold.
+  </p>
+
+  <h2>Children</h2>
+  <p>
+    This site is not directed at children under 13 and we do not knowingly collect their personal
+    information.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    We may update this policy from time to time. The date at the top reflects the most recent
+    revision.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    {site.legalName}<br />
+    {site.address.line1}, {site.address.line2}<br />
+    {site.address.city}, {site.address.region} {site.address.postal}<br />
+    <a href={`mailto:${site.email}`}>{site.email}</a> &middot;
+    <a href={site.phoneHref}>{site.phone}</a>
+  </p>
+</LegalLayout>

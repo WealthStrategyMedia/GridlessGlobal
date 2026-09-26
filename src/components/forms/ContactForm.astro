@@ -1,0 +1,89 @@
+---
+import FormShell from './FormShell.astro';
+import Field from './Field.astro';
+import Button from '~/components/Button.astro';
+import { services } from '~/data/services';
+
+interface Props {
+  /** Pre-selects the service dropdown on a service detail page. */
+  defaultService?: string;
+  title?: string;
+  class?: string;
+}
+
+const { defaultService, title = 'Send us a message', class: className = '' } = Astro.props;
+
+const serviceOptions = [
+  { value: '', label: 'Not sure yet - help me work it out' },
+  ...services.map((s) => ({ value: s.slug, label: s.title })),
+];
+---
+<div class={`panel rounded-4xl p-7 sm:p-9 ${className}`}>
+  <h2 class="font-display text-2xl font-bold sm:text-3xl">{title}</h2>
+  <p class="mt-2 text-[0.92rem] text-ink-muted">
+    Tell us what you are working on and we will come back within one business day.
+  </p>
+
+  <FormShell kind="contact" class="mt-7">
+    <div class="grid gap-5 sm:grid-cols-2">
+      <Field name="firstName" label="First name" required autocomplete="given-name" placeholder="Jordan" />
+      <Field name="lastName" label="Last name" required autocomplete="family-name" placeholder="Rivera" />
+      <Field name="email" label="Email" type="email" required autocomplete="email" placeholder="you@example.com" />
+      <Field name="phone" label="Phone" type="tel" autocomplete="tel" placeholder="(555) 123-4567" />
+
+      <Field
+        name="propertyType"
+        label="Property type"
+        type="select"
+        class="sm:col-span-2"
+        options={[
+          { value: 'residential', label: 'Residential' },
+          { value: 'commercial', label: 'Commercial' },
+          { value: 'community', label: 'Community or multifamily' },
+          { value: 'utility', label: 'Utility or developer' },
+        ]}
+      />
+
+      <div class="sm:col-span-2">
+        <Field
+          name="service"
+          label="What can we help with?"
+          type="select"
+          placeholder="Choose a service"
+          options={serviceOptions}
+          value={defaultService}
+        />
+      </div>
+
+      <div class="sm:col-span-2">
+        <Field
+          name="message"
+          label="Your message"
+          type="textarea"
+          required
+          minLength={10}
+          placeholder="Tell us about your property, timeline and what you are hoping to achieve."
+        />
+      </div>
+
+      <div class="sm:col-span-2">
+        <Field name="consent" label="Consent" type="checkbox" required>
+          I agree to be contacted about this enquiry and accept the
+          <a href="/privacy" class="text-brand-300 underline underline-offset-2">privacy policy</a>.
+        </Field>
+      </div>
+    </div>
+
+    <Button type="submit" variant="gold" size="lg" class="mt-7" icon="arrow-right">Send message</Button>
+  </FormShell>
+</div>
+
+<script>
+  // Honour a ?service= query so links from a service page arrive pre-filled.
+  const preset = new URLSearchParams(window.location.search).get('service');
+  if (preset) {
+    document.querySelectorAll<HTMLSelectElement>('select[name="service"]').forEach((select) => {
+      if (Array.from(select.options).some((o) => o.value === preset)) select.value = preset;
+    });
+  }
+</script>

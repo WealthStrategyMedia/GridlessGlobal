@@ -1,0 +1,96 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import ServicesMap from '~/components/ServicesMap.astro';
+import ServiceCard from '~/components/ServiceCard.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { services, servicesInGroup, GROUP_ORDER, GROUP_LABELS } from '~/data/services';
+import { site } from '~/data/site';
+
+const groupBlurbs: Record<string, string> = {
+  generation: 'Building and operating the assets that make the power - at utility scale and behind the meter.',
+  property: 'Whole-property programmes for homes, businesses and entire communities.',
+  energy: 'The measurable work: generation on site, consumption down, bills lower.',
+  advisory: 'Funding, carbon and capability - the parts of a project that are not hardware.',
+  trades: 'Self-performed construction capability, so an energy project never stalls waiting on a subcontractor.',
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Gridless Global services',
+  itemListElement: services.map((service, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: service.title,
+    url: `${site.url}/services/${service.slug}`,
+  })),
+};
+---
+<BaseLayout
+  title="All Services"
+  description="Every service Gridless Global offers: utility-scale generation, storage and microgrids, plus solar, energy analysis, carbon credits, grant writing, electrical, roofing, siding, construction and handyman work for homes and businesses."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Our capability"
+    title="Every service, end to end"
+    lead="Twenty-five services across generation, property, energy, advisory and the trades. Start on the map below, or jump straight to a category."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
+  >
+    <nav class="mt-9 flex flex-wrap gap-2.5" aria-label="Service categories">
+      {
+        GROUP_ORDER.map((group) => (
+          <a
+            href={`#${group}`}
+            class="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2.5 font-display text-[0.82rem] font-medium text-ink-muted transition-all hover:-translate-y-0.5 hover:border-brand-400/50 hover:text-ink"
+          >
+            {GROUP_LABELS[group]}
+            <span class="ml-2 text-ink-faint">{servicesInGroup(group).length}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </PageHero>
+
+  <div class="shell py-16 lg:py-20">
+    <ServicesMap showGrid={false} />
+  </div>
+
+  {
+    GROUP_ORDER.map((group) => {
+      const items = servicesInGroup(group);
+      return (
+        <section id={group} class="shell scroll-mt-28 py-12 lg:py-16">
+          <div class="mb-8 flex flex-wrap items-end justify-between gap-5">
+            <div class="max-w-2xl">
+              <h2 class="font-display text-2xl font-bold sm:text-3xl lg:text-4xl">
+                {GROUP_LABELS[group]}
+              </h2>
+              <p class="mt-3 text-[0.98rem] leading-relaxed text-ink-muted">{groupBlurbs[group]}</p>
+            </div>
+            <span class="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.78rem] text-ink-faint">
+              <Icon name="layers" size={15} />
+              {items.length} services
+            </span>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {items.map((service, i) => (
+              <ServiceCard service={service} index={i} />
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <CtaBand
+    class="mt-8 pb-8"
+    title="Not sure which of these you need?"
+    body="That is the normal starting point. An energy analysis measures the property and ranks every option by payback, so the first dollar goes where it earns the most."
+    primaryLabel="Book an energy analysis"
+    primaryHref="/quote?service=energy-analysis"
+  />
+</BaseLayout>

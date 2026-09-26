@@ -1,0 +1,37 @@
+---
+import FormShell from './FormShell.astro';
+import Icon from '~/components/Icon.astro';
+---
+<div>
+  <p class="eyebrow">Stay current</p>
+  <h2 class="mt-2 font-display text-xl font-bold">Energy intelligence, once a month</h2>
+  <p class="mt-2 max-w-md text-[0.88rem] text-ink-muted">
+    Incentive deadlines, tariff changes and project notes from the field. No filler, unsubscribe any time.
+  </p>
+
+  <FormShell kind="newsletter" class="mt-5 max-w-md" hideNotice>
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <div data-field class="flex-1">
+        <label for="newsletter-email" class="sr-only">Email address</label>
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          data-label="Email address"
+          placeholder="you@example.com"
+          autocomplete="email"
+          class="w-full rounded-full border border-white/12 bg-navy-900/60 px-5 py-3 text-[0.9rem] text-ink placeholder:text-ink-faint/70 transition-colors focus:border-brand-400/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25"
+        />
+        <p data-error class="mt-1.5 hidden px-2 text-[0.78rem] text-red-300"></p>
+      </div>
+      <button
+        type="submit"
+        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-500 to-brand-400 px-6 py-3 font-display text-[0.88rem] font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-12px_rgba(27,142,245,.9)]"
+      >
+        Subscribe
+        <Icon name="arrow-right" size={16} />
+      </button>
+    </div>
+  </FormShell>
+</div>

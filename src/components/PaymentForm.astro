@@ -1,0 +1,210 @@
+---
+import Field from './forms/Field.astro';
+import Icon from './Icon.astro';
+
+/**
+ * Payment intake.
+ *
+ * The form collects everything a checkout session needs and posts it to
+ * /api/checkout (netlify/functions/create-checkout-session.mts). That function
+ * returns a hosted checkout URL once payment provider credentials are set in
+ * the Netlify environment. Until then it replies 503 with a readable reason,
+ * which this component surfaces verbatim instead of failing silently.
+ */
+
+const reasons = [
+  { value: 'invoice', label: 'Pay an invoice' },
+  { value: 'deposit', label: 'Project deposit' },
+  { value: 'progress', label: 'Progress payment' },
+  { value: 'service-call', label: 'Service call' },
+  { value: 'assessment', label: 'Energy analysis fee' },
+  { value: 'other', label: 'Something else' },
+];
+---
+<div class="panel rounded-4xl p-7 sm:p-10">
+  <div class="flex items-start justify-between gap-6">
+    <div>
+      <h2 class="font-display text-2xl font-bold sm:text-3xl">Make a payment</h2>
+      <p class="mt-2 max-w-lg text-[0.92rem] text-ink-muted">
+        Pay an invoice, deposit or service call securely. You will be taken to our payment provider
+        to enter card details - we never handle or store them ourselves.
+      </p>
+    </div>
+    <span class="hidden shrink-0 items-center gap-2 rounded-full border border-signal-500/30 bg-signal-500/10 px-3.5 py-2 text-[0.75rem] font-semibold text-signal-300 sm:flex">
+      <Icon name="lock" size={14} /> Secure checkout
+    </span>
+  </div>
+
+  <form id="payment-form" class="mt-8" novalidate>
+    <div class="grid gap-5 sm:grid-cols-2">
+      <Field name="reason" label="What is this payment for?" type="select" required options={reasons} class="sm:col-span-2" />
+      <Field name="invoiceNumber" label="Invoice or job number" placeholder="INV-10482" hint="Leave blank if you do not have one." />
+
+      <div data-field class="group">
+        <label for="pay-amount" class="mb-2 block font-display text-[0.8rem] font-semibold tracking-wide text-ink-muted">
+          Amount <span class="ml-1 text-gold-400" aria-hidden="true">*</span>
+        </label>
+        <div class="relative">
+          <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-display text-[0.95rem] text-ink-faint">$</span>
+          <input
+            id="pay-amount"
+            name="amount"
+            type="number"
+            min="1"
+            step="0.01"
+            required
+            inputmode="decimal"
+            placeholder="0.00"
+            data-label="Amount"
+            class="w-full rounded-2xl border border-white/12 bg-navy-900/60 py-3.5 pl-8 pr-4 text-[0.95rem] text-ink placeholder:text-ink-faint/70 transition-colors hover:border-white/20 focus:border-brand-400/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25"
+          />
+        </div>
+        <p data-error class="mt-1.5 hidden text-[0.8rem] text-red-300"></p>
+      </div>
+
+      <Field name="name" label="Name on the account" required autocomplete="name" />
+      <Field name="email" label="Email for the receipt" type="email" required autocomplete="email" />
+      <Field name="notes" label="Notes (optional)" type="textarea" rows={3} class="sm:col-span-2" placeholder="Anything our accounts team should know about this payment." />
+    </div>
+
+    <div id="payment-status" class="hidden"></div>
+
+    <button
+      type="submit"
+      id="payment-submit"
+      class="mt-7 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-8 py-4 font-display text-base font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_46px_-12px_rgba(248,184,40,.95)] disabled:pointer-events-none disabled:opacity-50 sm:w-auto"
+    >
+      <Icon name="credit-card" size={19} />
+      Continue to secure checkout
+    </button>
+
+    <p class="mt-4 flex items-center gap-2 text-[0.78rem] text-ink-faint">
+      <Icon name="shield-check" size={15} class="text-signal-400" />
+      Card details are entered on our payment provider's hosted page, never on this site.
+    </p>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('payment-form') as HTMLFormElement | null;
+  const statusBox = document.getElementById('payment-status');
+  const submit = document.getElementById('payment-submit') as HTMLButtonElement | null;
+
+  type Kind = 'error' | 'info' | 'success';
+
+  function show(kind: Kind, title: string, body: string) {
+    if (!statusBox) return;
+    const palette: Record<Kind, string> = {
+      success: 'border-signal-500/40 bg-signal-500/10 text-signal-300',
+      error: 'border-red-400/40 bg-red-500/10 text-red-200',
+      info: 'border-gold-500/40 bg-gold-500/10 text-gold-200',
+    };
+    statusBox.className = `mt-6 rounded-2xl border px-5 py-4 text-sm ${palette[kind]}`;
+    statusBox.innerHTML = '';
+    const h = document.createElement('p');
+    h.className = 'font-display font-semibold';
+    h.textContent = title;
+    const p = document.createElement('p');
+    p.className = 'mt-1 leading-relaxed opacity-90';
+    p.textContent = body;
+    statusBox.append(h, p);
+    statusBox.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+  }
+
+  function setFieldError(input: HTMLElement, message: string | null) {
+    const wrap = input.closest('[data-field]');
+    const target = wrap?.querySelector('[data-error]') as HTMLElement | null;
+    if (target) {
+      target.textContent = message ?? '';
+      target.classList.toggle('hidden', !message);
+    }
+    wrap?.classList.toggle('is-invalid', Boolean(message));
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form) return;
+
+    const data = new FormData(form);
+    const amount = Number(data.get('amount'));
+    let firstInvalid: HTMLElement | null = null;
+
+    form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[name]').forEach((el) => {
+      const value = (el.value ?? '').trim();
+      let message: string | null = null;
+      if (el.hasAttribute('required') && !value) {
+        message = `${el.dataset.label || 'This field'} is required.`;
+      } else if (el.getAttribute('type') === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+        message = 'Enter a valid email address.';
+      } else if (el.getAttribute('name') === 'amount' && value && (!Number.isFinite(amount) || amount < 1)) {
+        message = 'Enter an amount of $1.00 or more.';
+      }
+      setFieldError(el, message);
+      if (message && !firstInvalid) firstInvalid = el;
+    });
+
+    if (firstInvalid) {
+      (firstInvalid as HTMLElement).focus();
+      show('error', 'Check the highlighted fields', 'A few details are needed before we can start checkout.');
+      return;
+    }
+
+    if (submit) submit.disabled = true;
+    show('info', 'Starting secure checkout...', 'One moment while we prepare your payment session.');
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          // Sent in cents so no floating-point rounding reaches the provider.
+          amountCents: Math.round(amount * 100),
+          currency: 'usd',
+          reason: data.get('reason'),
+          invoiceNumber: data.get('invoiceNumber'),
+          name: data.get('name'),
+          email: data.get('email'),
+          notes: data.get('notes'),
+          returnUrl: `${window.location.origin}/pay/complete`,
+          cancelUrl: window.location.href,
+        }),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+
+      if (response.ok && payload.checkoutUrl) {
+        window.location.assign(payload.checkoutUrl);
+        return;
+      }
+
+      if (response.status === 503) {
+        show(
+          'info',
+          'Card payments are not switched on yet',
+          payload.message ??
+            'Our payment provider is not connected yet. Please call us and we will take payment directly, or ask for an invoice with remittance details.'
+        );
+      } else if (response.status === 404) {
+        show(
+          'info',
+          'Checkout is unavailable in this environment',
+          'The payment endpoint only runs on a deployed build. On the live site this button opens secure checkout.'
+        );
+      } else {
+        show(
+          'error',
+          'We could not start checkout',
+          payload.message ?? 'Something went wrong preparing your payment. Please try again, or call us.'
+        );
+      }
+    } catch {
+      show(
+        'error',
+        'We could not reach the payment service',
+        'Check your connection and try again. If it persists, please call us and we will take payment over the phone.'
+      );
+    } finally {
+      if (submit) submit.disabled = false;
+    }
+  });
+</script>

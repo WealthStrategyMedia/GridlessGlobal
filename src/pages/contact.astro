@@ -1,0 +1,111 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import ContactForm from '~/components/forms/ContactForm.astro';
+import Icon from '~/components/Icon.astro';
+import { site } from '~/data/site';
+import type { IconName } from '~/components/icons';
+
+const channels: { icon: IconName; label: string; value: string; href?: string; note: string }[] = [
+  {
+    icon: 'phone',
+    label: 'Call us',
+    value: site.phone,
+    href: site.phoneHref,
+    note: 'Fastest route. 24/7 for electrical emergencies.',
+  },
+  {
+    icon: 'mail',
+    label: 'Email us',
+    value: site.email,
+    href: `mailto:${site.email}`,
+    note: 'Answered within one business day.',
+  },
+  {
+    icon: 'credit-card',
+    label: 'Accounts & billing',
+    value: site.supportEmail,
+    href: `mailto:${site.supportEmail}`,
+    note: 'Invoices, receipts and payment queries.',
+  },
+];
+---
+<BaseLayout
+  title="Contact Us"
+  description={`Get in touch with ${site.name}. Call ${site.phone}, email ${site.email}, or send us the details of your project and we will respond within one business day.`}
+>
+  <PageHero
+    eyebrow="Get in touch"
+    title="Let us talk about your project"
+    lead="Tell us what you are working on and we will point you at the right specialist - not a script, and not a call centre."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+    icon="mail"
+  />
+
+  <section class="shell py-14 lg:py-20">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.3fr)] lg:gap-16">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <ul class="space-y-4">
+          {
+            channels.map((channel, i) => (
+              <li class="reveal" style={`--reveal-delay:${i * 70}ms`}>
+                <a
+                  href={channel.href}
+                  class="group panel panel-hover flex items-start gap-3.5 rounded-3xl p-5 sm:gap-4 sm:p-6"
+                >
+                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.05] text-brand-300 transition-transform duration-500 group-hover:scale-105 sm:h-12 sm:w-12">
+                    <Icon name={channel.icon} size={22} />
+                  </span>
+                  <!-- min-w-0 lets this flex child shrink, and overflow-wrap:
+                       anywhere lowers the intrinsic width of a long email
+                       address so it wraps instead of pushing the page wide.
+                       (break-words alone does not reduce min-content width.) -->
+                  <span class="min-w-0 [overflow-wrap:anywhere]">
+                    <span class="block text-[0.78rem] uppercase tracking-wider text-ink-faint">
+                      {channel.label}
+                    </span>
+                    <span class="mt-1 block font-display text-[1.02rem] font-semibold text-ink">
+                      {channel.value}
+                    </span>
+                    <span class="mt-1.5 block text-[0.84rem] leading-relaxed text-ink-muted">
+                      {channel.note}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="panel mt-6 rounded-3xl p-6">
+          <p class="eyebrow">Office</p>
+          <address class="mt-4 not-italic text-[0.93rem] leading-relaxed text-ink-muted">
+            {site.address.line1}<br />
+            {site.address.line2}<br />
+            {site.address.city}, {site.address.region} {site.address.postal}<br />
+            {site.address.country}
+          </address>
+          <div class="rule my-5"></div>
+          <p class="flex items-start gap-2.5 text-[0.88rem] text-ink-muted">
+            <Icon name="clock" size={17} class="mt-px shrink-0 text-signal-400" />
+            {site.hours}
+          </p>
+        </div>
+
+        <div class="panel mt-6 rounded-3xl border-gold-500/25 bg-gold-500/[0.05] p-6">
+          <p class="flex items-center gap-2.5 font-display text-[0.95rem] font-bold text-gold-300">
+            <Icon name="alert" size={19} />
+            Electrical emergency?
+          </p>
+          <p class="mt-2.5 text-[0.88rem] leading-relaxed text-ink-muted">
+            Burning smells, sparking, water contact with electrical equipment or sudden partial power
+            loss should be treated as urgent. Shut off power at the main if it is safe to do so, then
+            call us on <a href={site.phoneHref} class="font-semibold text-gold-300">{site.phone}</a>.
+          </p>
+        </div>
+      </div>
+
+      <ContactForm />
+    </div>
+  </section>
+</BaseLayout>

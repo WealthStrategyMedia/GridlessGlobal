@@ -1,0 +1,196 @@
+---
+/**
+ * The interactive services map.
+ *
+ * Every gold "Click here for services" button on the artwork, and every row in
+ * the Key Highlights banner down the left, is overlaid with a real anchor that
+ * links to that service's detail page. The rectangles are percentages measured
+ * from the source pixels (see src/data/services.ts), so the overlay stays
+ * aligned at any width.
+ *
+ * The artwork is wide and detailed, so below `lg` it scrolls horizontally at a
+ * usable size rather than shrinking the hotspots to untappable slivers. A full
+ * card grid sits underneath at every breakpoint, which is the primary path on
+ * a phone and a keyboard- and screen-reader-friendly duplicate everywhere else.
+ */
+import Icon from './Icon.astro';
+import ServiceCard from './ServiceCard.astro';
+import { mapButtons, mapHighlights, MAP_ASPECT, requireService } from '~/data/services';
+
+interface Props {
+  class?: string;
+  /** Show the card grid beneath the artwork. */
+  showGrid?: boolean;
+}
+
+const { class: className = '', showGrid = true } = Astro.props;
+
+const style = (r: { x: number; y: number; w: number; h: number }) =>
+  `left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%`;
+
+const gridServices = mapButtons.map((b) => requireService(b.slug));
+---
+<section class={className} aria-labelledby="services-map-heading">
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-6">
+    <div>
+      <p class="eyebrow">Integrated renewable energy</p>
+      <h2 id="services-map-heading" class="mt-3 font-display text-3xl font-bold sm:text-4xl lg:text-5xl">
+        Explore the <span class="text-gradient">full energy ecosystem</span>
+      </h2>
+      <p class="mt-4 max-w-2xl text-[1.02rem] leading-relaxed text-ink-muted">
+        Select any gold button on the map, or any service in the panel on the left, to open that
+        service in detail.
+      </p>
+    </div>
+    <p class="hidden items-center gap-2.5 rounded-full border border-gold-500/30 bg-gold-500/[0.08] px-4 py-2.5 text-[0.82rem] font-medium text-gold-200 lg:flex">
+      <Icon name="sparkles" size={16} />
+      Every gold button is clickable
+    </p>
+  </div>
+
+  <!-- Artwork + hotspot overlay -->
+  <div class="relative">
+    <div
+      class="-mx-4 overflow-x-auto overscroll-x-contain px-4 pb-3 sm:-mx-6 sm:px-6 lg:mx-0 lg:overflow-visible lg:px-0"
+      data-map-scroller
+    >
+      <div class="relative w-[1100px] lg:w-full">
+        <div
+          class="relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_40px_110px_-40px_rgba(1,11,22,1)] lg:rounded-4xl"
+          style={`aspect-ratio:${MAP_ASPECT}`}
+        >
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/images/services-map-1100.webp 1100w, /images/services-map.webp 1672w"
+              sizes="(min-width: 1024px) 100vw, 1100px"
+            />
+            <img
+              src="/images/services-map.png"
+              alt="Illustrated map of a renewable energy community showing a solar power plant, thermal power plant, hydro power plant, microgrid, strategic energy reserve, eco-smart living district, education hub, and residential and commercial areas."
+              width="1672"
+              height="941"
+              decoding="async"
+              fetchpriority="high"
+              class="h-full w-full object-cover"
+            />
+          </picture>
+        </div>
+
+        <!-- Overlay sits outside the clipped box so tooltips are not cut off. -->
+        <div class="pointer-events-none absolute inset-0">
+          <!-- The nine gold call-to-action buttons -->
+          {
+            mapButtons.map((spot, i) => {
+              const service = requireService(spot.slug);
+              return (
+                <a
+                  href={`/services/${spot.slug}`}
+                  class="group/spot pointer-events-auto absolute rounded-[6px] outline-none ring-0 transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(.16,1,.3,1)] hover:scale-[1.06] focus-visible:scale-[1.06] map-spot"
+                  style={`${style(spot.rect)};--spot-delay:${i * 160}ms`}
+                  aria-label={`${service.title} - view services`}
+                >
+                  <span class="sr-only">{service.title}</span>
+                  <span
+                    class="pointer-events-none absolute bottom-[calc(100%+0.65rem)] left-1/2 z-20 w-max max-w-[15rem] -translate-x-1/2 translate-y-1 rounded-xl border border-gold-400/30 bg-navy-950/95 px-3.5 py-2 text-left opacity-0 shadow-[0_18px_40px_-14px_rgba(1,11,22,1)] backdrop-blur-sm transition-all duration-300 group-hover/spot:translate-y-0 group-hover/spot:opacity-100 group-focus-visible/spot:translate-y-0 group-focus-visible/spot:opacity-100"
+                    aria-hidden="true"
+                  >
+                    <span class="block font-display text-[0.8rem] font-semibold text-gold-300">
+                      {service.title}
+                    </span>
+                    <span class="mt-0.5 block text-[0.7rem] leading-snug text-ink-faint">
+                      Open the full service page
+                    </span>
+                  </span>
+                </a>
+              );
+            })
+          }
+
+          <!-- Key Highlights rows in the left banner -->
+          {
+            mapHighlights.map((spot) => {
+              const service = requireService(spot.slug);
+              return (
+                <a
+                  href={`/services/${spot.slug}`}
+                  class="group/row pointer-events-auto absolute flex items-center justify-end rounded-xl pr-3 outline-none transition-all duration-300 hover:bg-gradient-to-r hover:from-brand-500/10 hover:to-signal-500/20 focus-visible:bg-signal-500/15"
+                  style={style(spot.rect)}
+                  aria-label={`${service.title} - view services`}
+                >
+                  <span class="sr-only">{spot.label}</span>
+                  <span
+                    class="pointer-events-none absolute inset-y-1 left-0 w-[3px] origin-center scale-y-0 rounded-full bg-signal-400 transition-transform duration-300 group-hover/row:scale-y-100 group-focus-visible/row:scale-y-100"
+                    aria-hidden="true"
+                  />
+                  <Icon
+                    name="arrow-right"
+                    size={16}
+                    class="translate-x-2 text-signal-400 opacity-0 transition-all duration-300 group-hover/row:translate-x-0 group-hover/row:opacity-100 group-focus-visible/row:translate-x-0 group-focus-visible/row:opacity-100"
+                  />
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-3 flex items-center justify-center gap-2 text-[0.8rem] text-ink-faint lg:hidden">
+      <Icon name="arrow-right" size={14} />
+      Scroll the map sideways, or use the service cards below
+    </p>
+  </div>
+
+  {
+    showGrid && (
+      <div class="mt-14">
+        <div class="mb-7 flex items-center gap-4">
+          <h3 class="font-display text-xl font-bold sm:text-2xl">Every service on the map</h3>
+          <span class="rule flex-1" />
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
+          {gridServices.map((service, i) => (
+            <ServiceCard service={service} index={i} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  /* A short, staggered pulse on load so the gold buttons read as interactive
+     without leaving nine rings animating forever. */
+  .map-spot {
+    box-shadow: 0 0 0 0 rgb(248 184 40 / 0);
+    animation: spot-hint 2.2s ease-out var(--spot-delay, 0ms) 3;
+  }
+  .map-spot:hover,
+  .map-spot:focus-visible {
+    animation: none;
+    box-shadow:
+      0 0 0 2px rgb(255 217 119 / 0.95),
+      0 10px 34px -6px rgb(248 184 40 / 0.75);
+  }
+
+  @keyframes spot-hint {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(248 184 40 / 0);
+    }
+    35% {
+      box-shadow: 0 0 0 5px rgb(248 184 40 / 0.45);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgb(248 184 40 / 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-spot {
+      animation: none;
+      box-shadow: 0 0 0 1.5px rgb(248 184 40 / 0.5);
+    }
+  }
+</style>

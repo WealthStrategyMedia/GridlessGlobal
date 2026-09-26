@@ -1,0 +1,79 @@
+---
+/**
+ * Note on `class`: this component sets `inline-flex`, and Tailwind emits
+ * `inline-flex` after `hidden` in the stylesheet, so passing `hidden` in here
+ * will NOT hide the button. Put responsive display classes on a wrapper element
+ * instead. The same applies to Logo.astro.
+ */
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+interface Props {
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  variant?: 'primary' | 'gold' | 'ghost' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: IconName;
+  iconPosition?: 'start' | 'end';
+  class?: string;
+  full?: boolean;
+  disabled?: boolean;
+  id?: string;
+  'data-form-submit'?: string;
+}
+
+const {
+  href,
+  type = 'button',
+  variant = 'primary',
+  size = 'md',
+  icon,
+  iconPosition = 'end',
+  class: className = '',
+  full = false,
+  disabled = false,
+  ...rest
+} = Astro.props;
+
+const base =
+  'group/btn relative inline-flex items-center justify-center gap-2.5 rounded-full font-display font-semibold tracking-tight transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)] disabled:opacity-50 disabled:pointer-events-none';
+
+const sizes = {
+  sm: 'px-4 py-2 text-[0.8rem]',
+  md: 'px-6 py-3 text-[0.9rem]',
+  lg: 'px-8 py-4 text-base',
+};
+
+const variants = {
+  primary:
+    'bg-gradient-to-r from-brand-500 to-brand-400 text-white shadow-[0_10px_34px_-12px_rgba(27,142,245,.85)] hover:shadow-[0_16px_46px_-12px_rgba(27,142,245,.95)] hover:-translate-y-0.5',
+  gold:
+    'bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 shadow-[0_10px_34px_-12px_rgba(248,184,40,.85)] hover:shadow-[0_16px_46px_-12px_rgba(248,184,40,.95)] hover:-translate-y-0.5',
+  outline:
+    'border border-white/20 bg-white/[0.04] text-ink backdrop-blur-sm hover:border-brand-400/60 hover:bg-white/[0.08] hover:-translate-y-0.5',
+  ghost: 'text-ink-muted hover:text-ink hover:bg-white/[0.06]',
+};
+
+const cls = [base, sizes[size], variants[variant], full ? 'w-full' : '', className].filter(Boolean).join(' ');
+const Tag = href ? 'a' : 'button';
+---
+<Tag
+  class={cls}
+  href={href}
+  type={href ? undefined : type}
+  disabled={href ? undefined : disabled}
+  aria-disabled={href && disabled ? 'true' : undefined}
+  {...rest}
+>
+  {icon && iconPosition === 'start' && <Icon name={icon} size={18} class="shrink-0" />}
+  <span><slot /></span>
+  {
+    icon && iconPosition === 'end' && (
+      <Icon
+        name={icon}
+        size={18}
+        class="shrink-0 transition-transform duration-300 group-hover/btn:translate-x-0.5"
+      />
+    )
+  }
+</Tag>
