@@ -71,6 +71,23 @@ it. Netlify does not run it.
   and computed styles look broken when they are not. Take a screenshot to force a paint
   before trusting such a reading.
 
+## Interactive 3D models
+
+The three power-plant pages embed live models from Energy Encyclopedia via
+`src/components/ModelViewer.astro`, driven by the `models` array on a service.
+The active model's iframe is **rendered server-side** so it loads with the page
+and needs no interaction; additional tabs create theirs on selection. Do not
+reintroduce a launch/click-to-load step — the user asked specifically for the
+model to be running when the page is first seen.
+
+Two standing caveats, both recorded in README.md: permission to embed these
+third-party models is not yet confirmed with Simopt s.r.o., and the models are
+heavy, so every visitor to those pages downloads one.
+
+Note: once a model is running, this environment's screenshot capture stops
+producing frames for that tab. That is a capture limitation, not a site bug —
+verify those pages with `get_page_text` and DOM measurements instead.
+
 ## Not yet connected
 
 Forms and payments are complete but intentionally inert until credentials exist. Both

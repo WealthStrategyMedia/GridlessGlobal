@@ -1,0 +1,265 @@
+---
+/**
+ * Embeds an interactive 3D model on a service page.
+ *
+ * The model for the active tab is rendered straight into the HTML and starts
+ * loading with the page, so a visitor scrolling down finds it already running -
+ * nothing to press first. Rendering it server-side also means it still works
+ * with JavaScript unavailable.
+ *
+ * Where a service has more than one relevant model, the others are created only
+ * when their tab is selected, so a page never pulls down two large WebGL
+ * applications at once.
+ *
+ * These are sizeable downloads. If they ever need to be deferred again, give
+ * the non-active branch below to every panel and add a launch control.
+ */
+import Icon from './Icon.astro';
+import type { Model3D } from '~/data/services';
+
+interface Props {
+  models: Model3D[];
+  serviceTitle: string;
+  accentClass?: string;
+}
+
+const { models, serviceTitle, accentClass = 'text-brand-300' } = Astro.props;
+const multiple = models.length > 1;
+const groupId = `model-${Math.random().toString(36).slice(2, 8)}`;
+
+const stageClass =
+  'relative aspect-[4/3] min-h-[22rem] w-full bg-gradient-to-br from-navy-850 to-navy-950 sm:aspect-[16/9] sm:min-h-0 lg:aspect-[21/9]';
+---
+<section class="shell py-14 lg:py-20" aria-labelledby={`${groupId}-heading`}>
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-6">
+    <div class="max-w-2xl">
+      <p class="eyebrow">Explore in 3D</p>
+      <h2 id={`${groupId}-heading`} class="mt-3 font-display text-3xl font-bold sm:text-4xl">
+        See how it actually works
+      </h2>
+      <p class="mt-4 text-[1.02rem] leading-relaxed text-ink-muted">
+        A live, fully rotatable model of the plant. Drag to orbit, scroll to zoom, and select any
+        labelled component to read what it does.
+      </p>
+    </div>
+    <p class={`flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2.5 text-[0.78rem] ${accentClass}`}>
+      <Icon name="sparkles" size={15} />
+      Live interactive model
+    </p>
+  </div>
+
+  <div class="panel overflow-hidden rounded-4xl" data-model-group>
+    {
+      multiple && (
+        <div
+          role="tablist"
+          aria-label={`${serviceTitle} 3D models`}
+          class="flex flex-wrap gap-2 border-b border-white/[0.08] p-4"
+        >
+          {models.map((model, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`${groupId}-tab-${model.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`${groupId}-panel-${model.id}`}
+              tabindex={i === 0 ? 0 : -1}
+              data-model-tab={model.id}
+              class="rounded-full border border-white/12 px-5 py-2.5 font-display text-[0.85rem] font-semibold text-ink-muted transition-all hover:border-white/25 hover:text-ink aria-selected:border-gold-400/60 aria-selected:bg-gold-500/12 aria-selected:text-gold-300"
+            >
+              {model.label}
+            </button>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      models.map((model, i) => (
+        <div
+          id={`${groupId}-panel-${model.id}`}
+          role={multiple ? 'tabpanel' : undefined}
+          aria-labelledby={multiple ? `${groupId}-tab-${model.id}` : undefined}
+          data-model-panel={model.id}
+          class={i === 0 ? '' : 'hidden'}
+        >
+          <div
+            class={stageClass}
+            data-model-stage
+            data-model-url={model.url}
+            data-model-title={`${model.label} interactive 3D model`}
+            data-model-loaded={i === 0 ? 'true' : undefined}
+          >
+            {i === 0 && (
+              /* Rendered server-side so it begins loading with the page. */
+              <iframe
+                src={model.url}
+                title={`${model.label} interactive 3D model`}
+                class="absolute inset-0 h-full w-full border-0"
+                allow="fullscreen; xr-spatial-tracking; accelerometer; gyroscope"
+                referrerpolicy="strict-origin-when-cross-origin"
+                data-model-frame
+              />
+            )}
+
+            {/* Only ever shown by script, so it can never trap the model
+                behind an overlay when JavaScript is unavailable. */}
+            <div
+              class="pointer-events-none absolute inset-0 hidden flex-col items-center justify-center gap-4 bg-navy-950/85"
+              data-model-loading
+            >
+              <span class="h-10 w-10 animate-spin rounded-full border-2 border-white/15 border-t-gold-400" />
+              <p class="font-display text-[0.9rem] text-ink-muted">Loading the 3D model...</p>
+              <p class="px-6 text-center text-[0.76rem] text-ink-faint">
+                Large model - this can take a moment the first time.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] px-5 py-4">
+            <p class="min-w-0 text-[0.78rem] text-ink-faint">
+              <span class="text-ink-muted">{model.blurb}</span>
+              {' '}Model by
+              <a
+                href="https://www.energyencyclopedia.com/en/online-3d-models"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-brand-300 underline underline-offset-2"
+              >
+                Energy Encyclopedia
+              </a>
+            </p>
+            <div class="flex shrink-0 items-center gap-2">
+              <button
+                type="button"
+                data-model-fullscreen
+                hidden
+                class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-ink-muted transition-colors hover:border-brand-400/50 hover:text-ink"
+              >
+                <Icon name="search" size={15} />
+                Fullscreen
+              </button>
+              <a
+                href={model.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-[0.8rem] font-medium text-ink-muted transition-colors hover:border-brand-400/50 hover:text-ink"
+              >
+                Open in a new tab
+                <Icon name="arrow-up-right" size={15} />
+              </a>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-model-group]').forEach((group) => {
+    const tabs = [...group.querySelectorAll<HTMLButtonElement>('[data-model-tab]')];
+    const panels = [...group.querySelectorAll<HTMLElement>('[data-model-panel]')];
+
+    /** Shows the spinner until the embedded app has had a moment to paint. */
+    const attachLoadingState = (stage: HTMLElement, frame: HTMLIFrameElement) => {
+      const loading = stage.querySelector<HTMLElement>('[data-model-loading]');
+      const show = () => {
+        loading?.classList.remove('hidden');
+        loading?.classList.add('flex');
+      };
+      const hide = () => {
+        loading?.classList.add('hidden');
+        loading?.classList.remove('flex');
+      };
+
+      // The document load event only means the app shell arrived; the model
+      // keeps loading afterwards behind its own progress bar. Hold ours a beat
+      // longer so the panel is never blank, then hand over.
+      if (frame.contentDocument?.readyState === 'complete') {
+        window.setTimeout(hide, 2500);
+      } else {
+        show();
+        frame.addEventListener('load', () => window.setTimeout(hide, 2500), { once: true });
+        // Never leave the spinner up indefinitely if the load event is missed.
+        window.setTimeout(hide, 45000);
+      }
+
+      const fullscreenBtn = stage
+        .closest('[data-model-panel]')
+        ?.querySelector<HTMLButtonElement>('[data-model-fullscreen]');
+      if (fullscreenBtn) {
+        fullscreenBtn.hidden = false;
+        fullscreenBtn.addEventListener('click', () => {
+          if (document.fullscreenElement) document.exitFullscreen();
+          else stage.requestFullscreen?.().catch(() => {});
+        });
+      }
+    };
+
+    /** Creates the iframe for a panel that has not been loaded yet. */
+    const ensureLoaded = (stage: HTMLElement) => {
+      const existing = stage.querySelector<HTMLIFrameElement>('[data-model-frame]');
+      if (existing) {
+        attachLoadingState(stage, existing);
+        return;
+      }
+      const url = stage.dataset.modelUrl;
+      if (!url) return;
+      stage.dataset.modelLoaded = 'true';
+
+      const frame = document.createElement('iframe');
+      frame.src = url;
+      frame.title = stage.dataset.modelTitle ?? 'Interactive 3D model';
+      frame.className = 'absolute inset-0 h-full w-full border-0';
+      frame.allow = 'fullscreen; xr-spatial-tracking; accelerometer; gyroscope';
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.dataset.modelFrame = '';
+      stage.appendChild(frame);
+      attachLoadingState(stage, frame);
+    };
+
+    // The first panel's model is already in the HTML and loading; just wire up
+    // its spinner and fullscreen control.
+    const first = group.querySelector<HTMLElement>('[data-model-stage][data-model-loaded]');
+    if (first) ensureLoaded(first);
+
+    // --- Tabs ---------------------------------------------------------------
+    if (!tabs.length) return;
+
+    const select = (id: string, focus = false) => {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.modelTab === id;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        if (active && focus) tab.focus();
+      });
+      panels.forEach((panel) => {
+        const active = panel.dataset.modelPanel === id;
+        panel.classList.toggle('hidden', !active);
+        // Selecting a tab loads its model straight away - no extra click.
+        const stage = panel.querySelector<HTMLElement>('[data-model-stage]');
+        if (active && stage) ensureLoaded(stage);
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => select(tab.dataset.modelTab!));
+      tab.addEventListener('keydown', (event) => {
+        const keys = ['ArrowRight', 'ArrowLeft', 'Home', 'End'];
+        if (!keys.includes(event.key)) return;
+        event.preventDefault();
+        const i = tabs.indexOf(tab);
+        const next =
+          event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? tabs.length - 1
+              : event.key === 'ArrowRight'
+                ? (i + 1) % tabs.length
+                : (i - 1 + tabs.length) % tabs.length;
+        select(tabs[next].dataset.modelTab!, true);
+      });
+    });
+  });
+</script>

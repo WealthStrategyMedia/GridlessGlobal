@@ -24,6 +24,27 @@ export interface Stat {
   label: string;
 }
 
+/**
+ * An externally hosted interactive 3D model, embedded on a service page.
+ *
+ * These are served by Energy Encyclopedia (Simopt s.r.o.) and are loaded only
+ * when a visitor asks for one - they are heavy WebGL applications, and
+ * deferring them keeps third-party requests off the page until then.
+ *
+ * NOTE: the models are third-party copyrighted works. Confirm permission to
+ * embed them commercially before launch; see README.md.
+ */
+export interface Model3D {
+  /** Stable id, used for the tab controls. */
+  id: string;
+  /** Tab label when a service offers more than one model. */
+  label: string;
+  /** Full URL of the embeddable model. */
+  url: string;
+  /** One line describing what the model shows. */
+  blurb: string;
+}
+
 export interface Service {
   /** URL segment: /services/<slug> */
   slug: string;
@@ -47,6 +68,8 @@ export interface Service {
   process: Step[];
   faqs: Faq[];
   stats?: Stat[];
+  /** Interactive 3D models embedded on the detail page, if any. */
+  models?: Model3D[];
   /** Slugs of services shown in the "works well with" rail. */
   related: string[];
 }

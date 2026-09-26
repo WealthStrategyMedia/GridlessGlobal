@@ -78,6 +78,15 @@ export const pillars: Service[] = [
       { value: '99.2%', label: 'Typical contracted availability' },
       { value: '250 kW - 200 MW', label: 'Project sizes delivered' },
     ],
+    models: [
+      {
+        id: 'solar',
+        label: 'Solar power plant',
+        url: 'https://3d.energyencyclopedia.com/solar/',
+        blurb:
+          'Explore a photovoltaic farm, a solar thermal plant and a central tower heliostat plant, with every major component labelled.',
+      },
+    ],
     related: ['energy-storage', 'smart-microgrid', 'commercial', 'energy-grant-writing'],
   },
 
@@ -153,6 +162,21 @@ export const pillars: Service[] = [
       { value: '50-100 yr', label: 'Civil asset service life' },
       { value: '5-15%', label: 'Typical uprate recovery' },
     ],
+    models: [
+      {
+        id: 'hydropower',
+        label: 'Hydropower plant',
+        url: 'https://3d.energyencyclopedia.com/hydropower-plant/',
+        blurb:
+          'A pumped-storage plant with a Francis turbine and a conventional plant with a Kaplan turbine, cut away down to the runner.',
+      },
+      {
+        id: 'small-hydro',
+        label: 'Small hydro',
+        url: 'https://3d.energyencyclopedia.com/small-hydro/',
+        blurb: 'A small run-of-river installation, showing intake, penstock, powerhouse and tailrace.',
+      },
+    ],
     related: ['energy-storage', 'smart-microgrid', 'thermal-power-plant', 'energy-grant-writing'],
   },
 
@@ -227,6 +251,22 @@ export const pillars: Service[] = [
       { value: '85%', label: 'Achievable total CHP efficiency' },
       { value: '8,000+ hr', label: 'Annual run hours designed for' },
       { value: '<2%', label: 'Forced outage rate target' },
+    ],
+    models: [
+      {
+        id: 'geothermal',
+        label: 'Geothermal plant',
+        url: 'https://3d.energyencyclopedia.com/geothermal_hdr',
+        blurb:
+          'A Hot Dry Rock geothermal station, from the injection and production wells up through the surface power block.',
+      },
+      {
+        id: 'biomass',
+        label: 'Biomass & biogas',
+        url: 'https://3d.energyencyclopedia.com/biogas/',
+        blurb:
+          'A biomass energy plant, showing feedstock handling, anaerobic digestion and the gas engine generating set.',
+      },
     ],
     related: ['energy-storage', 'smart-microgrid', 'commercial', 'energy-management'],
   },

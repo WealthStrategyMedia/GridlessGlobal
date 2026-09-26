@@ -170,6 +170,57 @@ everywhere else.
 
 ---
 
+## Interactive 3D models
+
+The three power-plant service pages embed a live, interactive 3D model of the plant,
+running directly on our page — visitors never leave the site:
+
+| Page | Model(s) |
+| --- | --- |
+| `/services/solar-power-plant` | Solar power plant (PV farm, solar thermal, central tower) |
+| `/services/hydro-power-plant` | Hydropower plant · Small hydro |
+| `/services/thermal-power-plant` | Geothermal plant · Biomass & biogas |
+
+The models are hosted by **Energy Encyclopedia** (Simopt s.r.o.) and embedded in an
+iframe. The model for the active tab is rendered server-side into the HTML, so it starts
+loading with the page and is already running when the visitor scrolls to it — there is
+nothing to press. On a page with two models, the second is created only when its tab is
+selected, so no page pulls down two large WebGL applications at once.
+
+Add or change a model by editing the `models` array on the service in
+`src/data/services-*.ts` — no component changes needed:
+
+```ts
+models: [
+  {
+    id: 'solar',
+    label: 'Solar power plant',
+    url: 'https://3d.energyencyclopedia.com/solar/',
+    blurb: 'Explore a photovoltaic farm, a solar thermal plant and a central tower…',
+  },
+],
+```
+
+Other models Energy Encyclopedia publishes that may be worth adding later: **Energy
+Efficient House** (`/energy-efficient-house`) would suit `/services/eco-smart-living`, and
+there are wind, marine and a large set of nuclear models.
+
+> ### Two things to be aware of
+>
+> **Permission.** These models are third-party copyrighted works ("Copyright © Simopt,
+> s.r.o. All rights reserved"). They set no technical restriction on embedding, and we
+> credit and link back on every page, but that is not the same as a licence. **Confirm
+> permission with Simopt before launch** — they invite contact on their site. If they
+> decline, remove the `models` array from the affected services and the sections disappear
+> cleanly.
+>
+> **Weight.** Each model is a large WebGL application and takes a while to appear on a slow
+> connection. Because they now load automatically, every visitor to those three pages
+> downloads one. If that ever needs to change, `src/components/ModelViewer.astro` documents
+> how to put it back behind a launch control.
+
+---
+
 ## Brand assets
 
 The supplied logo is additive glow painted over a dark grey vignette, so it cannot be
