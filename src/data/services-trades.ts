@@ -140,7 +140,7 @@ export const tradeServices: Service[] = [
     ],
     stats: [
       { value: '1-3 days', label: 'Typical residential replacement' },
-      { value: '6 systems', label: 'Roofing types installed' },
+      { value: '6 systems', label: 'Roofing types managed' },
       { value: 'Solar-ready', label: 'Detailed for future arrays' },
     ],
     freeOffer: true,
@@ -186,7 +186,7 @@ export const tradeServices: Service[] = [
       { q: 'Which material lasts longest?', a: 'Fibre cement and metal typically give the longest service life with modest maintenance. Vinyl is the value option and engineered wood offers the most authentic appearance. We match the recommendation to your climate and budget.' },
     ],
     stats: [
-      { value: '5 systems', label: 'Cladding types installed' },
+      { value: '5 systems', label: 'Cladding types managed' },
       { value: 'Open wall', label: 'Best moment for insulation' },
       { value: 'Full detail', label: 'Barrier and flashing corrected' },
     ],

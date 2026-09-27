@@ -466,7 +466,7 @@ export const energyServices: Service[] = [
     ],
     stats: [
       { value: '3-5x', label: 'More chargers with load management' },
-      { value: 'L2 & DCFC', label: 'Charging levels installed' },
+      { value: 'L2 & DCFC', label: 'Charging levels supported' },
       { value: 'Phased', label: 'Designed for the next expansion' },
     ],
     freeOffer: true,

@@ -80,7 +80,7 @@ const RULES = [
   },
   {
     regime: 'WARRANTY',
-    re: /\bour warranty (on|covering) (the )?(work|installation|roof)\b|\bwe warrant the (work|installation)\b|one warranty covering/i,
+    re: /\bour warranty (on|covering) (the )?(work|installation|roof)\b|\bwe warrant the (work|installation)\b|one warranty covering|\bwarranty across every trade\b|\bone warranty\b(?! desk)/i,
     hint: 'Gridless Global warrants its own services and enforces the trade’s warranty. It does not warrant the physical work.',
     skipLegal: true,
   },

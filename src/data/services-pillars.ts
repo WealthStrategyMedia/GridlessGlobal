@@ -14,7 +14,7 @@ export const pillars: Service[] = [
     summary:
       'Utility-scale and distributed photovoltaic plants, developed and managed end to end - from land screening and interconnection through commissioning and long-term operations.',
     intro:
-      'Gridless Global develops and manages solar generation at every scale, from a 250 kW carport array behind a single meter to a 200 MW plant feeding a regional transmission node. We carry the project the whole way: site control, resource modelling, interconnection queue strategy, permitting, procurement, EPC selection and oversight, and the operations contract that keeps the asset performing for the next thirty years.',
+      'Gridless Global develops and manages solar generation at every scale, from a 5 kW rooftop array behind a single meter to multi-gigawatt portfolios feeding regional transmission nodes. We carry the project the whole way: site control, resource modelling, interconnection queue strategy, permitting, procurement, EPC selection and oversight, and the operations contract that keeps the asset performing for the next thirty years.',
     icon: 'sun',
     accent: 'gold',
     group: 'generation',
@@ -76,7 +76,7 @@ export const pillars: Service[] = [
     stats: [
       { value: '30 yr', label: 'Design life modelled on every plant' },
       { value: '99.2%', label: 'Typical contracted availability' },
-      { value: '250 kW - 200 MW', label: 'Project sizes delivered' },
+      { value: '5 kW - 10,000 MW', label: 'Project sizes managed' },
     ],
     models: [
       {
@@ -339,7 +339,7 @@ export const pillars: Service[] = [
       },
     ],
     stats: [
-      { value: '2-8 hr', label: 'Typical duration range delivered' },
+      { value: '2-8 hr', label: 'Typical duration range specified' },
       { value: '10 yr', label: 'Standard performance warranty' },
       { value: 'NFPA 855', label: 'Safety standard engineered to' },
     ],
