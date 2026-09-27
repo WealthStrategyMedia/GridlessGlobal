@@ -106,6 +106,7 @@ export const primaryNav: NavGroup[] = [
   { label: 'Residential', href: '/services/residential' },
   { label: 'Commercial', href: '/services/commercial' },
   { label: 'About', href: '/about' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Pay a Bill', href: '/pay' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -146,6 +147,7 @@ export const footerNav = [
     heading: 'Company',
     links: [
       { label: 'About Us', href: '/about' },
+      { label: 'Insights & News', href: '/blog' },
       { label: 'All Services', href: '/services' },
       { label: 'Request a Quote', href: '/quote' },
       { label: 'Make a Payment', href: '/pay' },

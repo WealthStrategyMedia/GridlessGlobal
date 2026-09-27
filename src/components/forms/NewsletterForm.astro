@@ -8,12 +8,16 @@ import {
 } from '~/data/newsletter';
 
 /**
- * Footer subscribe box, wired to the live Tweeble newsletter form.
+ * Subscribe box, wired to the live Tweeble newsletter form.
  *
  * Posts directly to Tweeble, same contract as the contact form. The field id
  * and endpoint come from the committed snapshot; the button label is ours,
  * because the upstream form is a generic contact form labelled "Send Message".
+ *
+ * Rendered more than once per page (footer plus the blog empty state), so the
+ * input id is generated per instance to keep label associations valid.
  */
+const inputId = `newsletter-email-${Math.random().toString(36).slice(2, 8)}`;
 ---
 <div data-newsletter-root>
   <p class="eyebrow">Stay current</p>
@@ -31,9 +35,9 @@ import {
   >
     <div class="flex flex-col gap-3 sm:flex-row">
       <div data-field class="flex-1">
-        <label for="newsletter-email" class="sr-only">{newsletterEmailField.label}</label>
+        <label for={inputId} class="sr-only">{newsletterEmailField.label}</label>
         <input
-          id="newsletter-email"
+          id={inputId}
           name={newsletterEmailField.id}
           type="email"
           required={newsletterEmailField.required}

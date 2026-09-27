@@ -124,6 +124,23 @@ changed here; our modal header carries the Gridless branding instead.
 
 The unused Stripe leftovers (`netlify/functions/*`, `/pay/complete`) are kept but dead.
 
+## Blog
+
+`/blog` pulls the Tweeble blog feed at build time **and** again in the browser, so posts
+published after a deploy appear without rebuilding. Never make the build fail on a feed
+outage — it degrades to the client fetch.
+
+The feed's exact field names are unverified (the account had no posts when this was
+written), so `src/lib/blog.ts` normalises each value from a list of plausible names. If the
+live payload uses a name not in those lists, a console warning on `/blog` reports the
+skipped count — add the real name rather than rewriting the approach. Keep the fallbacks:
+branded placeholder for a missing cover, excerpt derived from body text, malformed entries
+skipped, dates formatted in `timeZone: 'UTC'` (a date-only string otherwise renders as the
+previous day).
+
+`BlogCard.astro` and the `cardMarkup` template inside `blog.astro` render the same card —
+one for the build, one for the client refresh. Change both together.
+
 ## Loading indicator and the hero globe
 
 Any wait shows **our** globe mark, never a third party's: `.gg-spinner` for in-page waits

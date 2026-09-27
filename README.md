@@ -109,6 +109,43 @@ See [`.env.example`](.env.example) for the remaining variables.
 
 ---
 
+## Blog
+
+`/blog` renders the Tweeble blog feed:
+
+```
+GET https://www.tweeble.com/api/public/<account>/blog
+```
+
+Posts are fetched **twice**: once at build time, so they are in the HTML for search engines
+and paint instantly, and again in the browser, so anything published after the last deploy
+appears **without a rebuild**. A feed outage never fails the build — it falls back to the
+client fetch.
+
+### About the field names
+
+The account had no published posts when this was built, so the exact field names could not
+be observed. Rather than guess one spelling and ship blank cards on launch day,
+`src/lib/blog.ts` reads each value through a list of plausible names
+(`title|name|heading`, `coverImage|image|thumbnail|…`, `publishedAt|date|createdAt|…`,
+authors as either a string or `{ name }`, and so on) and normalises them into one shape.
+It also accepts a bare array or a `{ data|posts|items|results }` wrapper.
+
+**When the first real posts go live, open the browser console on `/blog`.** If any post was
+skipped for having no recognisable title, a warning names the count — that is the signal to
+add the real field name to the lists in `src/lib/blog.ts`.
+
+Cards handle the awkward cases already: a post with no cover falls back to a branded
+placeholder rather than a broken image, an excerpt is derived from the body text (HTML
+stripped) when no summary is supplied, and malformed entries are skipped rather than
+rendered blank. Dates are formatted in UTC so a date-only value never renders as the
+previous day.
+
+With no posts, the page shows a designed "first articles are on their way" state with the
+subscribe form, not an empty grid.
+
+---
+
 ## Deploying to Netlify
 
 [`netlify.toml`](netlify.toml) is already configured:
@@ -147,6 +184,7 @@ src/
     newsletter.ts            Subscribe form config
     *-form.json              Committed snapshots of the live Tweeble forms
   layouts/                   BaseLayout, LegalLayout
+  lib/blog.ts                Tweeble blog feed fetching and normalising
   lib/form-client.ts         Shared form validation and submission runtime
   pages/                     Routes; services/[slug].astro generates 25 pages
   styles/global.css          Design tokens and composed utilities

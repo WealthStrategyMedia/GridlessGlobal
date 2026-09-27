@@ -1,0 +1,277 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import BlogCard from '~/components/BlogCard.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import Button from '~/components/Button.astro';
+import NewsletterForm from '~/components/forms/NewsletterForm.astro';
+import { fetchPosts, BLOG_ENDPOINT, type BlogPost } from '~/lib/blog';
+import { site } from '~/data/site';
+
+/**
+ * Blog index.
+ *
+ * Posts are fetched at build time so they are in the HTML for search engines
+ * and paint instantly, then refreshed in the browser so anything published
+ * since the last deploy shows up without a rebuild.
+ *
+ * A build must never fail because a third-party feed is briefly unavailable,
+ * so a failed fetch degrades to the client-side path.
+ */
+let posts: BlogPost[] = [];
+let buildFetchFailed = false;
+
+try {
+  posts = await fetchPosts();
+} catch (error) {
+  buildFetchFailed = true;
+  console.warn(`[gridless] Blog feed unavailable at build time, falling back to client fetch: ${error}`);
+}
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: `${site.name} Insights`,
+  url: `${site.url}/blog`,
+  publisher: { '@type': 'Organization', name: site.name },
+  ...(posts.length
+    ? {
+        blogPost: posts.slice(0, 20).map((post) => ({
+          '@type': 'BlogPosting',
+          headline: post.title,
+          ...(post.excerpt ? { description: post.excerpt } : {}),
+          ...(post.date ? { datePublished: post.date } : {}),
+          ...(post.author ? { author: { '@type': 'Person', name: post.author } } : {}),
+          ...(post.url ? { url: post.url } : {}),
+          ...(post.image ? { image: post.image } : {}),
+        })),
+      }
+    : {}),
+};
+---
+<BaseLayout
+  title="Insights & News"
+  description="Energy intelligence from Gridless Global - incentive deadlines, tariff changes, project notes from the field and what they mean for your property."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Insights & news"
+    title="From the field"
+    lead="Incentive deadlines, tariff changes, lessons from live projects and the occasional strong opinion about how energy work should be done."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Blog' }]}
+    icon="file-text"
+  />
+
+  <section class="shell py-14 lg:py-20" aria-labelledby="posts-heading" data-blog-root data-endpoint={BLOG_ENDPOINT}>
+    <h2 id="posts-heading" class="sr-only">Articles</h2>
+
+    <!-- Rendered at build time; replaced in place if the browser finds newer posts. -->
+    <div
+      class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      data-blog-grid
+      hidden={posts.length === 0}
+    >
+      {posts.map((post, i) => <BlogCard post={post} index={i} />)}
+    </div>
+
+    <!-- Loading skeleton: only ever seen when the build had nothing to show. -->
+    <div
+      class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      data-blog-skeleton
+      hidden={posts.length > 0}
+      aria-hidden="true"
+    >
+      {
+        Array.from({ length: 4 }).map(() => (
+          <div class="overflow-hidden rounded-3xl border border-white/[0.07] bg-navy-900/40">
+            <div class="aspect-[16/10] w-full animate-pulse bg-white/[0.04]" />
+            <div class="space-y-3 p-6">
+              <div class="h-4 w-4/5 animate-pulse rounded-full bg-white/[0.06]" />
+              <div class="h-3 w-full animate-pulse rounded-full bg-white/[0.04]" />
+              <div class="h-3 w-3/5 animate-pulse rounded-full bg-white/[0.04]" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Nothing published yet. -->
+    <div class="hidden" data-blog-empty>
+      <div class="aurora relative overflow-hidden rounded-4xl border border-white/10 bg-navy-900/50 px-7 py-16 text-center sm:px-12 lg:py-24">
+        <div
+          class="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-brand-500/12 blur-3xl"
+          aria-hidden="true"
+        >
+        </div>
+        <div
+          class="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-signal-500/12 blur-3xl"
+          aria-hidden="true"
+        >
+        </div>
+
+        <div class="relative mx-auto max-w-xl">
+          <img
+            src="/images/logo-mark.png"
+            alt=""
+            aria-hidden="true"
+            width="280"
+            height="248"
+            class="animate-float mx-auto w-24 opacity-90 drop-shadow-[0_0_55px_rgba(63,208,106,.3)] sm:w-28"
+          />
+
+          <p class="eyebrow mt-8">Coming soon</p>
+          <h3 class="mt-3 font-display text-3xl font-bold sm:text-4xl">
+            The first articles are <span class="text-gradient">on their way</span>
+          </h3>
+          <p class="mt-5 text-[1.02rem] leading-relaxed text-ink-muted">
+            We are putting the first pieces together now - incentive deadlines worth knowing about,
+            what we find on real sites, and the numbers behind the decisions. Check back shortly, or
+            have them land in your inbox instead.
+          </p>
+
+          <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <Button href="/services" variant="gold" size="lg" icon="arrow-right">
+              Explore our services
+            </Button>
+            <Button href="/contact" variant="outline" size="lg" icon="mail" iconPosition="start">
+              Ask us a question
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel mt-6 rounded-4xl p-7 sm:p-10">
+        <NewsletterForm />
+      </div>
+    </div>
+
+    <!-- The feed could not be reached at all. -->
+    <div class="hidden" data-blog-error>
+      <div class="panel rounded-4xl px-7 py-14 text-center sm:px-12">
+        <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-gold-500/30 bg-gold-500/10 text-gold-400">
+          <Icon name="alert" size={30} />
+        </span>
+        <h3 class="mt-6 font-display text-2xl font-bold">We could not load the articles</h3>
+        <p class="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-ink-muted">
+          Something went wrong reaching our publishing service. It is usually brief - please try
+          again in a moment.
+        </p>
+        <button
+          type="button"
+          data-blog-retry
+          class="mt-7 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-6 py-3 font-display text-[0.88rem] font-semibold text-ink transition-colors hover:border-brand-400/60"
+        >
+          <Icon name="arrow-right" size={16} />
+          Try again
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    class="pb-8"
+    title="Would rather just ask someone?"
+    body="Articles are useful, but a ten-minute conversation about your actual property is usually faster. The consultation and the energy analysis are both free."
+    primaryLabel="Book a free consultation"
+    primaryHref="/quote?service=energy-analysis"
+  />
+</BaseLayout>
+
+<script>
+  import { fetchPosts, type BlogPost } from '~/lib/blog';
+
+  const root = document.querySelector<HTMLElement>('[data-blog-root]');
+  if (root) {
+    const grid = root.querySelector<HTMLElement>('[data-blog-grid]');
+    const skeleton = root.querySelector<HTMLElement>('[data-blog-skeleton]');
+    const empty = root.querySelector<HTMLElement>('[data-blog-empty]');
+    const errorBox = root.querySelector<HTMLElement>('[data-blog-error]');
+    const prerendered = (grid?.children.length ?? 0) > 0;
+
+    const showOnly = (visible: HTMLElement | null) => {
+      [grid, skeleton, empty, errorBox].forEach((el) => {
+        if (!el) return;
+        if (el === visible) {
+          el.hidden = false;
+          el.classList.remove('hidden');
+        } else {
+          el.hidden = true;
+          el.classList.add('hidden');
+        }
+      });
+    };
+
+    const escapeHtml = (value: string) =>
+      value.replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string
+      );
+
+    /** Mirrors BlogCard.astro. Kept in step by hand - both are small. */
+    const cardMarkup = (post: BlogPost, index: number) => {
+      const delay = Math.min(index, 8) * 70;
+      const cover = post.image
+        ? `<img src="${escapeHtml(post.image)}" alt="" loading="lazy" decoding="async"
+             class="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.06]">`
+        : `<div class="flex h-full w-full items-center justify-center">
+             <img src="/images/logo-mark.png" alt="" aria-hidden="true" width="280" height="248" loading="lazy"
+                  class="w-20 opacity-25 transition-opacity duration-500 group-hover:opacity-40">
+           </div>`;
+
+      const title = post.url
+        ? `<a href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer" class="after:absolute after:inset-0">${escapeHtml(post.title)}</a>`
+        : escapeHtml(post.title);
+
+      const meta = [
+        post.author ? `<span class="font-medium text-ink-muted">${escapeHtml(post.author)}</span>` : '',
+        post.author && post.dateLabel ? '<span aria-hidden="true">&middot;</span>' : '',
+        post.dateLabel
+          ? `<time${post.date ? ` datetime="${escapeHtml(post.date)}"` : ''}>${escapeHtml(post.dateLabel)}</time>`
+          : '',
+        post.url
+          ? `<span class="ml-auto flex items-center gap-1.5 font-display font-semibold text-brand-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Read</span>`
+          : '',
+      ].join('');
+
+      return `
+        <article class="group reveal is-visible relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/[0.09] bg-navy-900/55 transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-1.5 hover:border-brand-400/40 hover:bg-navy-850/70 hover:shadow-[0_28px_70px_-28px_rgba(1,11,22,1)]"
+                 style="--reveal-delay:${delay}ms">
+          <div class="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-navy-800 to-navy-950">
+            ${cover}
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-900/70 via-transparent to-transparent" aria-hidden="true"></div>
+          </div>
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="font-display text-[1.18rem] font-bold leading-snug text-ink transition-colors group-hover:text-brand-200">${title}</h3>
+            ${post.excerpt ? `<p class="mt-3 flex-1 text-[0.89rem] leading-relaxed text-ink-muted">${escapeHtml(post.excerpt)}</p>` : ''}
+            <div class="rule mt-6"></div>
+            <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.78rem] text-ink-faint">${meta}</div>
+          </div>
+        </article>`;
+    };
+
+    const render = (posts: BlogPost[]) => {
+      if (!posts.length) {
+        showOnly(empty);
+        return;
+      }
+      if (grid) {
+        grid.innerHTML = posts.map(cardMarkup).join('');
+        showOnly(grid);
+      }
+    };
+
+    const load = async () => {
+      if (!prerendered) showOnly(skeleton);
+      try {
+        render(await fetchPosts());
+      } catch (error) {
+        console.warn('[gridless] Could not refresh the blog feed:', error);
+        // Keep whatever the build produced rather than replacing it with an error.
+        if (!prerendered) showOnly(errorBox);
+      }
+    };
+
+    root.querySelector('[data-blog-retry]')?.addEventListener('click', load);
+    load();
+  }
+</script>
