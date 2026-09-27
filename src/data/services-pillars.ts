@@ -8,13 +8,13 @@ import type { Service } from './service-types';
 export const pillars: Service[] = [
   {
     slug: 'solar-power-plant',
-    title: 'Solar Power Plants',
+    title: 'Solar Power Plant Projects',
     short: 'Solar Power Plant',
     kicker: 'Generation & Grid',
     summary:
-      'Utility-scale and distributed photovoltaic plants, developed and managed end to end - from land screening and interconnection through commissioning and long-term operations.',
+      'Owner-side advisory and project administration for utility-scale and distributed solar - development coordination, procurement support, execution reporting and closeout.',
     intro:
-      'Gridless Global develops and manages solar generation at every scale, from a 5 kW rooftop array behind a single meter to multi-gigawatt portfolios feeding regional transmission nodes. We carry the project the whole way: site control, resource modelling, interconnection queue strategy, permitting, procurement, EPC selection and oversight, and the operations contract that keeps the asset performing for the next thirty years.',
+      'Complex energy projects need more than equipment. They need disciplined information, stakeholder coordination, commercial visibility and owner-side decision support. Gridless Global gives project owners a central advisory and project-administration layer across development coordination, procurement support, document control, execution reporting and closeout administration. Engineering, procurement and construction are carried out by the appropriately qualified and licensed EPC contractor, engineers and construction contractors responsible for their own scopes.',
     icon: 'sun',
     accent: 'gold',
     group: 'generation',
@@ -40,12 +40,12 @@ export const pillars: Service[] = [
         body: 'Civil, structural and electrical packages stamped by the licensed professional engineers engaged for the project, with PVsyst yield modelling, DC/AC ratio optimisation and medium-voltage collection design procured and managed as one package.',
       },
       {
-        title: 'EPC procurement & oversight',
-        body: 'We competitively bid the electrical, civil and racking scopes to vetted licensed specialists, use our procurement leverage on modules and inverters, and hold those contractors to a commissioning package that actually matches the as-builts.',
+        title: 'EPC procurement support',
+        body: 'We help the owner organize the tender process, compare the electrical, civil and racking proposals received on a like-for-like basis, and track commissioning documentation against the as-builts. The EPC and specialist contractors are engaged by the owner and remain responsible for engineering, procurement and construction within their own scopes.',
       },
       {
         title: 'Operations & maintenance',
-        body: 'SCADA monitoring and availability reporting against contracted guarantees, with preventive maintenance, module washing, vegetation control and inverter service contracted to specialist providers and managed by us.',
+        body: 'SCADA monitoring and availability reporting against contracted guarantees, with preventive maintenance, module washing, vegetation control and inverter service contracted to specialist providers and their reporting organized for the owner.',
       },
       {
         title: 'Repowering & asset recovery',
@@ -70,7 +70,7 @@ export const pillars: Service[] = [
       },
       {
         q: 'Do you work with existing developers?',
-        a: 'Yes. We are frequently brought in as the EPC or O&M partner on projects another team developed, and we are equally happy to take an early-stage site off your hands.',
+        a: 'Yes. We are frequently brought in as the owner’s project advisor on projects another team developed, and we are equally happy to start at the earliest stage. The EPC and O&M contracts sit between you and the appropriately licensed firms that hold them.',
       },
     ],
     stats: [
@@ -92,13 +92,13 @@ export const pillars: Service[] = [
 
   {
     slug: 'hydro-power-plant',
-    title: 'Hydro Power Plants',
+    title: 'Hydro Power Projects',
     short: 'Hydro Power Plant',
     kicker: 'Generation & Grid',
     summary:
-      'Run-of-river, small hydro and pumped storage - efficient, dispatchable generation from natural water flow, plus modernisation of ageing hydro assets.',
+      'Owner-side advisory and project administration for run-of-river, small hydro and pumped storage - development coordination, licensing documentation, procurement support and reporting.',
     intro:
-      'Water is the most dependable renewable resource there is, and it runs at night. Gridless Global develops new small and run-of-river hydro, manages the refurbishment of turbines and controls on plants that have been in service for decades, and brings the engineering together for pumped storage where the topography earns it. Hydro is unforgiving of sloppy hydrology and even less forgiving of sloppy permitting, so we front-load both.',
+      'Water is the most dependable renewable resource there is, and it runs at night. It is also unforgiving of sloppy hydrology and even less forgiving of sloppy licensing, so both get front-loaded. Gridless Global gives the owner a central advisory and administration layer across development coordination, agency and stakeholder communications, procurement support, document control and execution reporting. Hydrology studies, engineering, licensing submissions and construction are performed by the appropriately licensed professionals and contractors engaged for the project.',
     icon: 'droplet',
     accent: 'cyan',
     group: 'generation',
@@ -182,13 +182,13 @@ export const pillars: Service[] = [
 
   {
     slug: 'thermal-power-plant',
-    title: 'Thermal Power Plants',
+    title: 'Thermal Energy Projects',
     short: 'Thermal Power Plant',
     kicker: 'Generation & Grid',
     summary:
-      'Continuous, clean thermal generation - combined heat and power, biomass, waste heat recovery and geothermal, engineered for round-the-clock reliability.',
+      'Owner-side advisory and project administration for combined heat and power, biomass, waste heat recovery and geothermal projects.',
     intro:
-      'Thermal plants carry the load when the sun is down and the wind is still. Gridless Global develops and manages clean thermal generation: combined heat and power for campuses and industrial hosts, biomass and biogas plants that turn a waste stream into revenue, organic Rankine cycle systems that harvest heat already going up a stack, and geothermal where the resource supports it.',
+      'Thermal generation carries the load when the sun is down and the wind is still, and it lives or dies on whether the heat is genuinely used. Gridless Global gives the owner a central advisory and administration layer: load and objective documentation, procurement support, proposal evaluation support, permitting-document coordination, commissioning-document coordination and execution reporting. Engineering, emissions permitting submissions, construction and plant operation are performed by the appropriately licensed professionals, contractors and operators engaged for the project.',
     icon: 'flame',
     accent: 'gold',
     group: 'generation',
@@ -244,7 +244,7 @@ export const pillars: Service[] = [
       },
       {
         q: 'Can thermal pair with our solar?',
-        a: 'That is usually the strongest configuration. Solar covers daylight, thermal covers the base load and cold snaps, and storage smooths the transitions. We design the three together rather than bolting them on one at a time.',
+        a: 'That is usually the strongest configuration. Solar covers daylight, thermal covers the base load and cold snaps, and storage smooths the transitions. We help you evaluate the three together rather than letting them be bolted on one at a time by three separate providers.',
       },
     ],
     stats: [
@@ -273,13 +273,13 @@ export const pillars: Service[] = [
 
   {
     slug: 'energy-storage',
-    title: 'Strategic Energy Reserve',
+    title: 'Energy Storage Projects',
     short: 'Energy Storage',
     kicker: 'Generation & Grid',
     summary:
-      'High-capacity battery storage for grid stability, peak shaving and backup - from a wall-mounted home battery to a multi-hour front-of-meter reserve.',
+      'Owner-side advisory and project administration for battery energy storage - from a single cabinet to containerised and grid-scale systems.',
     intro:
-      'Storage is what turns intermittent generation into dependable power. Gridless Global specifies, procures and manages battery energy storage across the full range: a single cabinet keeping a home running through an outage, a containerised system shaving a factory peak demand charge, or a front-of-meter reserve providing frequency response and capacity to the grid. The economics live in the dispatch strategy, so we model that before we specify a single cell.',
+      'Storage decisions turn on duration, tariff, safety standards and how the asset will actually be dispatched, and those answers come from data rather than brochures. Gridless Global helps the owner document objectives and critical loads, organize and compare the proposals received, coordinate communications with suppliers and licensed professionals, and track budgets, documents, decisions and reported milestones through to closeout. Technical design, sizing determinations requiring professional judgement, code compliance and installation are the responsibility of the appropriately licensed engineers and contractors engaged for the project.',
     icon: 'battery',
     accent: 'green',
     group: 'generation',
@@ -331,7 +331,7 @@ export const pillars: Service[] = [
       },
       {
         q: 'How long do batteries last?',
-        a: 'Modern lithium iron phosphate systems are typically warranted for ten years or a set number of cycles, and usually retain around seventy percent of rated capacity at end of warranty. For long-duration assets we plan augmentation into the design so contracted capacity is maintained.',
+        a: 'Modern lithium iron phosphate systems are typically warranted for ten years or a set number of cycles, and usually retain around seventy percent of rated capacity at end of warranty. For long-duration assets, augmentation is usually planned into the design by the supplier so contracted capacity is maintained, and we make sure that is addressed in what you are quoted.',
       },
       {
         q: 'Can you add storage to solar we already have?',
@@ -348,13 +348,13 @@ export const pillars: Service[] = [
 
   {
     slug: 'smart-microgrid',
-    title: 'Smart Microgrids',
+    title: 'Microgrid Projects',
     short: 'Microgrid',
     kicker: 'Generation & Grid',
     summary:
-      'Integrated energy distribution for local resilience - generation, storage and intelligent controls that can island from the utility and keep critical loads alive.',
+      'Owner-side advisory and project administration for islandable, resilient power at campuses, industrial parks, municipal sites, hospitals and communities.',
     intro:
-      'A microgrid is the difference between an outage being an inconvenience and an outage being a catastrophe. Gridless Global develops and manages microgrids for campuses, industrial parks, military and municipal sites, hospitals and residential communities: local generation, storage, smart switching and a controller that decides second by second what to run, what to charge and when to disconnect from the utility entirely.',
+      'A microgrid is the difference between an outage being an inconvenience and an outage being a catastrophe. It is also a controls problem, a tariff problem and a procurement problem at the same time. Gridless Global gives the owner one coordinated project process: objectives documented, proposals organized and compared, utility and stakeholder communications coordinated, interfaces, risks and decisions tracked, and commissioning and closeout records collected. Engineering, protection and controls design, code determinations and installation are performed by the appropriately licensed professionals and contractors engaged for the project.',
     icon: 'network',
     accent: 'blue',
     group: 'generation',
@@ -424,7 +424,7 @@ export const pillars: Service[] = [
 
   {
     slug: 'eco-smart-living',
-    title: 'Eco-Smart Living',
+    title: 'Eco-Smart Living Projects',
     short: 'Eco-Smart Living',
     kicker: 'Property Solutions',
     summary:
@@ -575,13 +575,13 @@ export const pillars: Service[] = [
 
   {
     slug: 'residential',
-    title: 'Residential Services',
+    title: 'Residential Projects',
     short: 'Residential',
     kicker: 'Property Solutions',
     summary:
-      'Everything your home needs, coordinated through one point of contact - solar, storage, electrical, energy analysis, carbon credits, roofing, siding and the trades work in between, each delivered by licensed specialists.',
+      'Owner-side support for everything a home project involves - solar, storage, electrical, roofing, siding and the trades in between, organized into one clear process.',
     intro:
-      'Most homeowners end up juggling four contractors who each blame the other three. Gridless Global takes that off you. We work out what the house actually needs, competitively bid every scope to specialists we have already vetted, and manage the whole programme to completion: the solar array and the battery behind it, the panel upgrade that makes both possible, the roof underneath, the siding around it. One plan, one schedule, one point of contact.',
+      'Most homeowners end up juggling four contractors who each blame the other three, with the whole project living in text messages and a folder of PDFs. Gridless Global takes that off you. We help you work out what the house actually needs, organize and compare the proposals you receive, keep communications with every provider flowing through one process, and track budgets, documents, decisions and reported milestones through to closeout. The regulated work - electrical, roofing, solar, construction - is contracted with and performed by appropriately licensed independent contractors responsible for their own work.',
     icon: 'home',
     accent: 'green',
     group: 'property',
@@ -591,13 +591,13 @@ export const pillars: Service[] = [
       'Solar, battery and EV charging under one managed plan',
       'Licensed, insured and vetted specialists on every job',
       'Roofing, siding and construction coordinated with the energy work',
-      'The Gridless Global Guarantee - we hold and enforce every warranty',
+      'Warranty paperwork from every trade collected in one place',
       'Energy analysis before you spend anything',
     ],
     offerings: [
       {
         title: 'Solar installation & upgrades',
-        body: 'New rooftop and ground-mount arrays, plus additions, inverter replacement and repair on systems another company installed - scoped by us, delivered by licensed specialists we coordinate.',
+        body: 'New rooftop and ground-mount arrays, plus additions, inverter replacement and repair on systems another company installed - scoped with you, delivered by licensed specialists you engage.',
       },
       {
         title: 'Home battery & backup',
@@ -624,7 +624,7 @@ export const pillars: Service[] = [
       { title: 'Assess', body: 'A measured energy analysis of the house, not a sales walkthrough.' },
       { title: 'Prioritise', body: 'Improvements ranked by payback so the budget goes to the right place first.' },
       { title: 'Design', body: 'One integrated scope across every trade involved.' },
-      { title: 'Deliver', body: 'We help you engage the right trades and sequence them so roofing, electrical and solar never collide.' },
+      { title: 'Coordinate', body: 'We keep the providers you engage talking to each other, so roofing, electrical and solar are not each hearing about the others for the first time on site.' },
       { title: 'Support', body: 'Monitoring, maintenance and a single number to call - ours.' },
     ],
     faqs: [
@@ -634,7 +634,7 @@ export const pillars: Service[] = [
       },
       {
         q: 'My roof needs replacing and I have solar. Now what?',
-        a: 'That is exactly the case we are built for. The detach, the roof and the re-install run as one project on one schedule, with every warranty held and enforced by us in one place - instead of you coordinating two contractors who each disclaim responsibility for the other.',
+        a: 'That is exactly the case we are built for. The detach, the roof and the re-install run as one project on one schedule, with the warranty paperwork from each trade collected in one place - instead of you coordinating two contractors who each disclaim responsibility for the other.',
       },
       {
         q: 'Do you handle incentives and paperwork?',
@@ -652,13 +652,13 @@ export const pillars: Service[] = [
 
   {
     slug: 'commercial',
-    title: 'Commercial Services',
+    title: 'Commercial Projects',
     short: 'Commercial',
     kicker: 'Property Solutions',
     summary:
-      'Solar, energy analysis, efficiency and carbon credits for facilities and portfolios - plus the electrical, roofing and construction capability to execute it.',
+      'Owner-side advisory and project administration for facilities and portfolios - energy analysis, solar, efficiency, carbon and the capital projects that follow.',
     intro:
-      'Energy is one of the few operating costs a business can genuinely re-engineer. Gridless Global works with facility managers, portfolio owners, REITs, manufacturers, municipalities and institutions to cut consumption, shave demand charges, generate on site, monetise carbon and keep the building envelope sound - then manages the delivery of every measure, so the plan does not die on a spreadsheet waiting for someone to own it.',
+      'Energy is one of the few operating costs a business can genuinely re-engineer, but the plan usually dies on a spreadsheet waiting for someone to own it. Gridless Global works with facility managers, portfolio owners, REITs, manufacturers, municipalities and institutions to establish where the money is, organize the proposals and the providers, and then keep the programme visible: budgets, invoices, documents, decisions, open issues and contractor-reported milestones in one place. Licensed contractors, engineers and design professionals perform the regulated work under their own agreements.',
     icon: 'building',
     accent: 'blue',
     group: 'property',
@@ -669,7 +669,7 @@ export const pillars: Service[] = [
       'Rooftop, carport and ground-mount commercial solar',
       'Demand-charge and tariff optimisation',
       'Carbon credit generation and ESG reporting',
-      'The Gridless Global Guarantee on every managed scope',
+      'Credentials verified on every trade partner before work begins',
     ],
     offerings: [
       {
@@ -690,7 +690,7 @@ export const pillars: Service[] = [
       },
       {
         title: 'Electrical & infrastructure',
-        body: 'Service upgrades, switchgear, lighting retrofits, EV charging and power quality work, scoped by us, competitively priced by licensed commercial electricians, and coordinated through to sign-off.',
+        body: 'Service upgrades, switchgear, lighting retrofits, EV charging and power quality work, scoped with you, competitively priced by licensed commercial electricians, and tracked through to sign-off.',
       },
       {
         title: 'Roofing & building envelope',
@@ -701,7 +701,7 @@ export const pillars: Service[] = [
       { title: 'Benchmark', body: 'Every site scored against its peers to find where the money is.' },
       { title: 'Model', body: 'Measures ranked by NPV, payback and carbon impact.' },
       { title: 'Fund', body: 'Incentives and grants prepared, and financing options modelled around the plan.' },
-      { title: 'Execute', body: 'We put the work to licensed trades and drive the schedule, so the plan does not drift.' },
+      { title: 'Coordinate', body: 'You contract the licensed trades. We keep the information, documents and reported progress moving so the plan does not quietly drift.' },
       { title: 'Report', body: 'Measurement and verification proves the savings were real.' },
     ],
     faqs: [

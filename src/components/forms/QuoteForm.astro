@@ -15,7 +15,7 @@ const interestGroups = [
   { heading: 'Solar & storage', slugs: ['solar-installation', 'solar-upgrades', 'solar-removal-reinstall', 'energy-storage', 'backup-power'] },
   { heading: 'Analysis & savings', slugs: ['energy-analysis', 'energy-bill-savings', 'energy-management', 'demand-side-management'] },
   { heading: 'Advisory', slugs: ['carbon-credits', 'energy-grant-writing', 'education-hub'] },
-  { heading: 'Trades & construction', slugs: ['electrical', 'ev-charging', 'roofing', 'siding', 'construction', 'handyman'] },
+  { heading: 'Construction & trades projects', slugs: ['electrical', 'ev-charging', 'roofing', 'siding', 'construction', 'handyman'] },
 ];
 const titleFor = (slug: string) => services.find((s) => s.slug === slug)?.title ?? slug;
 ---
@@ -47,7 +47,7 @@ const titleFor = (slug: string) => services.find((s) => s.slug === slug)?.title 
     <!-- Step 1 -->
     <fieldset data-quote-step="1">
       <legend class="sr-only">What you need</legend>
-      <h2 class="font-display text-2xl font-bold">What can we quote for you?</h2>
+      <h2 class="font-display text-2xl font-bold">What is the project?</h2>
       <p class="mt-2 text-[0.92rem] text-ink-muted">
         Pick everything that applies. Bundling work into one project is almost always cheaper than
         scheduling it separately.
@@ -167,7 +167,7 @@ const titleFor = (slug: string) => services.find((s) => s.slug === slug)?.title 
     <!-- Step 3 -->
     <fieldset data-quote-step="3" class="hidden">
       <legend class="sr-only">Your details</legend>
-      <h2 class="font-display text-2xl font-bold">Where should we send it?</h2>
+      <h2 class="font-display text-2xl font-bold">Where should we send your project plan?</h2>
       <p class="mt-2 text-[0.92rem] text-ink-muted">
         You will hear from a real member of the team within one business day - no call centre.
       </p>

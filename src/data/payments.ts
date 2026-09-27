@@ -102,9 +102,9 @@ export const isRequired = (fieldId: string) => requiredFieldIds.has(fieldId);
  */
 export const PAYMENT_REASONS = [
   'Invoice payment',
-  'Project deposit',
-  'Progress payment',
-  'Service call',
+  'Advisory retainer',
+  'Project administration fee',
+  'Consultation fee',
   'Energy analysis fee',
   'Other',
 ] as const;

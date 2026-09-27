@@ -1,0 +1,48 @@
+---
+/**
+ * Role disclosure for pages covering scopes that involve regulated work.
+ *
+ * Deliberately placed low on the page. The positioning leads; this supports
+ * it. Do not move it into a hero - see CLAUDE.md. Which pages render it is
+ * decided by `involvesRegulatedWork()` in `src/data/services.ts`.
+ */
+import Button from '~/components/Button.astro';
+
+interface Props {
+  /** Adds the public-adjuster disclosure on pages that discuss insurance or storm damage. */
+  insurance?: boolean;
+}
+
+const { insurance = false } = Astro.props;
+---
+
+<section class="shell pb-14 lg:pb-20">
+  <div class="panel rounded-4xl p-7 sm:p-9">
+    <p class="eyebrow">How licensed work is handled</p>
+    <p class="mt-4 max-w-4xl text-[0.95rem] leading-relaxed text-ink-muted">
+      Gridless Global provides owner-side advisory, project-administration and coordination
+      services. Gridless does not perform regulated trade or professional work. Construction,
+      installation, engineering and other services requiring licensure are separately performed
+      by appropriately licensed independent professionals responsible for their own work. The
+      scope Gridless can offer varies by jurisdiction.
+    </p>
+    {
+      insurance && (
+        <p class="mt-4 max-w-4xl text-[0.95rem] leading-relaxed text-ink-muted">
+          <strong class="font-semibold text-ink">Property documentation, not claim representation.</strong>
+          Gridless Global is not a public adjuster and does not prepare, file, adjust, negotiate or
+          settle insurance claims for compensation. We may organize property records, photographs,
+          contractor documents and repair information for your own records. If you need claim
+          representation, work directly with your insurer or an appropriately licensed public
+          adjuster or attorney.
+        </p>
+      )
+    }
+
+    <div class="mt-6">
+      <Button href="/how-gridless-works" variant="outline" size="sm" icon="arrow-right">
+        Learn about our project model
+      </Button>
+    </div>
+  </div>
+</section>

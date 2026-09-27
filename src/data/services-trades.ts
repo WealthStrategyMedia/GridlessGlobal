@@ -8,12 +8,12 @@ import type { Service } from './service-types';
 export const tradeServices: Service[] = [
   {
     slug: 'electrical',
-    title: 'Electrical Services & Wiring',
+    title: 'Electrical Projects',
     kicker: 'Trades & Construction',
     summary:
-      'Service upgrades, rewiring, panels, lighting, EV circuits, troubleshooting and code correction - scoped by us and delivered by licensed electricians, residential and commercial.',
+      'Owner-side advisory for electrical projects - service capacity, equipment and utility coordination, organized around one clear process.',
     intro:
-      'Electrical is the backbone of everything else we coordinate. Solar, storage, microgrids and EV charging all terminate in a panel that somebody has to get right, so we scope it carefully, help you select from licensed electricians we have already vetted, and review the result against that scope. The same programme covers conventional electrical work: service upgrades, rewiring, lighting, troubleshooting and bringing older installations back into code compliance.',
+      'Electrical projects can involve service capacity, equipment, utility coordination, engineering, permitting, installation, inspection and commissioning. Gridless Global helps the owner organize the project information and the professional relationships around it: intended use, desired capacity, equipment preferences, site information, budget objectives, constraints, proposals received, utility communications, permit and inspection status, and contractor-reported milestones. Load calculations, technical design, code determinations, specifications requiring professional judgement, permitting responsibility, installation and testing are performed or approved by the appropriately licensed electrical contractor or design professional.',
     icon: 'bolt',
     accent: 'gold',
     group: 'trades',
@@ -33,10 +33,10 @@ export const tradeServices: Service[] = [
       { title: 'Code compliance & documentation', body: 'Correction scopes, condition reporting and the documentation insurers and authorities ask for.' },
     ],
     process: [
-      { title: 'Inspect', body: 'Existing service, panel and wiring condition assessed and documented.' },
+      { title: 'Review', body: 'The licensed electrician assesses existing service, panel and wiring condition; we make sure it is documented.' },
       { title: 'Calculate', body: 'A load calculation by the licensed electrician confirms what the service can genuinely carry.' },
       { title: 'Permit', body: 'The licensed electrician on your job files the permit; we track it and keep inspections moving.' },
-      { title: 'Install', body: 'Carried out by the licensed electrician you engage, with us coordinating access, sequence and sign-off.' },
+      { title: 'Install', body: 'Carried out by the licensed electrician you engage. We keep the documentation, access arrangements and sign-off records organized around it.' },
       { title: 'Certify', body: 'Testing, labelling and inspection sign-off before handover.' },
     ],
     faqs: [
@@ -55,12 +55,12 @@ export const tradeServices: Service[] = [
 
   {
     slug: 'backup-power',
-    title: 'Backup Power & Generators',
+    title: 'Backup Power Projects',
     kicker: 'Trades & Construction',
     summary:
-      'Standby generators, transfer switches and battery backup - engineered so the transition from grid to backup is automatic, tested and genuinely reliable.',
+      'Owner-side advisory for standby generators, batteries and transfer equipment - critical loads documented, proposals organized, the project tracked to closeout.',
     intro:
-      'Backup power that has never been tested is a hope, not a plan. We size standby systems against the loads you actually need to keep alive, specify the transfer switching properly, help you engage the right licensed installer and put the system on a maintenance and exercise schedule so it starts on the day it matters. Where batteries make more sense than fuel - and increasingly they do - we will say so.',
+      'Backup power that has never been tested is a hope, not a plan. These projects involve electrical loads, generators, batteries, transfer equipment, fuel systems, engineering, permits and utility requirements. Gridless Global helps the owner document critical-load priorities and operational goals for evaluation by the appropriately licensed contractor or engineer, organize and compare the proposals received, and keep documentation, budget and reported progress visible through commissioning and closeout. Sizing determinations, technical design, code compliance and installation are the responsibility of the licensed specialists engaged for the project.',
     icon: 'shield',
     accent: 'blue',
     group: 'trades',
@@ -102,12 +102,12 @@ export const tradeServices: Service[] = [
 
   {
     slug: 'roofing',
-    title: 'Roofing',
+    title: 'Roofing Projects',
     kicker: 'Trades & Construction',
     summary:
-      'Residential and commercial roofing - replacement, repair, storm damage and solar-ready installation, planned by the same team that runs your solar programme.',
+      'Owner-side advisory for roofing projects - scope clarity, proposal organization, project visibility and warranty records, while licensed roofers do the roofing.',
     intro:
-      'The roof is the single most important component in any solar project, and the one most often skipped over. We manage roof replacement and repair across every common system, and because we also run the solar programme we specify the roof to receive an array - flashing, attachment layout and future penetration planning - rather than leaving that problem for a second contractor to solve badly.',
+      'A roofing project is more than choosing shingles. Gridless Global helps owners organize the decisions, documentation, contractor information, project costs, milestones and closeout surrounding the roof - and because we also help organize the solar side, the two scopes stay connected instead of each disclaiming the other. Roof inspections, technical roofing determinations, construction, repair, replacement, permitting and other regulated roofing services are performed by appropriately licensed contractors where licensing is required.',
     icon: 'roof',
     accent: 'cyan',
     group: 'trades',
@@ -127,11 +127,11 @@ export const tradeServices: Service[] = [
       { title: 'Ventilation & insulation', body: 'Attic ventilation and insulation corrected during replacement, where much of the energy benefit actually is.' },
     ],
     process: [
-      { title: 'Inspect', body: 'Condition, decking, flashing and ventilation assessed and photographed.' },
+      { title: 'Review', body: 'The licensed roofer assesses condition, decking, flashing and ventilation; we make sure it is documented and photographed.' },
       { title: 'Specify', body: 'System selected for the building, climate and any planned solar.' },
       { title: 'Protect', body: 'Property and landscaping protected, disposal arranged.' },
       { title: 'Install', body: 'Tear-off, decking repair, underlayment, flashing and finish system.' },
-      { title: 'Warrant', body: 'Manufacturer and workmanship warranties registered on your behalf.' },
+      { title: 'Document', body: 'Manufacturer and trade workmanship warranties registered in your name.' },
     ],
     faqs: [
       { q: 'Should I replace the roof before adding solar?', a: 'If the roof has less than about ten years of life left, yes. A twenty-five year array on a ten year roof means paying twice to remove and re-install the panels. Doing both together as one coordinated project, on one schedule, is materially cheaper.' },
@@ -149,12 +149,12 @@ export const tradeServices: Service[] = [
 
   {
     slug: 'siding',
-    title: 'Siding & Exteriors',
+    title: 'Siding & Exterior Projects',
     kicker: 'Trades & Construction',
     summary:
-      'Siding, cladding, soffit, fascia and gutters - replaced with the weather barrier and insulation behind them done properly, not just the visible surface.',
+      'Owner-side advisory for siding and exterior projects - requirements, material choices, contractor information, costs and milestones organized in one process.',
     intro:
-      'Siding replacement is one of the few moments when the wall assembly is genuinely open, and it is the cheapest opportunity you will ever get to fix the weather barrier, add continuous insulation and correct the details that cause rot. We treat it as a building-envelope project that happens to change the appearance, which is why our siding programmes usually show up in the energy analysis as well.',
+      'Gridless Global helps owners organize siding replacement and exterior improvement projects: requirements, material choices, contractor information, project documentation, costs and milestones. Licensed contractors perform and remain responsible for the construction work where licensing is required.',
     icon: 'layers',
     accent: 'green',
     group: 'trades',
@@ -196,12 +196,12 @@ export const tradeServices: Service[] = [
 
   {
     slug: 'construction',
-    title: 'Construction & Build-Outs',
+    title: 'Construction Projects',
     kicker: 'Trades & Construction',
     summary:
-      'Additions, remodels, tenant improvements and ground-up work - built efficient from the start, with the energy systems designed in rather than added later.',
+      'Owner-side support for construction projects - requirements, proposals, documentation, budgets, decisions and closeout organized around one clear process.',
     intro:
-      'Gridless Global manages construction programmes. Residential additions and remodels, garages and accessory dwellings, commercial tenant improvements and ground-up light construction. What distinguishes our work is that the energy design is native to it: envelope performance, electrical capacity, solar readiness and EV conduit are specified at framing, when they cost almost nothing, rather than retrofitted later at many times the price. We write the scope, competitively bid it and manage the builders through to sign-off.',
+      'Construction projects can involve architects, engineers, licensed contractors, specialty trades, vendors, permits, inspections, budgets, schedules and hundreds of decisions. Gridless Global helps the owner organize the project around one clear information and decision-making process. Gridless Global is not the general contractor and does not perform, direct, supervise or control licensed construction work. Construction contracts are entered into directly between the customer and the appropriately licensed contractor, who remains responsible for its own work, employees, subcontractors, jobsite safety, construction means and methods, permits within its responsibility, code compliance and workmanship.',
     icon: 'hammer',
     accent: 'gold',
     group: 'trades',
@@ -243,12 +243,12 @@ export const tradeServices: Service[] = [
 
   {
     slug: 'handyman',
-    title: 'Handyman Services',
+    title: 'Handyman Projects',
     kicker: 'Trades & Construction',
     summary:
-      'The smaller jobs, handled properly - repairs, installations, maintenance and punch lists by insured tradespeople, for homes and commercial properties alike.',
+      'The smaller jobs, organized properly - scope, provider coordination, scheduling and records for repairs, installations and maintenance.',
     intro:
-      'Not everything needs a full programme and a permit. Our handyman programme covers the long tail of work that property owners struggle to get anyone to show up for: repairs, fixture installation, door and window adjustment, drywall, carpentry, seasonal maintenance and the punch list that never quite gets finished. Same vetted tradespeople, same standards, considerably smaller invoice.',
+      'Not everything needs a full programme and a permit. Gridless Global helps owners organize the long tail of smaller work that is hard to get anyone to show up for: describing the scope clearly, coordinating with insured tradespeople, keeping the schedule and the records straight, and closing out the punch list that never quite gets finished. The work itself is performed by the independent tradespeople engaged for it.',
     icon: 'wrench',
     accent: 'blue',
     group: 'trades',
@@ -272,7 +272,7 @@ export const tradeServices: Service[] = [
       { title: 'Quote', body: 'Hourly or fixed-price estimate, agreed before work starts.' },
       { title: 'Schedule', body: 'A real appointment window that we keep.' },
       { title: 'Complete', body: 'Work done, area cleaned, materials disposed of.' },
-      { title: 'Follow up', body: 'Workmanship warranty from the trade that did the work, held and enforced by us, and an easy route to call us back.' },
+      { title: 'Follow up', body: 'Workmanship warranty from the trade that did the work, documented for you, and an easy route to call us back.' },
     ],
     faqs: [
       { q: 'Is there a minimum charge?', a: 'We have a minimum service call to cover travel and setup, which is why bundling several small items into one visit is far better value than calling us out repeatedly.' },

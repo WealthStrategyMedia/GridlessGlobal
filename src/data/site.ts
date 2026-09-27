@@ -8,7 +8,7 @@ export const site = {
   legalName: 'Gridless Global LLC',
   tagline: 'Powering a Connected Future',
   description:
-    'Gridless Global is a project management and energy consulting firm. We plan, price and manage energy and construction projects end to end - utility-scale generation, microgrids and storage, plus solar, electrical, roofing and construction for homes and businesses - delivering superior results at a materially lower total cost.',
+    'Gridless Global provides owner-side project advisory, coordination and administration. We give property, business and infrastructure owners a single command center for complex energy, roofing, electrical and construction projects - organizing requirements, providers, budgets, documents, milestones and decisions. Regulated work is performed by independent licensed professionals.',
   url: 'https://gridlessglobal.com',
 
   /** Primary number. Both published numbers are listed in `phones`. */
@@ -153,6 +153,7 @@ export const footerNav = [
     heading: 'Company',
     links: [
       { label: 'About Us', href: '/about' },
+      { label: 'How We Work', href: '/how-gridless-works' },
       { label: 'Events', href: '/events' },
       { label: 'Insights & News', href: '/blog' },
       { label: 'All Services', href: '/services' },

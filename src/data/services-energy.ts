@@ -8,21 +8,21 @@ import type { Service } from './service-types';
 export const energyServices: Service[] = [
   {
     slug: 'solar-installation',
-    title: 'Solar Installation',
+    title: 'Solar & Energy Projects',
     kicker: 'Energy Services',
     summary:
-      'Rooftop, ground-mount and carport photovoltaic systems designed around your actual consumption, competitively priced and delivered under our management.',
+      'Owner-side advisory for rooftop, ground-mount and carport solar - energy goals documented, proposals organized, the project visible through completion.',
     intro:
-      'A solar array is only as good as the analysis behind it. We start from twelve months of real consumption data, commission a structural review by a licensed engineer where the mounting calls for one, and specify a system sized to your load and your tariff rather than to whatever fits on the roof. That scope goes to licensed installers we have already vetted, and we coordinate the build, track the permit your installer files, and prepare the interconnection and incentive paperwork through to sign-off.',
+      'A solar array is only as good as the analysis behind it and the process around it. Gridless Global helps you document consumption, goals and constraints, organize and compare the proposals you receive, coordinate communications with installers and the utility, and track permits, budgets, documents and reported milestones through to commissioning and closeout. Technical design, engineering, structural determinations, code compliance and installation are performed by the appropriately licensed solar and electrical contractors and design professionals engaged for the project.',
     icon: 'panel',
     accent: 'gold',
     group: 'energy',
     segments: ['residential', 'commercial'],
     highlights: [
-      'Design driven by twelve months of real usage data',
-      'Structural and roof-condition assessment included',
+      'Proposals compared against twelve months of real usage data',
+      'Structural and roof-condition review by a licensed professional arranged',
       'Permits tracked, interconnection and incentives prepared',
-      'Installed by licensed electricians we vet and manage',
+      'Installed by licensed electricians whose credentials we help you verify',
     ],
     offerings: [
       { title: 'Rooftop systems', body: 'Pitched and flat roofs, with flashing and attachment detailed to preserve the existing roof warranty.' },
@@ -55,10 +55,10 @@ export const energyServices: Service[] = [
 
   {
     slug: 'solar-upgrades',
-    title: 'Solar Upgrades & Repowering',
+    title: 'Solar Upgrade & Repowering Projects',
     kicker: 'Energy Services',
     summary:
-      'Expand, modernise or repair an existing array - added capacity, new inverters, panel-level monitoring and recovery of production you have quietly been losing.',
+      'Owner-side advisory for additions, inverter replacement, repowering and orphaned systems - options compared, providers coordinated, records rebuilt.',
     intro:
       'Arrays age, households grow, and the original installer is often long gone. We take on systems somebody else built: adding capacity for an EV or a heat pump, replacing inverters that have reached end of life, retrofitting monitoring so faults surface early, and diagnosing the gradual underperformance that owners usually do not notice until we measure it.',
     icon: 'upgrade',
@@ -77,7 +77,7 @@ export const energyServices: Service[] = [
       { title: 'Monitoring retrofit', body: 'Module-level electronics that turn a silent array into one that reports faults the week they occur.' },
       { title: 'Battery retrofit', body: 'AC-coupled storage added to an existing array without replacing what already works.' },
       { title: 'Performance diagnostics', body: 'IV curve tracing, thermal imaging and string testing to find the exact cause of lost output.' },
-      { title: 'Orphaned system adoption', body: 'We take over service and warranty administration for systems whose original installer has gone.' },
+      { title: 'Orphaned system adoption', body: 'We take over management of systems whose original installer has gone, including tracing what warranty cover still survives and who now holds it.' },
     ],
     process: [
       { title: 'Measure', body: 'Actual output is compared against modelled expectation.' },
@@ -102,12 +102,12 @@ export const energyServices: Service[] = [
 
   {
     slug: 'solar-removal-reinstall',
-    title: 'Solar Removal & Re-Install',
+    title: 'Solar Removal & Re-Install Projects',
     kicker: 'Energy Services',
     summary:
-      'Panel removal and re-installation for roof replacement, repairs, storm damage or relocation - one schedule, one warranty desk, no finger-pointing.',
+      'Owner-side coordination when the roof under an array needs work - one schedule, one point of contact, one organized set of records.',
     intro:
-      'When the roof under an array needs work, most homeowners discover their roofer will not touch the panels and their solar company will not touch the roof. Gridless Global brings both together. We scope the detach, the roofing and the re-install as one job and run them to one schedule, then hold the warranties on the roof penetrations and the array alike and enforce them from one desk - rather than leaving you between two firms pointing at each other.',
+      'When the roof under an array needs work, most homeowners discover their roofer will not touch the panels and their solar company will not touch the roof. Gridless Global brings both into one organized process: sequence and objectives documented, proposals organized, communications between the roofing and solar providers coordinated, and the warranty and closeout records from each collected in one place. The detach, the roofing and the re-install are performed by the appropriately licensed contractors engaged for each scope.',
     icon: 'layers',
     accent: 'gold',
     group: 'energy',
@@ -116,11 +116,11 @@ export const energyServices: Service[] = [
       'Detach and re-install for roof replacement',
       'Labelled, secure on-site storage of modules and electronics',
       'Storm and insurance work supported',
-      'Roof and array warranties held and enforced together',
+      'Roof and array warranty paperwork documented together',
     ],
     offerings: [
       { title: 'Detach & re-install', body: 'Full removal, labelled storage and re-installation with new flashing and attachment hardware.' },
-      { title: 'Roof replacement coordination', body: 'The roofing and solar scopes run to one schedule we control, so the house is never left open while two contractors wait on each other.' },
+      { title: 'Roof replacement coordination', body: 'The roofing and solar scopes run to one agreed sequence that everyone is kept informed of, so the house is never left open while two providers wait on each other.' },
       { title: 'Storm & insurance documentation', body: 'Condition recorded in detail and a fully itemised scope your claim can be built on.' },
       { title: 'System relocation', body: 'Moving an array to a new roof section, a ground mount, or a new property entirely.' },
       { title: 'Decommissioning', body: 'Permanent removal with responsible module recycling and electrical make-safe.' },
@@ -134,8 +134,8 @@ export const energyServices: Service[] = [
       { title: 'Verify', body: 'Production tested against the pre-removal baseline.' },
     ],
     faqs: [
-      { q: 'How long is my system offline?', a: 'Typically three to seven days for a standard residential roof replacement. We schedule detach and re-install around the roofing crew so the gap stays as short as the work allows.' },
-      { q: 'Will removal void my panel warranty?', a: 'Not when a licensed contractor performs and documents the work, which is exactly how we scope it. Removal by an unqualified crew is a genuine warranty risk, which is much of the reason this service exists.' },
+      { q: 'How long is my system offline?', a: 'Typically three to seven days for a standard residential roof replacement. We help you line the detach and re-install up with the roofing provider so the gap stays as short as the work allows.' },
+      { q: 'Will removal void my panel warranty?', a: 'Not when a licensed contractor performs and documents the work, which is exactly what we help you put in the scope you agree with them. Removal by an unqualified crew is a genuine warranty risk, which is much of the reason this service exists.' },
       { q: 'Can you help with an insurance claim?', a: 'On the documentation, yes, and that is usually what a claim turns on. We record the condition in detail and prepare the itemised scope your claim needs. Adjusting, negotiating or settling the claim itself is for you, a licensed public adjuster or your attorney - we will tell you when you need one rather than blur that line.' },
     ],
     stats: [
@@ -428,12 +428,12 @@ export const energyServices: Service[] = [
 
   {
     slug: 'ev-charging',
-    title: 'EV Charging Infrastructure',
+    title: 'EV Charging Projects',
     kicker: 'Energy Services',
     summary:
-      'Home, workplace and fleet charging - load-managed, properly permitted and designed so adding the next twenty chargers does not mean a new service.',
+      'Owner-side advisory for home, workplace and fleet charging - objectives, locations, provider communications, budgets and deployment records in one place.',
     intro:
-      'Charging infrastructure fails in predictable ways: service capacity nobody checked, conduit nobody installed, and a second phase that costs more than the first. We design for where you are going, not only where you are - load management that lets existing capacity support more chargers, conduit and panel space for future stages, and the networking and billing to run it as a service if you need to.',
+      'From a single commercial charger to multi-site charging infrastructure, Gridless Global helps owners organize objectives, site information, provider communications, budgets, documentation and deployment tracking. Licensed electrical contractors and engineers remain responsible for electrical design, load determinations, code compliance, permitting and installation.',
     icon: 'ev',
     accent: 'green',
     group: 'energy',

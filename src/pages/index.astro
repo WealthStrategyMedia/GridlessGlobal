@@ -12,51 +12,51 @@ import { requireService } from '~/data/services';
 import type { IconName } from '~/components/icons';
 
 const heroStats = [
-  { value: '25+', label: 'Services under one roof' },
-  { value: '5 kW-10,000 MW', label: 'Projects managed' },
-  { value: '24/7', label: 'Emergency response' },
-  { value: '1', label: 'Warranty desk across every trade' },
+  { value: '25+', label: 'Project types supported' },
+  { value: '5 kW-10,000 MW', label: 'Project scale supported' },
+  { value: '1', label: 'Organized project record' },
+  { value: 'Owner-side', label: 'Always on your side of the table' },
 ];
 
 const differentiators: { icon: IconName; title: string; body: string }[] = [
   {
-    icon: 'shield-check',
-    title: 'One manager, every trade',
-    body: 'You deal with us, not with five contractors blaming each other. We hold the scope, the schedule and the quality, and chase everyone else so you do not have to.',
-  },
-  {
-    icon: 'gauge',
-    title: 'Independent by design',
-    body: 'Our fee buys judgement, not a product line, so nothing skews the recommendation. Every option starts from metered data and a ranked payback list - sometimes that means telling you not to buy the thing you asked about.',
+    icon: 'file-text',
+    title: 'Project clarity',
+    body: 'Know what has been proposed, what decisions are still open, which documents are missing and what happens next. One organized picture instead of forty emails and a folder of PDFs.',
   },
   {
     icon: 'network',
-    title: 'The whole system',
-    body: 'Generation, storage, controls, envelope and trades designed together, because optimising one in isolation usually wastes money on the others.',
+    title: 'Provider coordination',
+    body: 'Keep communications with contractors, engineers, vendors and everyone else on the project flowing through one owner-side process, so nothing depends on you remembering to forward it.',
   },
   {
-    icon: 'file-text',
-    title: 'Paperwork is our job',
-    body: 'Interconnection, incentives, rebates and grants are inside our scope - you sign, we prepare, file and chase them. Permits are filed by the licensed contractor on the job, and we keep that moving too.',
+    icon: 'gauge',
+    title: 'Budget and milestone visibility',
+    body: 'Track project budgets, invoices and contractor-reported milestones without living inside spreadsheets, text threads and email chains.',
+  },
+  {
+    icon: 'shield-check',
+    title: 'Documented from start to closeout',
+    body: 'Scopes, proposals, permits, decisions, warranty records, equipment documents and closeout paperwork organized and handed to you, not scattered across four companies.',
   },
   {
     icon: 'users',
-    title: 'The Gridless Global Guarantee',
-    body: 'We warrant our own scope and specification, we set the warranty terms every trade on your project has to carry, and we hold and enforce those warranties for you. If a trade will not honour its warranty, we arrange and fund a licensed replacement to put it right.',
+    title: 'One owner-side point of coordination',
+    body: 'Instead of personally chasing every participant, you work through one organized Gridless process. Contractors and licensed professionals stay responsible for their regulated work; we keep you informed and the project information connected.',
   },
   {
     icon: 'leaf',
-    title: 'Built to last decades',
-    body: 'We design for thirty-year asset life and we are still here to service it, which shapes every specification decision we make.',
+    title: 'Not another trade selling you its piece',
+    body: 'Our fee buys judgement, not a product line. Contractors see their scope. Gridless helps you see the project - which sometimes means telling you not to buy the thing you asked about.',
   },
 ];
 
 const process = [
-  { step: 'Consult', body: 'A real conversation about the property, the budget and what you are actually trying to solve.' },
-  { step: 'Analyse', body: 'Metered data, site survey and tariff review establish what is true before anything is proposed.' },
-  { step: 'Design', body: 'One integrated scope across every trade, priced transparently with the incentives already applied.' },
-  { step: 'Deliver', body: 'We put the work to licensed trades, keep the permits moving and hold a sequence that keeps the site working.' },
-  { step: 'Support', body: 'Monitoring, maintenance and one number to call for the life of the system.' },
+  { step: 'Understand', body: 'We organize your goals, documentation, constraints, priorities and the outcome you are actually after.' },
+  { step: 'Build the picture', body: 'An organized owner-side project record, so requirements, proposals, documents, open questions and decisions are visible in one place.' },
+  { step: 'Coordinate', body: 'Where regulated services are required, you contract directly with appropriately licensed professionals. We coordinate the information and communication around those relationships.' },
+  { step: 'Keep you informed', body: 'Documentation, budgets, communications, open decisions and contractor-reported milestones tracked, so you can see where the project stands.' },
+  { step: 'Close out', body: 'Final documents, warranties, manuals, approvals and project records collected and organized for you.' },
 ];
 
 const testimonials = [
@@ -68,7 +68,7 @@ const testimonials = [
   },
   {
     quote:
-      'Roof replacement and solar detach in one project, on one schedule, with one person answering the phone. Every other quote had me managing two contractors who blamed each other.',
+      'Roof replacement and solar detach on one schedule, with one person answering the phone and every document in one place. Before Gridless I was the one relaying messages between two contractors who blamed each other.',
     name: 'Homeowner',
     role: 'Residential solar and roofing',
   },
@@ -82,24 +82,32 @@ const testimonials = [
 
 const homeFaqs = [
   {
-    q: 'What exactly does Gridless Global do?',
-    a: 'We are a project management and energy consulting firm, and we cover the energy space end to end. At utility scale that means developing and managing solar, hydro, thermal, storage and microgrid assets. For homes and businesses it means solar, batteries, EV charging, energy analysis, bill savings, carbon credits and grant writing - plus the electrical, roofing, siding, construction and handyman scopes those projects depend on, each scoped by us and delivered by licensed trades we have already vetted.',
+    q: 'Is Gridless Global a contractor?',
+    a: 'No. Gridless Global is an owner-side project advisory and administration company. Gridless does not itself perform regulated construction or trade work. Where contractor licensing is required, that work is performed under a separate agreement with an appropriately licensed contractor.',
   },
   {
-    q: 'Do I have to buy a whole system?',
-    a: 'No. A great many of our customers start with an energy analysis and act on the cheapest items first. Others come to us purely for roofing, electrical or grant writing and never install a panel. Take the parts that are useful.',
+    q: 'Then what does Gridless actually do?',
+    a: 'We help you organize the project: requirements, documents, communications, commercial information, project records, open issues, budgets, decisions, provider information and closeout. The goal is one clear project picture, instead of piecing it together from scattered calls, texts and emails.',
   },
   {
-    q: 'How do you charge?',
-    a: 'Consultations and project estimates are free. Energy audits carry a fee that we credit against implementation work on most residential projects. Construction and trades work is quoted by the licensed trade performing it, fixed-price or hourly, and agreed in writing before anything starts - with our management fee set out separately, so you can see exactly what you are paying for and what it is buying.',
+    q: 'Do I still need licensed contractors?',
+    a: 'Yes, whenever the work requires them. Gridless helps you navigate the project around those professionals; it does not replace legally required licensed providers.',
   },
   {
-    q: 'What areas do you serve?',
-    a: 'Trades and residential work is regional; energy development, advisory and grant services are delivered nationally. Tell us where the property is and we will confirm coverage straight away.',
+    q: 'Who pays the contractors?',
+    a: 'Unless another lawful written arrangement applies, you contract with and pay third-party contractors and professionals directly. Gridless charges separately for its own advisory and project-administration services, so you can always see what you are paying us for.',
   },
   {
-    q: 'Who is licensed and insured on my project?',
-    a: 'Gridless Global is a project management and energy consulting firm, registered to do business in the states where we operate and carrying our own professional and general liability cover. The work itself is performed by contractors who are licensed, insured and bonded to the level your project requires, and we verify those credentials before anyone sets foot on site. Documentation is provided with every proposal.',
+    q: 'Does Gridless supervise construction?',
+    a: 'No. Gridless does not direct construction means and methods, control jobsite safety, or take on responsibilities assigned by law to a licensed contractor or owner-builder. We maintain project records, coordinate communications and track information reported by project participants, within the scope applicable law allows.',
+  },
+  {
+    q: 'Can Gridless help with an insurance-related repair?',
+    a: 'We can assist with ordinary project documentation and repair-project administration. Gridless is not a public adjuster and does not prepare, negotiate or settle insurance claims for compensation - that belongs with you, a licensed public adjuster or your attorney.',
+  },
+  {
+    q: 'Can Gridless work anywhere?',
+    a: 'Available services vary by jurisdiction, because contractor, engineering, owner-builder and professional licensing laws differ. We adjust our scope to the law applicable to each project, and we will tell you plainly where that changes what we can do.',
   },
 ];
 
@@ -117,7 +125,7 @@ const segments = [
 ];
 ---
 <BaseLayout
-  title="Energy Generation, Solar, Electrical & Construction"
+  title="Owner-Side Project Advisory for Energy, Roofing, Electrical & Construction"
   description={site.description}
 >
   <!-- ================= Hero ================= -->
@@ -132,32 +140,32 @@ const segments = [
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal-400 opacity-70"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full bg-signal-400"></span>
             </span>
-            Project management &amp; energy consulting
+            Owner-side project advisory, coordination &amp; administration
           </p>
 
           <h1 class="mt-7 font-display text-[2.6rem] font-extrabold leading-[1.04] sm:text-6xl xl:text-7xl">
-            <span class="block">The entire energy stack,</span>
-            <span class="text-gradient mt-1 block">under one roof</span>
+            <span class="block">Your project.</span>
+            <span class="text-gradient mt-1 block">One command center.</span>
           </h1>
 
           <p class="mt-7 max-w-2xl text-[1.08rem] leading-relaxed text-ink-muted lg:text-[1.18rem]">
-            <strong class="font-semibold text-ink">We run the whole project, so you deal with one team,
-            one schedule and one point of accountability.</strong> Gridless Global plans, prices and manages energy projects - utility-scale solar, hydro,
-            thermal, storage and microgrids - and brings the same discipline to homes and businesses:
-            solar, electrical, roofing, construction, and the analysis that shows which of them
-            actually pays.
+            <strong class="font-semibold text-ink">You own the project. We help you stay in control of it.</strong>
+            Gridless Global brings complex energy, roofing, electrical, construction and facility
+            projects under control - organizing the information, providers, budgets, documentation,
+            milestones and decisions into one owner-side process. Licensed specialists handle the
+            regulated work. We help you keep the whole project organized, visible and moving.
           </p>
 
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Button href="/quote" variant="gold" size="lg" icon="arrow-right">Book a free consultation</Button>
-            <Button href="/services" variant="outline" size="lg" icon="sparkles" iconPosition="start">
-              Explore the services map
+            <Button href="/quote" variant="gold" size="lg" icon="arrow-right">Build my project plan</Button>
+            <Button href="/contact" variant="outline" size="lg" icon="sparkles" iconPosition="start">
+              Talk to a project advisor
             </Button>
           </div>
 
           <ul class="mt-10 flex flex-wrap gap-x-7 gap-y-3">
             {
-              ['Independent advice', 'Vetted specialists', 'Incentives handled', 'One accountable manager'].map((point) => (
+              ['Owner-side, always', 'One organized record', 'Provider coordination', 'Full project visibility'].map((point) => (
                 <li class="flex items-center gap-2 text-[0.85rem] text-ink-muted">
                   <Icon name="check" size={16} class="text-signal-400" />
                   {point}
@@ -247,8 +255,8 @@ const segments = [
         Whether it is a house or a portfolio
       </h2>
       <p class="mt-4 max-w-2xl text-[1.02rem] leading-relaxed text-ink-muted">
-        The same capability, scaled to the property. Every energy service we offer is available to
-        both, and the same managed trade network delivers it either way.
+        The same owner-side process, scaled to the property. Whichever route you come in through,
+        you get one organized project record and one place the information lives.
       </p>
     </div>
 
@@ -296,13 +304,15 @@ const segments = [
   <!-- ================= Why us ================= -->
   <section class="shell py-14 lg:py-20">
     <div class="mb-10 max-w-3xl">
-      <p class="eyebrow">Why Gridless Global</p>
+      <p class="eyebrow">Why owners bring us in</p>
       <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl lg:text-5xl">
-        Engineering first, sales second
+        You should not have to manage twenty moving parts yourself
       </h2>
       <p class="mt-4 text-[1.02rem] leading-relaxed text-ink-muted">
-        Energy is a field where the confident answer is often the wrong one. We would rather be the
-        firm that measured it.
+        A complex property or infrastructure project turns quickly into a maze of contractors,
+        proposals, technical questions, permits, invoices, equipment, timelines, warranties and
+        unanswered emails. Gridless gives you a central project layer for information,
+        administration and decision support - so the moving parts become one clear picture.
       </p>
     </div>
 
@@ -328,8 +338,8 @@ const segments = [
   <section class="shell py-14 lg:py-20">
     <div class="panel overflow-hidden rounded-4xl p-8 sm:p-12 lg:p-16">
       <div class="max-w-2xl">
-        <p class="eyebrow">How a project runs</p>
-        <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">Five steps, no surprises</h2>
+        <p class="eyebrow">How Gridless works</p>
+        <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">From first conversation to organized closeout</h2>
       </div>
 
       <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
@@ -358,10 +368,10 @@ const segments = [
   <section class="shell py-14 lg:py-20">
     <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
       <div>
-        <p class="eyebrow">In their words</p>
-        <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">What working with us is like</h2>
+        <p class="eyebrow">Project advisory in action</p>
+        <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">Projects Gridless helped organize</h2>
       </div>
-      <Button href="/contact" variant="outline" size="sm" icon="arrow-right">Talk to a specialist</Button>
+      <Button href="/how-gridless-works" variant="outline" size="sm" icon="arrow-right">How our project model works</Button>
     </div>
 
     <div class="grid gap-5 lg:grid-cols-3">

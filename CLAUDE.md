@@ -4,23 +4,47 @@ Guidance for Claude Code when working in this repository.
 
 ## What this is
 
-Static marketing site for Gridless Global, a **project management and energy consulting
-firm**. This matters for every word of copy: Gridless Global plans, prices, tenders and
-manages energy and construction projects; the physical work is carried out by independent
-licensed trade partners it vets, tenders to and manages - never supervising their means and
-methods, which is a contractor role and is expressly disclaimed in the Terms.
+Static marketing site for Gridless Global, an **owner-side project advisory and
+administration firm**. This matters for every word of copy. Gridless is the owner's
+project command center: it organizes project information, coordinates communications,
+maintains documentation, tracks budgets and reported milestones, and gives the owner
+visibility and decision support. It does **not** perform, tender, appoint, supervise,
+direct, schedule or control regulated work. The owner contracts directly with
+appropriately licensed independent contractors, engineers and design professionals, who
+remain responsible for their own scopes.
 
 **Copy rules, non-negotiable:**
-- Never write that Gridless Global self-performs, has crews or trades "in-house", or
-  employs electricians, roofers or builders. That language was removed deliberately.
-- Public pages sell the management value positively - one accountable manager, vetted
-  specialists, competitive tendering, superior results at a materially lower total cost.
-  Never phrase this as a negative ("we do not do the work"). State affirmatively who does:
-  every page for a scope involving regulated work carries the licensed-trade-partner notice,
-  driven by `involvesRegulatedWork()` in `src/data/services.ts`.
-- The explicit disclosure lives in the Terms, in "Nature of Gridless Global; Project
-  Management and Consulting Only". Keep that section and its liability carve-out for trade
-  partner acts and omissions intact.
+- Gridless **organizes, coordinates, documents, tracks, compares, summarizes and reports**.
+  It never installs, builds, performs, tenders, bids, appoints, supervises, oversees,
+  sequences or schedules regulated work, and never controls means, methods or jobsite safety.
+- Use "manage" carefully. "Project management" is allowed **only** when the object is the
+  owner's project *process*: information, documentation, communications, decisions, budgets,
+  invoices, provider-reported schedules and milestones, meetings, requirements, closeout and
+  warranty records. It is never allowed for construction means and methods, workers,
+  subcontractors, field operations, jobsite safety, technical execution, trade sequencing,
+  workmanship, code compliance or a contractor's employees.
+- Never write that Gridless replaces an owner-builder's supervision - e.g. "acts as the project
+  manager so the homeowner does not have to supervise the work". Florida requires the
+  owner-builder to give direct onsite supervision and forbids delegating it to an unlicensed
+  person. California CSLB treats a consultant who provides or oversees construction bidding, or
+  who both arranges contractor schedules and keeps project oversight, as a contractor.
+- Company-level category: **Owner-Side Project Advisory, Coordination & Administration**. Do not
+  append "Advisory" to individual service titles - pages use plain project categories
+  ("Roofing Projects", "Electrical Projects"), with the role line under the title carrying the
+  model.
+- Lead with what Gridless **does**, not what it does not do. The role disclosure supports the
+  positioning; it never becomes the positioning, and it never sits in a hero.
+- Never state or imply that Gridless holds a trade or professional licence, and never claim
+  licensing is unnecessary. Requirements vary by jurisdiction; Gridless limits its scope.
+- Gridless gives **no warranty or guarantee of any kind**, on the work or on its own services.
+  Warranties belong to the performing contractor and the manufacturer. The most we say is that
+  we help organize and centralize that paperwork.
+- Gridless invoices **advisory and administration fees only** - never construction deposits,
+  material deposits, mobilisation, progress payments, retainage or draws. Third-party
+  providers invoice the owner directly. Changes to our own scope are a **Service Amendment**,
+  never a construction change order.
+- Gridless is **not a public adjuster**: documentation and scope organization only, never
+  preparing, filing, negotiating or settling a claim, and never contingent on recovery.
 
 Services covered: energy generation, solar, electrical, roofing, construction. Astro 5 + Tailwind CSS 4, `output: 'static'`, deployed to Netlify's free
 tier. Two Netlify Functions handle payments and optional form relay — everything else is
@@ -214,11 +238,13 @@ of the compliance surface, not just marketing. When editing copy anywhere:
 - **No single contract and no Gridless Global warranty on physical work.** The owner signs the
   trade partner's own agreement. Workmanship warranties are the trade's; Gridless Global *holds
   and enforces* them.
-- The **Gridless Global Guarantee** (`/terms`) is the sanctioned way to say "we stand behind it":
-  we warrant our own services, set the warranty terms trades must carry, enforce them, and fund a
-  licensed replacement up to the Guarantee Cap. It is deliberately **not** insurance - no separate
-  fee, never sold standalone - because a standalone repair-or-replace promise sold for
-  consideration is a regulated service warranty under Fla. Stat. Ch. 634. Keep that carve-out.
+- **Gridless Global gives no warranty or guarantee of any kind.** Not on the physical work,
+  not on its own services, not as a branded programme. There was briefly a "Gridless Global
+  Guarantee"; the owner removed it. Do not reintroduce it in any form, including softer
+  phrasings like "warranty desk", "we enforce it" or "held and enforced by us".
+  Warranties belong to the performing trade and the equipment manufacturer. The most we say
+  is that we collect and register that paperwork in the client name, which `/terms` states
+  is a clerical act creating no obligation.
 
 ### Six licence regimes, not one
 
@@ -226,26 +252,27 @@ Copy can trip any of these. Contracting is only the most obvious:
 
 | Regime | Florida | What we may say |
 |---|---|---|
-| Contracting | Ch. 489 | We scope, tender, coordinate, verify. Trade partners perform the work and carry the permit. |
-| Engineering / architecture | Ch. 471 / 481 | Sealed drawings, structural assessment and load calculations belong to a licensed PE or architect engaged for the project - never "our engineers" or "engineers on the team". |
-| Home inspection | Ch. 468 Pt XV | "Energy analysis", "condition documentation". Never "pre-sale inspection". |
-| Public adjusting | Ch. 626 Pt VI | Document damage and prepare an itemised scope. Never adjust, negotiate or settle a claim, and never offer to deal with the carrier on the client behalf. |
-| Service warranty | Ch. 634 | The Gridless Global Guarantee only: no separate fee, never sold standalone. |
-| Credit / securities | - | Financing options are modelled and compared, not arranged, originated or brokered. |
+| Contracting | Ch. 489 | We organize and coordinate. Owners contract directly with licensed contractors, who perform the work and carry the permit. |
+| Engineering / architecture | Ch. 471 / 481 | Sealed drawings, structural assessment and load calculations belong to a licensed PE or architect engaged for the project - never "our engineers". |
+| Home inspection | Ch. 468 Pt XV | "Condition documentation", "energy analysis". Never "pre-sale inspection". |
+| Public adjusting | Ch. 626 Pt VI | Document and organize. Never adjust, negotiate or settle, and never deal with the carrier for the owner. |
+| Service warranty | Ch. 634 | Nothing. We give no warranty, so none is offered or sold. |
+| Credit / securities | - | Financing options are modelled and compared, never arranged, originated or brokered. |
 
-Permit expediting - tracking an application, chasing status, collating documents
-others produced, monitoring progress as the applicant authorised agent - is lawful
-consulting and we do sell it. Preparing permit drawings, submitting, signing, or
-acting as qualifying agent for a contractor is not.
+Permit expediting - tracking an application, chasing status, collating documents others
+produced, monitoring status - is lawful and we do sell it. Preparing permit drawings,
+submitting, signing, or acting as qualifying agent is not.
 
-Which pages carry the licensed-trade-partner notice is decided by
-`involvesRegulatedWork()` in `src/data/services.ts`. It defaults to showing the
-notice, so a new service is safe by default; add a slug to `ADVISORY_ONLY_SLUGS`
-only when the scope genuinely involves no permitted work.
+California and Florida both have specific sections in `/terms`. California in particular may
+treat providing or overseeing construction bids, or arranging contractor schedules while
+keeping oversight, as contracting - so those are off the table sitewide, not just in CA.
+
+Which pages carry the role disclosure is decided by `involvesRegulatedWork()` in
+`src/data/services.ts`; it defaults to showing, so a new service is safe by default. The
+public-adjuster paragraph is triggered by storm/claim content on the page itself.
 
 `npm run build` enforces all of this through `scripts/check-positioning.mjs`, which reads
-the rendered HTML of every built page and fails on claims Gridless Global cannot
-lawfully make. Run it on its own with:
+the rendered HTML of every page and fails on claims Gridless cannot lawfully make. Run alone:
 
 ```bash
 npm run audit:positioning

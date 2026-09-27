@@ -9,6 +9,7 @@ import ServiceCard from '~/components/ServiceCard.astro';
 import ContactForm from '~/components/forms/ContactForm.astro';
 import ModelViewer from '~/components/ModelViewer.astro';
 import FreeOffer from '~/components/FreeOffer.astro';
+import LicensedWorkNotice from '~/components/LicensedWorkNotice.astro';
 import { services, getService, ACCENTS, SEGMENT_LABELS, involvesRegulatedWork } from '~/data/services';
 import { site } from '~/data/site';
 
@@ -21,6 +22,8 @@ const service = getService(slug!)!;
 const accent = ACCENTS[service.accent];
 const related = service.related.map((s) => getService(s)).filter(Boolean) as typeof services;
 const regulated = involvesRegulatedWork(service.slug);
+/** Pages that discuss insurance or storm work carry the public-adjuster disclosure. */
+const mentionsInsurance = /storm damage|adjuster|insurance claim/i.test(JSON.stringify(service));
 
 const schema = [
   {
@@ -73,6 +76,19 @@ const schema = [
       { label: service.title },
     ]}
   >
+    {
+      regulated && (
+        <p class="mt-7 max-w-3xl text-[0.97rem] leading-relaxed text-ink-muted">
+          <strong class="font-semibold text-ink">
+            Owner-side project advisory, coordination and administration
+          </strong>{' '}
+          from planning through closeout. Gridless organizes the people, information,
+          documentation, budgets and decisions, while appropriately licensed contractors and
+          professionals remain responsible for regulated work.
+        </p>
+      )
+    }
+
     <div class="mt-8 flex flex-wrap items-center gap-3">
       {
         service.segments.map((segment) => (
@@ -83,21 +99,9 @@ const schema = [
       }
     </div>
 
-    {
-      regulated && (
-        <p class="mt-7 max-w-2xl text-[0.82rem] leading-relaxed text-ink-faint">
-          <strong class="font-semibold text-ink-muted">Project management and consulting.</strong>
-          Gridless Global plans, specifies, competitively tenders and manages this scope on your
-          behalf. The regulated trade work is carried out by licensed, insured trade partners whose
-          credentials we verify before anyone starts, and who file the permits for the work they
-          perform.
-        </p>
-      )
-    }
-
     <div class="mt-9 flex flex-col gap-3 sm:flex-row">
       <Button href={`/quote?service=${service.slug}`} variant="gold" size="lg" icon="arrow-right">
-        Book a free consultation
+        Build my project plan
       </Button>
       <Button href={site.phoneHref} variant="outline" size="lg" icon="phone" iconPosition="start">
         {site.phone}
@@ -109,7 +113,7 @@ const schema = [
   <section class="shell py-14 lg:py-20">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-16">
       <div>
-        <p class="eyebrow">{regulated ? 'What we cover' : 'What this covers'}</p>
+        <p class="eyebrow">{regulated ? 'What we help with' : 'What this covers'}</p>
         <ul class="mt-6 grid gap-4 sm:grid-cols-2">
           {
             service.highlights.map((point, i) => (
@@ -158,14 +162,14 @@ const schema = [
   <section class="shell py-14 lg:py-20">
     <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
       <div>
-        <p class="eyebrow">{regulated ? 'Our scope' : 'In detail'}</p>
+        <p class="eyebrow">{regulated ? 'What we organize' : 'In detail'}</p>
         <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">
           {regulated
-            ? `What we plan, tender and manage on a ${service.title.toLowerCase()} project`
+            ? `What Gridless helps organize on your project`
             : `Everything included in ${service.title.toLowerCase()}`}
         </h2>
       </div>
-      <Button href="/contact" variant="outline" size="sm" icon="arrow-right">Discuss your project</Button>
+      <Button href="/contact" variant="outline" size="sm" icon="arrow-right">Talk to a project advisor</Button>
     </div>
 
     <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -292,6 +296,8 @@ const schema = [
       <ContactForm defaultService={service.slug} title={`Enquire about ${service.title.toLowerCase()}`} />
     </div>
   </section>
+
+  {regulated && <LicensedWorkNotice insurance={mentionsInsurance} />}
 
   <CtaBand class="pb-8" />
 </BaseLayout>

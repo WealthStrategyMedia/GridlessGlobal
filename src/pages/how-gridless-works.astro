@@ -1,0 +1,181 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import Button from '~/components/Button.astro';
+import { site } from '~/data/site';
+
+const columns = [
+  {
+    heading: 'Gridless Global',
+    accent: 'text-signal-400',
+    items: [
+      'Owner-side project organization',
+      'Documentation and document registers',
+      'Project dashboards and reporting',
+      'Communications coordination',
+      'Decision and issue logs',
+      'Commercial and budget tracking',
+      'Invoice and milestone tracking',
+      'Administrative coordination',
+      'Closeout organization',
+    ],
+  },
+  {
+    heading: 'Licensed professionals',
+    accent: 'text-gold-400',
+    items: [
+      'Engineering and technical design',
+      'Construction and installation',
+      'Electrical work',
+      'Roofing work',
+      'Regulated installation',
+      'Code determinations',
+      'Permitting responsibility',
+      'Jobsite safety',
+      'Construction means and methods',
+      'Professional certifications',
+    ],
+  },
+  {
+    heading: 'The owner',
+    accent: 'text-brand-300',
+    items: [
+      'Selects and contracts with providers',
+      'Makes the final business decisions',
+      'Approves project scope and cost',
+      'Holds the owner responsibilities required by law',
+      'Receives one organized project picture through Gridless',
+    ],
+  },
+];
+
+const steps = [
+  {
+    title: 'Understand the objective',
+    body: 'We organize your goals, available documentation, constraints, priorities and the outcome you are actually after.',
+  },
+  {
+    title: 'Build the project picture',
+    body: 'Gridless creates an organized owner-side project record, so requirements, proposals, documents, open questions and decisions are visible in one place.',
+  },
+  {
+    title: 'Coordinate the right professionals',
+    body: 'Where licensed or regulated services are required, you contract directly with appropriately licensed independent contractors and professionals. Gridless coordinates information and communication around those relationships, within the scope applicable law permits.',
+  },
+  {
+    title: 'Keep you informed',
+    body: 'Gridless tracks documentation, budgets, communications, outstanding decisions and contractor-reported milestones, so you can see where the project stands without chasing anyone.',
+  },
+  {
+    title: 'Organize closeout',
+    body: 'Final documents, warranties, manuals, approvals and other project records are collected and organized for you.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'How Gridless Global works',
+  description:
+    'Gridless Global is an owner-side project advisory and administration company. Licensed independent professionals perform regulated construction, trade and engineering work.',
+  url: `${site.url}/how-gridless-works`,
+};
+---
+
+<BaseLayout
+  title="How We Work - Owner-Side Project Advisory"
+  description="Gridless Global gives owners a central project advisory and administration process, while independent licensed professionals remain responsible for regulated work."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Our project model"
+    title="One owner-side command center. Licensed experts where licenses matter."
+    lead="Gridless was built to solve a simple problem: complex projects force owners to coordinate too many disconnected people, documents, decisions and costs. We give owners a central advisory and project-administration process while independent licensed professionals remain responsible for regulated work."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'How we work' }]}
+    icon="network"
+    accentClass="text-signal-400"
+  />
+
+  <!-- Who does what -->
+  <section class="shell py-14 lg:py-20">
+    <div class="mb-10 max-w-3xl">
+      <p class="eyebrow">Who does what</p>
+      <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl lg:text-5xl">
+        Three roles, kept clearly apart
+      </h2>
+      <p class="mt-4 text-[1.02rem] leading-relaxed text-ink-muted">
+        Most project trouble starts when these blur together. Keeping them distinct is what makes
+        the whole thing work - and it is why you always know who is answerable for what.
+      </p>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        columns.map((column, i) => (
+          <article class="panel reveal rounded-3xl p-7" style={`--reveal-delay:${i * 80}ms`}>
+            <h3 class={`font-display text-[1.15rem] font-bold ${column.accent}`}>{column.heading}</h3>
+            <ul class="mt-5 space-y-3">
+              {column.items.map((item) => (
+                <li class="flex items-start gap-3 text-[0.92rem] leading-relaxed text-ink-muted">
+                  <Icon name="check-circle" size={18} class={`mt-px shrink-0 ${column.accent}`} />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- How it runs -->
+  <section class="shell py-14 lg:py-20">
+    <div class="panel overflow-hidden rounded-4xl p-8 sm:p-12">
+      <p class="eyebrow">How Gridless works</p>
+      <h2 class="mt-3 max-w-2xl font-display text-3xl font-bold sm:text-4xl">
+        From first conversation to organized closeout
+      </h2>
+
+      <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+        {
+          steps.map((step, i) => (
+            <li class="reveal relative" style={`--reveal-delay:${i * 80}ms`}>
+              <span class="font-display text-[2.2rem] font-extrabold leading-none text-signal-500/30">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="mt-4 font-display text-[1.05rem] font-bold">{step.title}</h3>
+              <p class="mt-2.5 text-[0.9rem] leading-relaxed text-ink-muted">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- The result -->
+  <section class="shell py-14 lg:py-20">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">The result</p>
+      <h2 class="mt-3 font-display text-3xl font-bold sm:text-4xl">
+        The whole project, visible from one place
+      </h2>
+      <p class="mt-6 text-[1.05rem] leading-relaxed text-ink-muted">
+        You get professional project organization without pretending that one company should be the
+        engineer, the electrician, the roofer, the contractor, the equipment manufacturer and the
+        owner all at once. Every provider sees their scope. Gridless helps you see the project.
+      </p>
+      <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="/quote" variant="gold" size="lg" icon="arrow-right">
+          Bring Gridless into my project
+        </Button>
+        <Button href="/contact" variant="outline" size="lg" icon="arrow-right">
+          Talk to a project advisor
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

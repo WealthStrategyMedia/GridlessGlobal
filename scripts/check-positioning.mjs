@@ -80,8 +80,44 @@ const RULES = [
   },
   {
     regime: 'WARRANTY',
+    re: /\bgridless global guarantee\b|\bwe warrant\b|\bour (warranty|guarantee)\b|\bwarranty desk\b|\bheld and enforced by us\b|\bwe (hold and enforce|enforce) (those|the|every|each)? ?warrant/i,
+    hint: 'Gridless Global gives no warranty or guarantee of any kind. Warranties are the trade partner\u2019s and the manufacturer\u2019s; we only collect and register the paperwork.',
+    skipLegal: true,
+  },
+  {
+    regime: 'WARRANTY',
     re: /\bour warranty (on|covering) (the )?(work|installation|roof)\b|\bwe warrant the (work|installation)\b|one warranty covering|\bwarranty across every trade\b|\bone warranty\b(?! desk)/i,
-    hint: 'Gridless Global warrants its own services and enforces the trade’s warranty. It does not warrant the physical work.',
+    hint: 'Gridless Global does not warrant the physical work. The performing trade and the manufacturer do.',
+    skipLegal: true,
+  },
+  {
+    regime: 'CONTROL / TENDERING',
+    re: /\bwe (competitively )?(tender|bid)\b|\bwe put the work to\b|\bwe appoint\b|\bwe (supervise|oversee|direct|control)\b|\bwe manage the (build|construction|trades?|crew)\b|\bschedule we control\b|\bunder our control\b|\bwe sequence\b/i,
+    hint: 'Gridless organizes information and coordinates communication. It does not tender, appoint, supervise, direct or control contractors or their schedules.',
+    skipLegal: true,
+  },
+  {
+    regime: 'OWNER-BUILDER / JOBSITE',
+    re: /manages? (the )?jobsite|takes? over the owner|so the (home)?owner does ?n.?t have to supervise|manage your construction|construction project management|manages? (the )?(construction|subcontractors|trades) (from|through)|schedules? and oversees?/i,
+    hint: 'Florida requires an owner-builder to personally supervise and forbids delegating that to an unlicensed person. Never claim to replace owner supervision, control the jobsite, or manage construction end to end.',
+    skipLegal: true,
+  },
+  {
+    regime: 'EPC / ROLE',
+    re: /\bour EPC\b|\bwe (are|act as) (your )?(the )?(EPC|GC|general contractor|contractor)\b|\bwe provide EPC\b|\b(as|is) the EPC\b|\bEPC or O&M partner\b|\bEPC services\b|\bowner.s engineer\b/i,
+    hint: 'Gridless supports the owner across EPC procurement and administration. It is not the EPC, the GC, or the Owner\u2019s Engineer.',
+    skipLegal: true,
+  },
+  {
+    regime: 'LICENSING CLAIM',
+    re: /\brequires? no licen[cs]e/i,
+    hint: 'Never claim licensing is unnecessary. Say requirements vary by jurisdiction and Gridless limits its scope accordingly.',
+    skipLegal: true,
+  },
+  {
+    regime: 'PAYMENT CHARACTER',
+    re: /\b(construction|material|roof|electrical) deposit\b|\bmobili[sz]ation payment\b|\bprogress payment\b|\bconstruction draw\b|\bretainage\b/i,
+    hint: 'Gridless invoices advisory and administration fees only, never construction-style payments.',
     skipLegal: true,
   },
   {
