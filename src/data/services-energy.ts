@@ -11,9 +11,9 @@ export const energyServices: Service[] = [
     title: 'Solar Installation',
     kicker: 'Energy Services',
     summary:
-      'Rooftop, ground-mount and carport photovoltaic systems designed around your actual consumption and installed by our own licensed crews.',
+      'Rooftop, ground-mount and carport photovoltaic systems designed around your actual consumption, competitively priced and delivered under our management.',
     intro:
-      'A solar array is only as good as the analysis behind it. We start from twelve months of real consumption data and a structural assessment of what you are mounting to, then design a system sized to your load and your tariff rather than to whatever fits on the roof. Installation is performed by our own licensed electricians, and permits, interconnection and incentive paperwork are all inside our scope.',
+      'A solar array is only as good as the analysis behind it. We start from twelve months of real consumption data and a structural assessment of what you are mounting to, then design a system sized to your load and your tariff rather than to whatever fits on the roof. That scope goes out to licensed installers we have already vetted, and we manage the build, the permits, the interconnection and the incentive paperwork through to sign-off.',
     icon: 'panel',
     accent: 'gold',
     group: 'energy',
@@ -22,7 +22,7 @@ export const energyServices: Service[] = [
       'Design driven by twelve months of real usage data',
       'Structural and roof-condition assessment included',
       'Permits, interconnection and incentives handled',
-      'Installed by in-house licensed electricians',
+      'Installed by licensed electricians we vet and manage',
     ],
     offerings: [
       { title: 'Rooftop systems', body: 'Pitched and flat roofs, with flashing and attachment detailed to preserve the existing roof warranty.' },
@@ -120,7 +120,7 @@ export const energyServices: Service[] = [
     ],
     offerings: [
       { title: 'Detach & re-install', body: 'Full removal, labelled storage and re-installation with new flashing and attachment hardware.' },
-      { title: 'Roof replacement coordination', body: 'Our own roofing crews work to the same schedule, so the house is never left open waiting on a subcontractor.' },
+      { title: 'Roof replacement coordination', body: 'The roofing and solar scopes run to one schedule we control, so the house is never left open while two contractors wait on each other.' },
       { title: 'Storm & insurance claims', body: 'Damage assessment, documentation and direct work with your adjuster.' },
       { title: 'System relocation', body: 'Moving an array to a new roof section, a ground mount, or a new property entirely.' },
       { title: 'Decommissioning', body: 'Permanent removal with responsible module recycling and electrical make-safe.' },
@@ -129,7 +129,7 @@ export const energyServices: Service[] = [
     process: [
       { title: 'Document', body: 'Existing layout, wiring and production recorded before anything moves.' },
       { title: 'Detach', body: 'Array removed, labelled and stored securely on site.' },
-      { title: 'Roof', body: 'Roofing scope completed by our own crew.' },
+      { title: 'Roof', body: 'Roofing scope completed by our appointed roofing specialist.' },
       { title: 'Re-install', body: 'New flashing and hardware, array returned to its layout.' },
       { title: 'Verify', body: 'Production tested against the pre-removal baseline.' },
     ],
@@ -363,7 +363,7 @@ export const energyServices: Service[] = [
       { title: 'Measure', body: 'A full year of interval data reveals the true peak pattern.' },
       { title: 'Attribute', body: 'Submetering identifies which equipment drives each peak.' },
       { title: 'Design', body: 'Shifting, shedding and storage combined into one strategy.' },
-      { title: 'Automate', body: 'Controls implemented so response does not depend on staff.' },
+      { title: 'Automate', body: 'Controls implemented so response does not depend on anyone remembering.' },
       { title: 'Enrol', body: 'Flexibility registered in every programme that will pay for it.' },
     ],
     faqs: [
@@ -455,7 +455,7 @@ export const energyServices: Service[] = [
     process: [
       { title: 'Assess', body: 'Service capacity, panel space and duty cycles established first.' },
       { title: 'Plan', body: 'Phased layout with conduit and capacity for later stages.' },
-      { title: 'Install', body: 'Licensed electrical work, permits and inspection.' },
+      { title: 'Install', body: 'Licensed electrical work, permits and inspection, managed for you.' },
       { title: 'Network', body: 'Access control, billing and monitoring configured.' },
       { title: 'Manage', body: 'Load management tuned so charging never sets a new peak.' },
     ],

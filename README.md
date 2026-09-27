@@ -1,7 +1,11 @@
 # Gridless Global
 
-Marketing and services site for Gridless Global — energy generation, solar, electrical,
-roofing and construction.
+Marketing and services site for **Gridless Global**, a project management and energy
+consulting firm covering energy generation, solar, electrical, roofing and construction.
+
+Gridless Global plans, prices, tenders and manages projects; independent licensed trade
+partners carry out the physical work. Site copy sells that management value positively and
+never claims self-performed trades — the explicit disclosure sits in the Terms of Service.
 
 Built with [Astro](https://astro.build) 5 and Tailwind CSS 4, output as a fully static
 site so it runs comfortably on Netlify's free tier. Payments run client-side against
@@ -185,6 +189,7 @@ src/
     *-form.json              Committed snapshots of the live Tweeble forms
   layouts/                   BaseLayout, LegalLayout
   lib/blog.ts                Tweeble blog feed fetching and normalising
+  lib/events.ts              Events feed, normalising and the purchase contract
   lib/form-client.ts         Shared form validation and submission runtime
   pages/                     Routes; services/[slug].astro generates 25 pages
   styles/global.css          Design tokens and composed utilities
@@ -281,23 +286,65 @@ there are wind, marine and a large set of nuclear models.
 
 ---
 
+## Events
+
+`/events` renders the Tweeble events feed and sells tickets and sponsorship packages
+without leaving the site.
+
+```
+GET  /api/public/<account>/events
+POST /api/public/<account>/events/<eventId>/purchase
+POST /api/public/<account>/events/<eventId>/sponsorships/<packageId>/purchase
+```
+
+Same shape as the blog: fetched at build time for SEO, refreshed in the browser so new
+events appear without a rebuild, with a designed "no events scheduled just yet" state when
+the feed is empty.
+
+**Buying.** "Buy tickets" opens a quantity step (respecting each tier's per-order cap) with
+a live total, then buyer details. "Reserve package" skips quantity and requires an
+organisation name. Either way, submitting starts the purchase and hands over to Tweeble's
+hosted card form **inside the same modal**, exactly like Pay a Bill. Cancelling returns the
+buyer to their still-filled form; completing shows a receipt with the order reference. The
+`postMessage` listener checks `event.origin` against Tweeble's, so a forged message from
+another page is ignored — verified.
+
+> ### The purchase request is inferred, not observed
+>
+> The account has no published events, and the purchase endpoints check the event exists
+> *before* validating the body, so a placeholder id returns "This event isn't available"
+> rather than naming the fields it wanted. The **response** shape is documented by Tweeble
+> (`clientSecret` + `embedUrl`); the **request** field names are a best inference.
+>
+> They are isolated in `PURCHASE_FIELDS` and `buildPurchaseBody` in `src/lib/events.ts` so
+> they can be corrected in one place in seconds. **Create one real event and tell me, or
+> check a purchase response yourself, before relying on this in production.** The feed
+> reader is tolerant of naming (it already handles `priceCents`/`price`/`amount`,
+> `startsAt`/`startDate`/`date`, and so on) and warns in the console about anything it had
+> to skip.
+
+---
+
 ## Brand assets
 
-The supplied logo is additive glow painted over a dark grey vignette, so it cannot be
-dropped straight onto the navy UI. `scripts/prepare-assets.mjs` estimates that backdrop,
-subtracts it, and re-emits the artwork as a transparent cutout, then derives the favicon,
-the social card and web-optimised versions of the services map (3.7 MB PNG → 385 KB WebP).
+The logo shipped on the site is the **exact artwork supplied in `Context/Logo`** — already a
+transparent PNG. Nothing is recoloured or redrawn; `scripts/prepare-assets.mjs` only trims
+the empty margin, cuts the globe out for the favicon and spinner, and writes web-sized
+variants. It also derives the services-map WebP versions and the social card.
 
-Generated files are committed, so the deploy host never needs to run it. Re-run it only if
-the source artwork in `Context/` changes:
+Generated files are committed, so the deploy host never runs it. Re-run only if the source
+artwork changes:
 
 ```bash
 npm run assets
 ```
 
-The wordmark in the artwork is deep navy and disappears against a dark background, so the
-header pairs the globe mark with live typography instead. That also keeps it crisp at every
-size and readable to screen readers and search engines.
+### Why the logo sits on a light plate
+
+The wordmark is deep navy. Measured at real header size against the dark UI it is close to
+illegible, so `Logo.astro` places the lockup on a white plate wherever the background is
+dark. That is a placement decision — the mark itself is untouched. Pass `surface="bare"`
+when putting it on an already-light background.
 
 ---
 

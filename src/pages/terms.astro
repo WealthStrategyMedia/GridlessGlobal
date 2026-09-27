@@ -1,86 +1,717 @@
 ---
 import LegalLayout from '~/layouts/LegalLayout.astro';
 import { site } from '~/data/site';
+
+const company = site.legalName;
+const effective = 'September 27, 2026';
 ---
 <LegalLayout
   title="Terms of Service"
-  description={`The terms that govern use of the ${site.name} website and the services offered through it.`}
-  updated="26 September 2026"
+  description={`The terms and conditions governing use of the ${site.name} website and the products and services offered through it.`}
+  effective={effective}
 >
-  <h2>Agreement</h2>
+  <div class="legal-note">
+    <p>
+      <strong>Please read these Terms carefully.</strong> They govern your access to and use of this
+      website and, together with any written proposal or agreement you sign, the products and
+      services provided by {company}. They contain provisions that limit our liability, exclude
+      certain damages, require individual arbitration of disputes, waive your right to a jury trial
+      and to participate in a class action, and confirm that payments are non-refundable except at
+      our sole discretion. By accessing this website or engaging us, you accept these Terms in full.
+    </p>
+  </div>
+
+  <h2>Acceptance of These Terms</h2>
   <p>
-    These terms govern your use of this website. Work we perform for you is governed by a separate
-    signed contract or proposal, which takes precedence over anything on this page.
+    These Terms of Service (the <strong>"Terms"</strong>) constitute a binding legal agreement
+    between you (<strong>"you"</strong>, <strong>"your"</strong>, the <strong>"Customer"</strong> or
+    the <strong>"User"</strong>) and {company}, a Florida limited liability company with its
+    principal place of business in Orlando, Osceola County, Florida (<strong>"Gridless Global"</strong>,
+    <strong>"we"</strong>, <strong>"us"</strong> or <strong>"our"</strong>).
+  </p>
+  <p>
+    By accessing, browsing, or using this website (the <strong>"Site"</strong>), by submitting any
+    enquiry, quotation request, subscription or payment through the Site, or by accepting any
+    proposal, estimate or invoice issued by us, you acknowledge that you have read, understood, and
+    agree to be bound by these Terms and by our
+    <a href="/privacy">Privacy Policy</a>, which is incorporated herein by reference. If you do not
+    agree to these Terms in their entirety, you must immediately cease all use of the Site and must
+    not engage us for any product or service.
+  </p>
+  <p>
+    You represent and warrant that you are at least eighteen (18) years of age and possess the legal
+    capacity and authority to enter into a binding contract, and that where you act on behalf of an
+    entity you are duly authorised to bind that entity, in which case
+    <strong>"you"</strong> refers to that entity and to you jointly and severally.
   </p>
 
-  <h2>Estimates and proposals</h2>
-  <p>
-    Figures shown on this site, including savings ranges, paybacks and capacity guidance, are
-    illustrative. They are not offers and not guarantees. A binding price comes only from a written
-    proposal issued after a site assessment, and remains valid for the period stated on it.
-  </p>
-  <p>
-    Savings and production estimates depend on weather, occupancy, utility tariffs, equipment
-    condition and regulation, all of which change. Actual results will differ.
-  </p>
-
-  <h2>Payments</h2>
+  <h2>Definitions</h2>
   <ul>
-    <li>Online payments are processed by a third-party provider under their own terms.</li>
-    <li>Invoices are due on the terms stated on the invoice. Late payment may attract interest and collection costs to the extent permitted by law.</li>
-    <li>Deposits secure scheduling and materials procurement. Refundability is set out in your contract.</li>
-    <li>We do not store card details.</li>
+    <li><strong>"Services"</strong> means any service offered, quoted, proposed or performed by Gridless Global, including without limitation energy generation development and construction, solar design, installation, upgrade, removal and reinstallation, energy storage, microgrid and controls work, energy analysis and auditing, energy management, demand-side management, carbon credit and grant advisory, education and speaking services, and electrical, roofing, siding, construction and handyman work.</li>
+    <li><strong>"Site Content"</strong> means all text, graphics, photographs, illustrations, artwork, logos, trademarks, service marks, trade dress, layouts, designs, page structures, compilations, service descriptions, pricing methodologies, process descriptions, audit methodologies, data, models, calculators, code, and all other material made available on or through the Site.</li>
+    <li><strong>"Project Documents"</strong> means any proposal, estimate, quotation, scope of work, design, drawing, specification, calculation, audit report, energy model, savings analysis, permit package, interconnection application, grant narrative or other deliverable prepared by or for Gridless Global.</li>
+    <li><strong>"Protected Relationship"</strong> has the meaning given in the section titled "Non-Circumvention".</li>
   </ul>
 
-  <h2>Licensing and insurance</h2>
+  <h2>Nature of Gridless Global; Project Management and Consulting Only</h2>
+  <p class="legal-emphasis">
+    GRIDLESS GLOBAL IS A PROJECT MANAGEMENT AND CONSULTING COMPANY. ITS SERVICES CONSIST OF
+    ADVISORY, ANALYTICAL, DESIGN COORDINATION, PROCUREMENT, CONTRACT ADMINISTRATION, SCHEDULING,
+    SUPERVISION, QUALITY OVERSIGHT AND PROJECT MANAGEMENT SERVICES. GRIDLESS GLOBAL DOES NOT ITSELF
+    PERFORM, AND DOES NOT HOLD ITSELF OUT AS PERFORMING, ANY CONSTRUCTION, ELECTRICAL, ROOFING,
+    SIDING, MECHANICAL, SOLAR INSTALLATION OR OTHER REGULATED TRADE WORK.
+  </p>
+  <p class="legal-emphasis">
+    ALL PHYSICAL WORK IS PERFORMED BY INDEPENDENT THIRD-PARTY CONTRACTORS, TRADESPEOPLE, INSTALLERS,
+    SUPPLIERS AND OTHER VENDORS (EACH, A <strong>"TRADE PARTNER"</strong>), EACH OF WHICH IS
+    SEPARATELY LICENSED, INSURED AND SOLELY RESPONSIBLE FOR ITS OWN WORK, WORKMANSHIP, MEANS,
+    METHODS, SEQUENCES, TECHNIQUES, SITE SAFETY, PERSONNEL AND COMPLIANCE WITH APPLICABLE LAW.
+    TRADE PARTNERS ARE NOT EMPLOYEES, PARTNERS, JOINT VENTURERS OR AGENTS OF GRIDLESS GLOBAL, AND
+    NO AGENCY, PARTNERSHIP, JOINT VENTURE OR EMPLOYMENT RELATIONSHIP IS CREATED BY THESE TERMS.
+  </p>
   <p>
-    Electrical, construction and roofing work is performed by appropriately licensed personnel and we
-    carry insurance and bonding as required in the jurisdictions in which we operate. Documentation
-    is available on request and is supplied with proposals.
+    The value Gridless Global provides is the management of that work. We establish what a property
+    genuinely requires from measured data, write a scope precise enough to be priced accurately,
+    competitively tender it to Trade Partners whose licensure, insurance and capability we have
+    verified, and then administer the resulting contracts, schedule, inspections and close-out on
+    your behalf. Because Gridless Global is independent of the Trade Partners who perform the work
+    and derives no margin from selling its own labour or equipment, it is positioned to deliver
+    superior project outcomes at a materially lower total cost than a customer would typically
+    achieve unaided - through competitive tendering, aggregated purchasing power, precise scoping
+    and active supervision. <strong>This is a description of Gridless Global's method and commercial
+    positioning. It is not a warranty, guarantee or representation as to price, savings, quality or
+    outcome of any kind</strong>, and no such guarantee is given.
+  </p>
+  <p>
+    Where a Trade Partner is engaged directly by you, Gridless Global acts solely as your project
+    manager and adviser and is not a party to that contract. Where Gridless Global contracts with a
+    Trade Partner on your behalf, it does so as your agent for that limited purpose, and your
+    recourse in respect of the physical work lies against the Trade Partner and its insurers.
+  </p>
+  <p class="legal-emphasis">
+    TO THE FULLEST EXTENT PERMITTED BY LAW, GRIDLESS GLOBAL SHALL NOT BE LIABLE FOR THE ACTS,
+    OMISSIONS, NEGLIGENCE, DEFECTIVE OR NON-CONFORMING WORK, DELAY, ABANDONMENT, INSOLVENCY,
+    PROPERTY DAMAGE, PERSONAL INJURY, LIEN, STATUTORY VIOLATION OR BREACH OF CONTRACT OF ANY TRADE
+    PARTNER, MANUFACTURER, SUPPLIER OR OTHER THIRD PARTY, WHETHER OR NOT RECOMMENDED, SELECTED,
+    TENDERED, ENGAGED, SUPERVISED OR ADMINISTERED BY GRIDLESS GLOBAL. GRIDLESS GLOBAL'S OBLIGATION
+    IS LIMITED TO THE EXERCISE OF REASONABLE PROFESSIONAL CARE AND SKILL IN PERFORMING ITS OWN
+    MANAGEMENT AND CONSULTING SERVICES.
+  </p>
+  <p>
+    Gridless Global does not guarantee, insure, warrant or underwrite the performance of any Trade
+    Partner, and gives no warranty, express or implied, in respect of any physical work. Warranties
+    covering installed work and equipment are those given by the performing Trade Partner and the
+    equipment manufacturer, and are enforceable by you directly against them. Gridless Global will,
+    where reasonably practicable and where it holds the relevant contractual right, assist you in
+    pursuing such a warranty claim, but assumes no liability for its outcome.
+  </p>
+  <p>
+    Nothing on the Site constitutes an offer to perform regulated trade work, or an offer to provide
+    management services in any jurisdiction in which Gridless Global is not permitted to operate.
+    Descriptions of Services are general, are provided for convenience, and do not constitute an
+    offer capable of acceptance, a representation that any particular Service is available to you,
+    or a commitment at any stated price or timeframe. A binding obligation arises only upon a
+    written proposal or contract signed by an authorised representative of Gridless Global.
   </p>
 
-  <h2>Scheduling and access</h2>
+  <h2>No Professional, Financial, Legal or Tax Advice</h2>
   <p>
-    Work depends on safe site access, permit issuance, utility scheduling and weather. We will keep
-    you informed of changes. Delays caused by third parties, including permitting authorities and
-    utilities, are outside our control.
+    Content on the Site, and any general guidance, article, calculator, illustration, benchmark,
+    payback figure or educational material provided by Gridless Global, is for informational
+    purposes only. It does not constitute, and must not be relied upon as, engineering advice for
+    any specific installation, legal advice, accounting advice, tax advice, investment advice, or a
+    recommendation regarding any security, financial product or financing arrangement.
+  </p>
+  <p>
+    Statements regarding federal, state, local or utility incentives, tax credits, depreciation
+    treatment, rebates, grants, renewable energy certificates or carbon credit eligibility reflect
+    our general understanding at the time of writing. Such programmes are administered by third
+    parties, are subject to change, suspension, exhaustion of funds, reinterpretation and retroactive
+    amendment, and depend on facts specific to you. <strong>You are solely responsible for
+    confirming eligibility and treatment with your own qualified attorney, certified public
+    accountant or tax adviser.</strong> Gridless Global does not guarantee that any incentive, credit,
+    rebate or grant will be approved, awarded, retained or paid.
   </p>
 
-  <h2>Warranties</h2>
+  <h2>Estimates, Proposals and Performance Projections</h2>
   <p>
-    Workmanship and equipment warranties are set out in your contract and in the manufacturer
-    documentation supplied at handover. Warranties may be voided by unauthorised modification,
-    neglect of required maintenance, or damage from causes outside normal use.
+    Figures published on the Site, including savings ranges, payback periods, efficiency
+    percentages, production estimates, availability figures, capacity ranges and timelines, are
+    illustrative, are derived from typical conditions, and are not offers, guarantees, warranties or
+    representations of the results you will achieve.
+  </p>
+  <p>
+    Any binding price arises only from a written proposal issued following a site assessment, and
+    remains open for acceptance only for the period stated on its face. Proposals are premised on
+    the conditions observed or reasonably assumed at the time of assessment. Where latent, concealed
+    or differing site conditions are encountered, including without limitation concealed structural
+    defects, deteriorated framing or decking, inadequate electrical service, code violations from
+    prior work, environmental conditions, pests, mould, asbestos, lead, subsurface obstructions or
+    unforeseen utility requirements, Gridless Global shall be entitled to an equitable adjustment to
+    price and schedule by written change order.
+  </p>
+  <p class="legal-emphasis">
+    ENERGY PRODUCTION, CONSUMPTION REDUCTION, DEMAND REDUCTION, UTILITY BILL SAVINGS, CARBON CREDIT
+    VOLUMES, GRANT AWARDS, AND RETURN ON INVESTMENT DEPEND ON WEATHER, IRRADIANCE, HYDROLOGY,
+    OCCUPANCY, OPERATING PRACTICES, EQUIPMENT CONDITION, UTILITY TARIFFS AND RATE DESIGN,
+    REGULATORY CHANGE, MARKET PRICING AND OTHER FACTORS OUTSIDE OUR CONTROL. GRIDLESS GLOBAL DOES
+    NOT GUARANTEE ANY LEVEL OF PRODUCTION, SAVINGS, REVENUE, AWARD OR RETURN, AND ACTUAL RESULTS
+    WILL VARY, POSSIBLY MATERIALLY.
   </p>
 
-  <h2>Intellectual property</h2>
+  <h2>Eligibility, Accounts and Accuracy of Information</h2>
   <p>
-    The content, branding and artwork on this site belong to {site.legalName} and may not be
-    reproduced without permission.
+    You agree to provide true, accurate, current and complete information in every enquiry,
+    quotation request, form and payment submitted through the Site, and to keep that information
+    updated. You are solely responsible for the accuracy of property details, usage data, utility
+    account information, structural information and access arrangements you supply, and for any
+    consequence of inaccurate or incomplete information, including additional cost, delay, rework or
+    an invalidated estimate.
+  </p>
+  <p>
+    You warrant that you are the owner of the subject property, or are the duly authorised agent of
+    the owner with full authority to permit the work described, and you shall indemnify Gridless
+    Global against any claim arising from a breach of that warranty.
   </p>
 
-  <h2>Limitation of liability</h2>
+  <h2>Orders, Contracts and Change Orders</h2>
   <p>
-    To the fullest extent permitted by law, we are not liable for indirect or consequential losses
-    arising from use of this website. Nothing here limits liability that cannot lawfully be limited,
-    including for death or personal injury caused by negligence.
+    Work is performed pursuant to a written contract, proposal or work authorisation. No verbal
+    statement, marketing material, or communication from any representative modifies a signed
+    contract. Additions to or modifications of the scope of work are effective only upon a written
+    change order, and may adjust price, schedule and warranty terms. Where you direct work to
+    proceed before a change order is executed, you remain liable for the reasonable value of the
+    work performed.
   </p>
 
-  <h2>Third-party links</h2>
+  <h2>Pricing, Payment and Late Charges</h2>
+  <ul>
+    <li>Prices exclude applicable sales, use and other taxes, which are your responsibility unless expressly stated otherwise in writing.</li>
+    <li>Deposits secure scheduling, engineering, permitting and materials procurement and are applied to the contract price.</li>
+    <li>Invoices are due on the terms stated on their face. Time is of the essence with respect to payment.</li>
+    <li>Past-due amounts shall bear interest at the lesser of one and one-half percent (1.5%) per month or the maximum rate permitted by Florida law, accruing from the due date until paid in full.</li>
+    <li>You shall reimburse all costs of collection, including reasonable attorneys' fees, paralegal fees, expert fees and court costs, at trial, on appeal and in any bankruptcy or insolvency proceeding.</li>
+    <li>Gridless Global reserves all lien rights available under Florida law, including under Chapter 713, Florida Statutes, and may suspend performance or demobilise upon non-payment without liability.</li>
+    <li>Payments are processed by third-party payment providers. Gridless Global does not receive, process or store full payment card numbers.</li>
+  </ul>
+
+  <h2>No Refunds; Cancellations; Chargebacks</h2>
+  <p class="legal-emphasis">
+    ALL PAYMENTS MADE TO GRIDLESS GLOBAL, INCLUDING WITHOUT LIMITATION DEPOSITS, RETAINERS,
+    PROGRESS PAYMENTS, MOBILISATION FEES, DESIGN AND ENGINEERING FEES, ASSESSMENT AND AUDIT FEES,
+    ADVISORY FEES, GRANT WRITING FEES, EDUCATION AND SPEAKING FEES, SERVICE CALL CHARGES AND
+    INVOICED AMOUNTS, ARE NON-REFUNDABLE. ALL SALES ARE FINAL.
+  </p>
   <p>
-    This site may link to third-party resources. We do not control those sites and are not
-    responsible for their content or practices.
+    Any refund, in whole or in part, and any credit, concession or accommodation, is granted solely
+    at the absolute and unfettered discretion of Gridless Global. No course of dealing, prior
+    accommodation, or grant of a refund on any occasion shall create an entitlement, obligation,
+    expectation or precedent with respect to any other matter, and the grant of one accommodation
+    shall not waive this section as to any other payment.
+  </p>
+  <p>
+    Where you cancel after a contract is executed, you remain liable for all work performed, all
+    engineering, design, permitting and administrative effort expended, all materials and equipment
+    ordered, fabricated, restocked or rendered non-returnable, all restocking and cancellation
+    charges imposed by suppliers, and all other costs reasonably incurred in reliance on the
+    contract, together with lost profit on the unperformed balance to the extent permitted by law.
+  </p>
+  <p>
+    You agree not to initiate a chargeback, payment reversal or dispute with any card issuer,
+    bank or payment provider in respect of any amount properly owed. You agree to contact us first
+    and to allow a reasonable opportunity to resolve the matter. Initiating a chargeback in breach
+    of this section constitutes a material breach of these Terms, and you shall be liable for the
+    disputed amount together with all resulting fees, costs and reasonable attorneys' fees.
+  </p>
+  <div class="legal-note">
+    <p>
+      <strong>Statutory rights preserved.</strong> Nothing in this section purports to waive,
+      and this section shall not be construed to waive, any right of rescission or cancellation
+      that cannot lawfully be waived, including any applicable right to cancel a home solicitation
+      sale under Chapter 501, Florida Statutes, or any other non-waivable right conferred by
+      applicable consumer protection law. Where such a right applies and is validly exercised
+      within the statutory period, it prevails over this section to the minimum extent required by
+      law, and the remainder of this section continues in full force.
+    </p>
+  </div>
+
+  <h2>Scheduling, Site Access and Customer Responsibilities</h2>
+  <p>
+    Performance depends on safe, timely and unobstructed access to the property and work areas. You
+    shall, at your own cost: provide clear access and adequate working space; secure or remove
+    vehicles, furnishings, personal property, pets and obstructions; disclose the location of
+    concealed utilities, irrigation, septic systems and private lines; provide access to electrical
+    panels, water and power as reasonably required; and maintain any permissions, association
+    approvals or landlord consents necessary for the work.
+  </p>
+  <p>
+    Gridless Global is not liable for damage to concealed or undisclosed improvements, for damage to
+    items you failed to remove or secure, for incidental damage arising from work performed in the
+    manner customary in the trade, or for disruption, dust, noise, vibration or cosmetic effects
+    inherent in construction activity. Schedules are estimates only and are subject to weather,
+    permitting, inspection availability, utility scheduling, supply chain conditions and events
+    beyond our reasonable control.
   </p>
 
-  <h2>Governing law</h2>
+  <h2>Permits, Interconnection, Incentives and Third-Party Dependencies</h2>
   <p>
-    These terms are governed by the laws of the state of {site.location.region}, United States, without
-    regard to conflict of law principles.
+    Many Services depend on the acts, omissions, discretion and timetables of third parties,
+    including authorities having jurisdiction, building and electrical inspectors, utilities,
+    interconnection and grid operators, registries, verification bodies, funding agencies, lenders,
+    manufacturers, distributors and carriers. Gridless Global will apply reasonable professional
+    effort to advance such matters but <strong>does not guarantee, and shall bear no liability for,
+    the issuance, timing, conditions, denial, revocation or reinterpretation of any permit,
+    approval, interconnection agreement, certification, registration, award or determination.</strong>
+    Delay attributable to any such third party is excusable and shall entitle Gridless Global to an
+    extension of time and, where cost is increased, to an equitable price adjustment.
   </p>
 
-  <h2>Contact</h2>
+  <h2>Third-Party Products, Services and Manufacturer Warranties</h2>
   <p>
-    Questions about these terms: <a href={`mailto:${site.email}`}>{site.email}</a> or
-    <a href={site.phoneHref}>{site.phone}</a>.
+    Equipment, materials and components supplied in connection with the Services are manufactured by
+    third parties and are covered exclusively by the applicable manufacturer's warranty, the terms
+    of which are furnished at handover. <strong>Gridless Global is not the manufacturer and makes no
+    warranty whatsoever with respect to third-party equipment.</strong> To the extent permitted and
+    assignable, Gridless Global assigns to you the benefit of such warranties, and your sole recourse
+    in respect of defective equipment is against the manufacturer.
+  </p>
+  <p>
+    The Site integrates or links to third-party services, including payment processing, form intake,
+    hosting and third-party educational or illustrative content. Gridless Global does not control
+    and is not responsible for the availability, accuracy, security, performance, content, terms or
+    privacy practices of any third party. Your use of any third-party service is governed by that
+    party's own terms.
+  </p>
+
+  <h2>Limited Workmanship Warranty</h2>
+  <p>
+    Where a written contract expressly provides a workmanship warranty, that warranty is stated in
+    the contract and constitutes the sole and exclusive warranty given by Gridless Global. Such
+    warranty covers defects in workmanship only, is non-transferable unless expressly stated,
+    requires written notice within the warranty period and a reasonable opportunity to inspect and
+    cure, and is conditioned upon payment in full of all amounts owed.
+  </p>
+  <p>Any warranty is void, at our discretion, where the claimed defect arises from or is contributed to by:</p>
+  <ul>
+    <li>alteration, repair, servicing, relocation or addition performed by any party other than Gridless Global or its authorised subcontractor;</li>
+    <li>failure to perform required maintenance, monitoring, cleaning, inspection or manufacturer-specified servicing;</li>
+    <li>abuse, misuse, neglect, overloading, operation outside specification, or unauthorised modification of settings or firmware;</li>
+    <li>acts of God, storm, flood, wind, hail, lightning, earthquake, fire, falling objects, vandalism, theft, animal or pest activity, vegetation growth, or environmental conditions;</li>
+    <li>pre-existing conditions, concealed defects, defective design furnished by others, or deficiencies in structures, systems or materials not supplied by Gridless Global;</li>
+    <li>power quality events, utility interruption, grid conditions, or changes to tariffs, metering, rate design or interconnection rules;</li>
+    <li>normal wear, weathering, fading, minor cosmetic variation, efflorescence, or gradual degradation inherent in the materials.</li>
+  </ul>
+
+  <h2>Disclaimer of Warranties</h2>
+  <p class="legal-emphasis">
+    EXCEPT FOR ANY EXPRESS LIMITED WARRANTY STATED IN A SIGNED WRITTEN CONTRACT, THE SITE, ALL SITE
+    CONTENT, ALL PROJECT DOCUMENTS AND ALL SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE", WITH
+    ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND. TO THE FULLEST EXTENT PERMITTED BY LAW, GRIDLESS
+    GLOBAL EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS, WHETHER EXPRESS, IMPLIED, STATUTORY OR
+    ARISING FROM COURSE OF DEALING, COURSE OF PERFORMANCE OR USAGE OF TRADE, INCLUDING WITHOUT
+    LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE,
+    QUIET ENJOYMENT, ACCURACY, SYSTEM INTEGRATION, HABITABILITY, WORKMANLIKE CONSTRUCTION AND
+    NON-INFRINGEMENT.
+  </p>
+  <p class="legal-emphasis">
+    GRIDLESS GLOBAL DOES NOT WARRANT THAT THE SITE WILL BE UNINTERRUPTED, TIMELY, SECURE OR
+    ERROR-FREE, THAT DEFECTS WILL BE CORRECTED, THAT THE SITE OR ANY SERVER IS FREE OF VIRUSES OR
+    HARMFUL COMPONENTS, OR THAT ANY CONTENT, CALCULATION, PROJECTION OR DESCRIPTION IS ACCURATE,
+    COMPLETE, RELIABLE OR CURRENT. YOUR USE OF THE SITE IS AT YOUR SOLE RISK.
+  </p>
+
+  <h2>Limitation of Liability</h2>
+  <p class="legal-emphasis">
+    TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL GRIDLESS GLOBAL, ITS
+    MEMBERS, MANAGERS, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AFFILIATES, SUPPLIERS,
+    SUBCONTRACTORS, LICENSORS, INSURERS OR SUCCESSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND; NOR FOR ANY LOSS OF PROFITS,
+    LOSS OF REVENUE, LOSS OF ANTICIPATED SAVINGS, LOSS OF ENERGY PRODUCTION, LOSS OF INCENTIVES,
+    CREDITS, REBATES OR GRANTS, LOSS OF BUSINESS, LOSS OF GOODWILL, LOSS OF USE, BUSINESS
+    INTERRUPTION, LOSS OF DATA, DIMINUTION IN PROPERTY VALUE, COST OF SUBSTITUTE GOODS, SERVICES OR
+    POWER, OR COST OF CAPITAL; WHETHER ARISING IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT
+    LIABILITY, WARRANTY, STATUTE OR OTHERWISE, AND WHETHER OR NOT GRIDLESS GLOBAL HAS BEEN ADVISED
+    OF THE POSSIBILITY OF SUCH DAMAGES.
+  </p>
+  <p class="legal-emphasis">
+    THE AGGREGATE LIABILITY OF GRIDLESS GLOBAL ARISING OUT OF OR RELATING TO THE SITE, THESE TERMS,
+    ANY PROJECT DOCUMENT, OR ANY SERVICE, FROM ALL CAUSES OF ACTION AND UNDER ALL THEORIES OF
+    LIABILITY, SHALL NOT EXCEED THE LESSER OF (A) THE AMOUNTS ACTUALLY PAID BY YOU TO GRIDLESS
+    GLOBAL FOR THE SPECIFIC SERVICE GIVING RISE TO THE CLAIM DURING THE TWELVE (12) MONTHS
+    IMMEDIATELY PRECEDING THE EVENT FIRST GIVING RISE TO THE CLAIM, OR (B) ONE THOUSAND UNITED
+    STATES DOLLARS (US $1,000.00) WHERE THE CLAIM ARISES FROM USE OF THE SITE RATHER THAN FROM A
+    PAID SERVICE.
+  </p>
+  <p>
+    The foregoing limitations apply notwithstanding the failure of the essential purpose of any
+    limited remedy. You acknowledge that these limitations are an essential basis of the bargain,
+    that they reflect a reasonable allocation of risk between the parties, and that the pricing of
+    the Services would be materially higher in their absence.
+  </p>
+  <div class="legal-note">
+    <p>
+      <strong>Non-waivable liability preserved.</strong> Some jurisdictions do not permit the
+      exclusion or limitation of certain damages or liabilities. Nothing in these Terms excludes or
+      limits liability that cannot lawfully be excluded or limited, including liability for death or
+      personal injury caused by negligence, for fraud or fraudulent misrepresentation, or for any
+      other liability that applicable law prohibits limiting. Where a limitation is held
+      unenforceable, it shall be reduced to the minimum extent necessary and the remainder shall
+      continue in force.
+    </p>
+  </div>
+
+  <h2>Indemnification</h2>
+  <p>
+    You shall defend, indemnify and hold harmless Gridless Global and its members, managers,
+    officers, directors, employees, agents, affiliates, suppliers, subcontractors and licensors
+    (the <strong>"Indemnified Parties"</strong>) from and against any and all claims, demands,
+    actions, suits, proceedings, liabilities, damages, judgments, awards, settlements, losses,
+    fines, penalties, costs and expenses (including reasonable attorneys' fees, expert fees and
+    court costs at trial and on appeal) arising out of or relating to:
+  </p>
+  <ul>
+    <li>your use or misuse of the Site or any Site Content;</li>
+    <li>your breach of these Terms or of any contract with Gridless Global;</li>
+    <li>your violation of any applicable law, ordinance, code, covenant, association rule or third-party right;</li>
+    <li>any inaccurate, incomplete or misleading information you supply;</li>
+    <li>any condition of the property, including concealed conditions and conditions not disclosed to us;</li>
+    <li>any act or omission of you, your employees, contractors, tenants, guests or invitees; and</li>
+    <li>any claim that you lacked authority to authorise the work.</li>
+  </ul>
+  <p>
+    Gridless Global reserves the right, at your expense, to assume the exclusive defence and control
+    of any matter otherwise subject to indemnification by you, in which event you shall cooperate
+    fully. You shall not settle any matter affecting an Indemnified Party without our prior written
+    consent.
+  </p>
+
+  <h2>Intellectual Property; Limited Licence to Use the Site</h2>
+  <p>
+    All Site Content and all Project Documents are and shall remain the exclusive property of
+    Gridless Global or its licensors, and are protected by United States and international copyright,
+    trademark, trade dress, patent, trade secret and unfair competition laws. The name
+    "Gridless Global", the tagline "Powering a Connected Future", the globe and lightning device, and
+    all associated logos and marks are trademarks and trade dress of Gridless Global.
+  </p>
+  <p>
+    Subject to your continuous compliance with these Terms, Gridless Global grants you a limited,
+    revocable, non-exclusive, non-transferable, non-sublicensable licence to access and view the Site
+    for your own personal, non-commercial, informational purposes only. All rights not expressly
+    granted are reserved.
+  </p>
+  <p>
+    Project Documents are furnished for the sole purpose of evaluating and performing the specific
+    project for which they were prepared. They may not be used for any other property or project,
+    disclosed to any competitor, used to solicit competing bids except where required by law, or
+    used to perform the work with another contractor. Title to and all intellectual property rights
+    in Project Documents remain with Gridless Global notwithstanding delivery to you or payment of
+    any fee, unless expressly assigned in a signed writing.
+  </p>
+
+  <h2>Prohibited Conduct; No Scraping, Data Mining or Automated Extraction</h2>
+  <p>You shall not, and shall not permit or enable any third party to:</p>
+  <ul>
+    <li>copy, reproduce, republish, distribute, publicly display, transmit, sell, licence, rent, lease, mirror, frame or create derivative works from any Site Content or Project Document, in whole or in part, in any medium, without our prior express written consent;</li>
+    <li>use any robot, spider, crawler, scraper, headless browser, script, bot or other automated means to access, monitor, index, harvest, extract or copy any portion of the Site or its data;</li>
+    <li>use any Site Content, Project Document or data to train, fine-tune, evaluate or ground any machine learning model, large language model, generative system or artificial intelligence system, or to build any dataset, index or database, in each case without our prior express written consent;</li>
+    <li>reverse engineer, decompile, disassemble, or attempt to derive the source code, structure, methodology, formula, calculation, algorithm or organisation of any part of the Site or of any tool, model or calculator made available through it;</li>
+    <li>circumvent, disable, probe, scan or otherwise interfere with any security, authentication, rate-limiting or access-control feature, or attempt to gain unauthorised access to any system, account or data;</li>
+    <li>introduce any virus, worm, trojan horse, malware, or other harmful code, or impose an unreasonable or disproportionate load on our infrastructure;</li>
+    <li>remove, obscure or alter any copyright, trademark or proprietary notice;</li>
+    <li>use the Site or any Service for any unlawful, infringing, fraudulent, deceptive, defamatory, harassing or otherwise objectionable purpose;</li>
+    <li>submit false, misleading or fraudulent information, impersonate any person or entity, or misrepresent your affiliation; or</li>
+    <li>use the Site to develop, market or operate a competing product or service, or to assist any third party in doing so.</li>
+  </ul>
+  <p>
+    Gridless Global may investigate any suspected violation, and may suspend or terminate your access
+    immediately and without notice, refuse service, remove content, and report conduct to law
+    enforcement, in each case without liability and without prejudice to any other right or remedy.
+  </p>
+
+  <h2>Non-Circumvention</h2>
+  <p>
+    In the course of quoting, designing, procuring and performing the Services, Gridless Global may
+    introduce you to, or disclose to you the identity, capabilities, pricing, terms or contact
+    details of, its employees, subcontractors, trade partners, suppliers, distributors,
+    manufacturers, financiers, lenders, verification bodies, registries, funding sources, referral
+    sources, clients and other business relationships (each, a <strong>"Protected Relationship"</strong>).
+    You acknowledge that these relationships were developed by Gridless Global at substantial cost
+    and effort over time, constitute valuable proprietary business assets and, where applicable,
+    trade secrets under the Florida Uniform Trade Secrets Act, Chapter 688, Florida Statutes.
+  </p>
+  <p>
+    For the duration of your engagement and for a period of <strong>twenty-four (24) months</strong>
+    following its conclusion, you shall not, directly or indirectly, whether personally or through
+    any affiliate, agent, representative or entity in which you hold an interest:
+  </p>
+  <ul>
+    <li>contact, solicit, transact with, contract with, or accept the services or products of any Protected Relationship for the purpose of obtaining, in whole or in part, goods or services of the kind Gridless Global quoted, proposed or provided, so as to avoid, bypass, reduce or eliminate the participation, fees, margin or compensation of Gridless Global;</li>
+    <li>use any Project Document, pricing, specification, supplier identity, methodology or other information obtained from Gridless Global to procure the same or substantially similar work from any other party; or</li>
+    <li>induce or attempt to induce any Protected Relationship to terminate, curtail or decline to enter into a relationship with Gridless Global.</li>
+  </ul>
+  <p>
+    Where you breach this section, Gridless Global shall be entitled, in addition to injunctive
+    relief and all other remedies, to recover as liquidated damages and not as a penalty an amount
+    equal to the greater of (a) the full contract value or quoted value of the circumvented work, or
+    (b) the profit Gridless Global would reasonably have realised on that work, together with all
+    costs of enforcement and reasonable attorneys' fees. The parties acknowledge that actual damages
+    from circumvention are difficult to ascertain and that this measure is a reasonable
+    pre-estimate of the loss.
+  </p>
+  <p>
+    This section shall not restrict you from dealing with any person or entity with whom you had a
+    documented, pre-existing relationship independent of Gridless Global and established before the
+    relevant introduction, provided you can evidence that relationship in writing.
+  </p>
+
+  <h2>Non-Solicitation of Personnel</h2>
+  <p>
+    During your engagement and for <strong>twenty-four (24) months</strong> thereafter, you shall
+    not, directly or indirectly, solicit for employment or engagement, hire, engage as a contractor,
+    or induce or attempt to induce the departure of any employee, crew member, technician,
+    electrician, estimator, project manager or contractor of Gridless Global with whom you had
+    contact or of whom you became aware in connection with the Services. A general advertisement not
+    targeted at such persons shall not, standing alone, constitute solicitation. Where you breach
+    this section, you shall pay Gridless Global, as liquidated damages and not as a penalty, an
+    amount equal to one hundred percent (100%) of the affected person's annualised compensation,
+    which the parties agree is a reasonable estimate of recruitment, training and disruption costs.
+  </p>
+
+  <h2>Confidentiality and Trade Secrets</h2>
+  <p>
+    All non-public information disclosed by Gridless Global, including pricing and pricing
+    methodology, margins, supplier and subcontractor identities and terms, audit and assessment
+    methodologies, energy models, designs, drawings, specifications, proposals, customer lists,
+    business plans and know-how, is confidential and, where it derives independent economic value
+    from not being generally known, constitutes a trade secret.
+  </p>
+  <p>
+    You shall hold such information in strict confidence, use it solely for the purpose for which it
+    was disclosed, restrict access to those of your personnel with a genuine need to know who are
+    bound by obligations no less protective, and neither disclose nor permit disclosure to any third
+    party without our prior written consent. These obligations survive indefinitely as to trade
+    secrets and for five (5) years as to other confidential information. They do not apply to
+    information that is or becomes public through no act of yours, that you lawfully held without
+    obligation of confidence before disclosure, or that you are compelled to disclose by law,
+    provided you give prompt written notice and cooperate in seeking protective treatment.
+  </p>
+
+  <h2>Irreparable Harm; Injunctive Relief; Remedies Cumulative</h2>
+  <p class="legal-emphasis">
+    YOU ACKNOWLEDGE AND AGREE THAT ANY BREACH OR THREATENED BREACH OF THE SECTIONS TITLED
+    "INTELLECTUAL PROPERTY", "PROHIBITED CONDUCT", "NON-CIRCUMVENTION", "NON-SOLICITATION OF
+    PERSONNEL" OR "CONFIDENTIALITY AND TRADE SECRETS" WOULD CAUSE GRIDLESS GLOBAL IMMEDIATE,
+    SUBSTANTIAL AND IRREPARABLE HARM FOR WHICH MONETARY DAMAGES WOULD BE AN INADEQUATE REMEDY AND
+    FOR WHICH THERE IS NO ADEQUATE REMEDY AT LAW.
+  </p>
+  <p>
+    Accordingly, Gridless Global shall be entitled to seek and obtain immediate temporary,
+    preliminary and permanent injunctive relief, specific performance and other equitable relief in
+    any court of competent jurisdiction, <strong>without the necessity of posting bond or other
+    security and without the necessity of proving actual damages</strong>, and you irrevocably waive
+    any requirement for such bond or proof and any defence that an adequate remedy at law exists.
+    Such relief shall be in addition to, and not in lieu of, any other remedy available at law or in
+    equity, all of which are cumulative. The pursuit of equitable relief shall not waive or limit
+    the right to arbitrate any claim for damages.
+  </p>
+
+  <h2>User Submissions and Feedback</h2>
+  <p>
+    Any comment, suggestion, idea, review, testimonial, photograph, data or other material you
+    submit to Gridless Global (<strong>"Submissions"</strong>) is provided on a non-confidential and
+    non-proprietary basis. You grant Gridless Global a perpetual, irrevocable, worldwide, fully
+    paid-up, royalty-free, sublicensable and transferable licence to use, reproduce, modify, adapt,
+    publish, translate, distribute and display the Submission in any medium and for any purpose,
+    including marketing, without attribution or compensation. You warrant that you own or control
+    all rights in the Submission and that it does not infringe any third-party right or violate any
+    law. Gridless Global has no obligation to use, monitor, retain or return any Submission.
+  </p>
+
+  <h2>Electronic Communications; Calls, Texts and E-SIGN Consent</h2>
+  <p>
+    By providing your contact details you consent to receive communications from Gridless Global
+    electronically, including by email, text message and telephone, at the addresses and numbers you
+    supply, including through automated means, regarding your enquiry, quotation, project,
+    scheduling, invoicing and service. You agree that electronic communications and electronic
+    signatures satisfy any legal requirement that a communication or agreement be in writing, in
+    accordance with the federal E-SIGN Act and the Florida Uniform Electronic Transaction Act,
+    Chapter 668, Florida Statutes. Message and data rates may apply. You may opt out of marketing
+    messages at any time by replying STOP to a text, using the unsubscribe link in any marketing
+    email, or contacting us; operational messages relating to an active project may continue.
+    Consent to marketing is not a condition of purchase.
+  </p>
+
+  <h2>Privacy</h2>
+  <p>
+    Our collection and use of personal information is described in our
+    <a href="/privacy">Privacy Policy</a>, which forms part of these Terms.
+  </p>
+
+  <h2>Force Majeure</h2>
+  <p>
+    Gridless Global shall not be liable for any delay, suspension or failure of performance caused
+    directly or indirectly by any event beyond its reasonable control, including without limitation
+    acts of God, hurricane, tropical storm, flood, wind, hail, lightning, fire, earthquake, sinkhole,
+    extreme weather, epidemic or pandemic, public health order, war, terrorism, civil unrest, riot,
+    strike, labour shortage or dispute, shortage or delay of materials or equipment, supply chain
+    disruption, transportation failure, utility or grid failure, power interruption, cyberattack,
+    failure of telecommunications or internet services, embargo, tariff, change in law or code, or
+    act, delay or omission of any governmental authority, utility or third party. Time for
+    performance shall be extended for the duration of the event and a reasonable period thereafter,
+    and any resulting increase in cost shall be borne by you.
+  </p>
+
+  <h2>Dispute Resolution; Binding Arbitration; Class Action Waiver</h2>
+  <p>
+    <strong>Informal resolution first.</strong> Before commencing any proceeding, you shall give
+    written notice to Gridless Global describing the dispute in reasonable detail and the relief
+    sought, and the parties shall negotiate in good faith for a period of thirty (30) days. This
+    step is a condition precedent to the commencement of any arbitration or suit.
+  </p>
+  <p>
+    <strong>Binding arbitration.</strong> Except as provided below, any dispute, claim or
+    controversy arising out of or relating to these Terms, the Site, any Project Document or any
+    Service, including the existence, validity, interpretation, breach, enforcement or termination
+    thereof, shall be finally resolved by binding arbitration administered by the American
+    Arbitration Association under its Consumer Arbitration Rules or Construction Industry
+    Arbitration Rules, as applicable, before a single arbitrator. The seat of arbitration shall be
+    <strong>Osceola County, Florida</strong>. The arbitrator shall apply Florida substantive law,
+    shall have no authority to award relief inconsistent with these Terms, and shall have no
+    authority to award punitive or exemplary damages, which the parties expressly waive. Judgment on
+    the award may be entered in any court of competent jurisdiction. The Federal Arbitration Act
+    governs the interpretation and enforcement of this section.
+  </p>
+  <p class="legal-emphasis">
+    CLASS ACTION WAIVER. ALL CLAIMS SHALL BE BROUGHT AND ARBITRATED SOLELY IN YOUR INDIVIDUAL
+    CAPACITY AND NOT AS A PLAINTIFF, CLASS MEMBER OR REPRESENTATIVE IN ANY PURPORTED CLASS,
+    COLLECTIVE, CONSOLIDATED, PRIVATE ATTORNEY GENERAL OR REPRESENTATIVE PROCEEDING. THE ARBITRATOR
+    MAY NOT CONSOLIDATE THE CLAIMS OF MORE THAN ONE PERSON AND MAY NOT PRESIDE OVER ANY FORM OF
+    CLASS OR REPRESENTATIVE PROCEEDING. IF THIS CLASS ACTION WAIVER IS FOUND UNENFORCEABLE AS TO ANY
+    CLAIM, THAT CLAIM SHALL BE SEVERED AND LITIGATED IN COURT, AND THE REMAINING CLAIMS SHALL
+    PROCEED IN ARBITRATION.
+  </p>
+  <p class="legal-emphasis">
+    JURY TRIAL WAIVER. TO THE FULLEST EXTENT PERMITTED BY LAW, EACH PARTY KNOWINGLY, VOLUNTARILY AND
+    IRREVOCABLY WAIVES ANY RIGHT TO TRIAL BY JURY IN ANY ACTION, PROCEEDING OR COUNTERCLAIM ARISING
+    OUT OF OR RELATING TO THESE TERMS OR THE SERVICES.
+  </p>
+  <p>
+    <strong>Exceptions.</strong> Either party may bring an individual action in small claims court
+    within its jurisdictional limits. Notwithstanding anything to the contrary, Gridless Global may
+    seek injunctive or other equitable relief as described in the section titled "Irreparable Harm;
+    Injunctive Relief; Remedies Cumulative", and may pursue collection of unpaid amounts and the
+    enforcement or foreclosure of lien rights, in a court of competent jurisdiction, without first
+    submitting the matter to arbitration.
+  </p>
+
+  <h2>Governing Law and Venue</h2>
+  <p>
+    These Terms and any dispute arising out of or relating to them, the Site or the Services shall
+    be governed by and construed in accordance with the laws of the
+    <strong>State of Florida</strong>, without regard to its conflict of law principles and
+    excluding the United Nations Convention on Contracts for the International Sale of Goods.
+  </p>
+  <p>
+    Subject to the arbitration provisions above, the parties irrevocably submit to the
+    <strong>exclusive jurisdiction and venue of the state courts located in Osceola County, Florida,
+    and the United States District Court for the Middle District of Florida, Orlando Division</strong>,
+    and each party irrevocably waives any objection to such venue, including any defence of
+    inconvenient forum.
+  </p>
+  <p>
+    In any action to enforce these Terms or any contract with Gridless Global, the prevailing party
+    shall be entitled to recover its reasonable attorneys' fees, paralegal fees, expert fees and
+    costs, at trial, on appeal and in any bankruptcy, insolvency or post-judgment proceeding.
+  </p>
+
+  <h2>Limitation Period</h2>
+  <p class="legal-emphasis">
+    TO THE FULLEST EXTENT PERMITTED BY LAW, ANY CLAIM ARISING OUT OF OR RELATING TO THE SITE, THESE
+    TERMS OR ANY SERVICE MUST BE COMMENCED WITHIN ONE (1) YEAR AFTER THE CAUSE OF ACTION ACCRUES.
+    ANY CLAIM NOT BROUGHT WITHIN THAT PERIOD IS PERMANENTLY BARRED.
+  </p>
+
+  <h2>Assignment</h2>
+  <p>
+    You may not assign, delegate or transfer these Terms or any right or obligation under them, by
+    operation of law or otherwise, without our prior written consent, and any purported assignment
+    without such consent is void. Gridless Global may freely assign these Terms and any contract, in
+    whole or in part, including to an affiliate or in connection with a merger, reorganisation or
+    sale of assets. These Terms bind and benefit the parties and their permitted successors and
+    assigns.
+  </p>
+
+  <h2>Severability and Savings</h2>
+  <p>
+    If any provision of these Terms is held invalid, illegal or unenforceable by a court or
+    arbitrator of competent jurisdiction, that provision shall be modified and interpreted so as to
+    best accomplish its objectives to the greatest extent permitted by law, and if it cannot be so
+    modified, it shall be severed. The remaining provisions shall continue in full force and effect.
+    Without limiting the foregoing, where any limitation of liability, disclaimer, waiver, time bar
+    or restrictive covenant is held overbroad or unenforceable, it shall be enforced to the maximum
+    extent permissible, including by reducing any duration, geographic scope or measure of damages
+    to the maximum permitted.
+  </p>
+
+  <h2>No Waiver</h2>
+  <p>
+    No failure or delay by Gridless Global in exercising any right, power or remedy operates as a
+    waiver, and no single or partial exercise precludes any further exercise. No waiver is effective
+    unless in a signed writing, and a waiver on one occasion does not waive any other occasion. The
+    forbearance from enforcing any provision shall not be construed as a course of dealing modifying
+    these Terms.
+  </p>
+
+  <h2>Entire Agreement; Order of Precedence</h2>
+  <p>
+    These Terms, together with the Privacy Policy and any written proposal, contract, change order
+    or work authorisation signed by an authorised representative of Gridless Global, constitute the
+    entire agreement between the parties with respect to their subject matter and supersede all
+    prior or contemporaneous understandings, representations, negotiations, proposals and
+    communications, whether oral or written. You acknowledge that you have not relied upon any
+    statement, representation, warranty or assurance not expressly set out herein.
+  </p>
+  <p>
+    In the event of conflict, the following order of precedence applies: (a) a signed written
+    contract or change order; (b) a signed written proposal; (c) these Terms; and (d) any other
+    material on the Site. Any pre-printed terms on your purchase order or other document are
+    expressly rejected and shall have no effect.
+  </p>
+
+  <h2>Survival</h2>
+  <p>
+    All provisions which by their nature should survive termination shall survive, including without
+    limitation the sections titled Definitions, No Professional Advice, Pricing and Payment, No
+    Refunds, Disclaimer of Warranties, Limitation of Liability, Indemnification, Intellectual
+    Property, Prohibited Conduct, Non-Circumvention, Non-Solicitation of Personnel, Confidentiality
+    and Trade Secrets, Irreparable Harm, Dispute Resolution, Governing Law and Venue, Limitation
+    Period, Severability and Survival.
+  </p>
+
+  <h2>Changes to These Terms</h2>
+  <p>
+    Gridless Global may modify these Terms at any time in its sole discretion by posting a revised
+    version on the Site with an updated effective date. Changes are effective upon posting and apply
+    prospectively. Your continued use of the Site after posting constitutes acceptance. Where a
+    change materially affects an active contract, the terms in effect when that contract was signed
+    continue to govern that contract unless the parties agree otherwise in writing. You should
+    review these Terms periodically.
+  </p>
+
+  <h2>Notices and Contact</h2>
+  <p>
+    Notices to Gridless Global must be in writing and sent to the email address below, and are
+    effective upon confirmed receipt. Notices to you may be given by email to the address you
+    supplied, by posting on the Site, or by any other reasonable means.
+  </p>
+  <p>
+    {company}<br />
+    {site.location.label}<br />
+    Email: <a href={`mailto:${site.email}`}>{site.email}</a><br />
+    Telephone: <a href={site.phones[0].href}>{site.phones[0].number}</a> or
+    <a href={site.phones[1].href}>{site.phones[1].number}</a>
+  </p>
+  <p>
+    <strong>Effective date:</strong> {effective}.
   </p>
 </LegalLayout>

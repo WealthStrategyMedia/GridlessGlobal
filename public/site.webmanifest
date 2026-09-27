@@ -1,0 +1,14 @@
+{
+  "name": "Gridless Global",
+  "short_name": "Gridless",
+  "description": "Energy generation, solar, electrical, roofing and construction.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#010b16",
+  "theme_color": "#010b16",
+  "icons": [
+    { "src": "/images/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/images/favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/images/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

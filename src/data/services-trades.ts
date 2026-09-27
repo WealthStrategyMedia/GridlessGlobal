@@ -1,8 +1,9 @@
 import type { Service } from './service-types';
 
 /**
- * Self-performed trades. Having these in-house is what lets an energy project
- * run on one schedule instead of waiting on three subcontractors.
+ * Trades we manage. Bringing these under one plan is what lets an energy
+ * project run on one schedule instead of waiting on three separate contractors
+ * nobody is coordinating.
  */
 export const tradeServices: Service[] = [
   {
@@ -12,16 +13,16 @@ export const tradeServices: Service[] = [
     summary:
       'Licensed electricians for service upgrades, rewiring, panels, lighting, EV circuits, troubleshooting and code correction - residential and commercial.',
     intro:
-      'Our electrical division is the backbone of everything else we do. Solar, storage, microgrids and EV charging all terminate in a panel that somebody has to get right, so we keep that work in-house. The same licensed team also handles conventional electrical work: service upgrades, rewiring, lighting, troubleshooting and bringing older installations back into code compliance.',
+      'Electrical is the backbone of everything else we manage. Solar, storage, microgrids and EV charging all terminate in a panel that somebody has to get right, so we scope it carefully, put it to licensed electricians we have already vetted, and supervise the result. The same programme covers conventional electrical work: service upgrades, rewiring, lighting, troubleshooting and bringing older installations back into code compliance.',
     icon: 'bolt',
     accent: 'gold',
     group: 'trades',
     segments: ['residential', 'commercial'],
     highlights: [
-      'Licensed and insured on every job',
+      'Licensed and insured specialists on every job',
       'Service and panel upgrades to 400A and beyond',
       'Commercial switchgear and three-phase work',
-      '24/7 emergency electrical response',
+      '24/7 emergency electrical response coordinated for you',
     ],
     offerings: [
       { title: 'Service & panel upgrades', body: 'Capacity increases, main panel replacement, sub-panels and smart panels that support solar, storage and EV charging.' },
@@ -35,7 +36,7 @@ export const tradeServices: Service[] = [
       { title: 'Inspect', body: 'Existing service, panel and wiring condition assessed and documented.' },
       { title: 'Calculate', body: 'Load calculations confirm what the service can genuinely carry.' },
       { title: 'Permit', body: 'Applications filed and inspections scheduled by us.' },
-      { title: 'Install', body: 'Work performed by licensed electricians, never subcontracted out.' },
+      { title: 'Install', body: 'Carried out by licensed electricians we appoint, with our supervision throughout.' },
       { title: 'Certify', body: 'Testing, labelling and inspection sign-off before handover.' },
     ],
     faqs: [
@@ -45,7 +46,7 @@ export const tradeServices: Service[] = [
     ],
     stats: [
       { value: '24/7', label: 'Emergency response' },
-      { value: 'Licensed', label: 'Never subcontracted' },
+      { value: 'Vetted', label: 'Credentials verified before appointment' },
       { value: '400A+', label: 'Residential service capacity' },
     ],
     freeOffer: true,
@@ -59,7 +60,7 @@ export const tradeServices: Service[] = [
     summary:
       'Standby generators, transfer switches and battery backup - engineered so the transition from grid to backup is automatic, tested and genuinely reliable.',
     intro:
-      'Backup power that has never been tested is a hope, not a plan. We size standby systems against the loads you actually need to keep alive, install the transfer switching correctly, and put the system on a maintenance and exercise schedule so it starts on the day it matters. Where batteries make more sense than fuel - and increasingly they do - we will say so.',
+      'Backup power that has never been tested is a hope, not a plan. We size standby systems against the loads you actually need to keep alive, specify the transfer switching properly, appoint the right installer and put the system on a maintenance and exercise schedule so it starts on the day it matters. Where batteries make more sense than fuel - and increasingly they do - we will say so.',
     icon: 'shield',
     accent: 'blue',
     group: 'trades',
@@ -81,7 +82,7 @@ export const tradeServices: Service[] = [
     process: [
       { title: 'Prioritise', body: 'Critical, desirable and non-essential loads separated and costed.' },
       { title: 'Size', body: 'Generator or battery sized to measured starting and running loads.' },
-      { title: 'Install', body: 'Pad, fuel, exhaust, transfer switch and wiring by our own crew.' },
+      { title: 'Install', body: 'Pad, fuel, exhaust, transfer switch and wiring delivered by our appointed specialists.' },
       { title: 'Test', body: 'Live transfer testing under load before handover.' },
       { title: 'Maintain', body: 'Scheduled service and exercise so it works when called on.' },
     ],
@@ -106,7 +107,7 @@ export const tradeServices: Service[] = [
     summary:
       'Residential and commercial roofing - replacement, repair, storm damage and solar-ready installation from the contractor who also handles your array.',
     intro:
-      'The roof is the single most important component in any solar project, and the one most often skipped over. We replace and repair residential and commercial roofs across every common system, and because we also install solar we detail the roof to receive an array - flashing, attachment layout and future penetration planning - rather than leaving that problem for a second contractor to solve badly.',
+      'The roof is the single most important component in any solar project, and the one most often skipped over. We manage roof replacement and repair across every common system, and because we also run the solar programme we specify the roof to receive an array - flashing, attachment layout and future penetration planning - rather than leaving that problem for a second contractor to solve badly.',
     icon: 'roof',
     accent: 'cyan',
     group: 'trades',
@@ -153,7 +154,7 @@ export const tradeServices: Service[] = [
     summary:
       'Siding, cladding, soffit, fascia and gutters - replaced with the weather barrier and insulation behind them done properly, not just the visible surface.',
     intro:
-      'Siding replacement is one of the few moments when the wall assembly is genuinely open, and it is the cheapest opportunity you will ever get to fix the weather barrier, add continuous insulation and correct the details that cause rot. We treat it as a building-envelope project that happens to change the appearance, which is why our siding work usually shows up in the energy analysis as well.',
+      'Siding replacement is one of the few moments when the wall assembly is genuinely open, and it is the cheapest opportunity you will ever get to fix the weather barrier, add continuous insulation and correct the details that cause rot. We treat it as a building-envelope project that happens to change the appearance, which is why our siding programmes usually show up in the energy analysis as well.',
     icon: 'layers',
     accent: 'green',
     group: 'trades',
@@ -200,7 +201,7 @@ export const tradeServices: Service[] = [
     summary:
       'Additions, remodels, tenant improvements and ground-up work - built efficient from the start, with the energy systems designed in rather than added later.',
     intro:
-      'Gridless Global builds. Residential additions and remodels, garages and accessory dwellings, commercial tenant improvements and ground-up light construction. What distinguishes our work is that the energy design is native to it: envelope performance, electrical capacity, solar readiness and EV conduit are specified at framing, when they cost almost nothing, rather than retrofitted later at many times the price.',
+      'Gridless Global runs construction programmes. Residential additions and remodels, garages and accessory dwellings, commercial tenant improvements and ground-up light construction. What distinguishes our work is that the energy design is native to it: envelope performance, electrical capacity, solar readiness and EV conduit are specified at framing, when they cost almost nothing, rather than retrofitted later at many times the price. We write the scope, competitively bid it and manage the builders through to sign-off.',
     icon: 'hammer',
     accent: 'gold',
     group: 'trades',
@@ -216,14 +217,14 @@ export const tradeServices: Service[] = [
       { title: 'Garages & ADUs', body: 'Detached garages, workshops and accessory dwelling units, permitted and built to current code.' },
       { title: 'Tenant improvements', body: 'Commercial build-outs including demising walls, mechanical, electrical, finishes and occupancy sign-off.' },
       { title: 'Ground-up construction', body: 'Light commercial and residential new build with high-performance envelope specification.' },
-      { title: 'Design-build delivery', body: 'One contract covering design, permitting and construction, so responsibility never lands between two firms.' },
+      { title: 'Design-build delivery', body: 'One point of responsibility covering design, permitting and construction, so it never lands between two firms.' },
       { title: 'Energy-ready infrastructure', body: 'Conduit, panel capacity, roof structure and mounting provisions specified at framing for future systems.' },
     ],
     process: [
       { title: 'Define', body: 'Scope, budget and schedule established before design begins.' },
       { title: 'Design', body: 'Drawings and specifications including envelope and energy provisions.' },
       { title: 'Permit', body: 'Applications, plan review and approvals managed by us.' },
-      { title: 'Build', body: 'Self-performed trades with a single site supervisor accountable.' },
+      { title: 'Build', body: 'Managed trades with a single project manager accountable to you.' },
       { title: 'Close', body: 'Inspections, punch list, warranty documentation and handover.' },
     ],
     faqs: [
@@ -247,13 +248,13 @@ export const tradeServices: Service[] = [
     summary:
       'The smaller jobs, handled properly - repairs, installations, maintenance and punch lists by insured tradespeople, for homes and commercial properties alike.',
     intro:
-      'Not everything needs a project manager and a permit. Our handyman division covers the long tail of work that property owners struggle to get anyone to show up for: repairs, fixture installation, door and window adjustment, drywall, carpentry, seasonal maintenance and the punch list that never quite gets finished. Same insured team, same standards, considerably smaller invoice.',
+      'Not everything needs a full programme and a permit. Our handyman service covers the long tail of work that property owners struggle to get anyone to show up for: repairs, fixture installation, door and window adjustment, drywall, carpentry, seasonal maintenance and the punch list that never quite gets finished. Same vetted tradespeople, same standards, considerably smaller invoice.',
     icon: 'wrench',
     accent: 'blue',
     group: 'trades',
     segments: ['residential', 'commercial'],
     highlights: [
-      'Insured tradespeople, scheduled appointments',
+      'Insured, vetted tradespeople and appointments that hold',
       'Repairs, installations and general maintenance',
       'Commercial property and facility punch lists',
       'Recurring maintenance plans available',
@@ -275,11 +276,11 @@ export const tradeServices: Service[] = [
     ],
     faqs: [
       { q: 'Is there a minimum charge?', a: 'We have a minimum service call to cover travel and setup, which is why bundling several small items into one visit is far better value than calling us out repeatedly.' },
-      { q: 'Do you do electrical and plumbing?', a: 'Electrical, yes - licensed electricians handle anything beyond a simple fixture swap. Plumbing is limited to minor repairs and fixture replacement; anything structural we refer to a licensed plumber rather than pretend otherwise.' },
+      { q: 'Do you do electrical and plumbing?', a: 'Electrical, yes - licensed electricians handle anything beyond a simple fixture swap. Plumbing is limited to minor repairs and fixture replacement; anything structural we bring in a licensed plumber for rather than pretend otherwise.' },
       { q: 'Do you offer maintenance plans?', a: 'Yes. Scheduled quarterly or seasonal visits for homes, and recurring facility maintenance agreements for commercial properties.' },
     ],
     stats: [
-      { value: 'Insured', label: 'On every visit' },
+      { value: 'Insured', label: 'Verified on every visit' },
       { value: 'Bundled', label: 'Best value per call-out' },
       { value: 'Recurring', label: 'Maintenance plans available' },
     ],

@@ -386,3 +386,39 @@
     pointer-events: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Native select dropdowns
+   The option list is painted by the browser, not by the page. Options inherit
+   the select's near-white text but default to a transparent background, so on
+   a light system popup they render white on white and become unreadable.
+   Giving them an explicit opaque surface fixes the contrast everywhere that
+   honours option styling; where it is ignored (Safari renders the popup
+   itself) `color-scheme: dark` already yields a legible dark menu.
+   -------------------------------------------------------------------------- */
+@layer base {
+  select option,
+  select optgroup {
+    background-color: #04162a; /* navy-900, opaque on purpose */
+    color: #eef5fd;
+  }
+
+  select option:disabled {
+    color: #6f88a6;
+  }
+
+  /* The empty first entry reads as a prompt rather than a value. */
+  select option[value=""] {
+    color: #9db4cf;
+  }
+
+  /* Never override the user's own high-contrast palette. */
+  @media (forced-colors: active) {
+    select option,
+    select optgroup,
+    select option[value=""] {
+      background-color: Canvas;
+      color: CanvasText;
+    }
+  }
+}

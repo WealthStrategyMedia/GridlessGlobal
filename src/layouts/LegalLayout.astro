@@ -6,12 +6,15 @@ import Icon from '~/components/Icon.astro';
 interface Props {
   title: string;
   description: string;
-  updated: string;
-  /** Shows the "template - have counsel review" banner. */
+  /** Date the document takes effect, e.g. "September 26, 2026". */
+  effective: string;
+  /** Shown when the document has been revised since it took effect. */
+  updated?: string;
+  /** Shows a "template pending review" banner. Off for finalised documents. */
   draft?: boolean;
 }
 
-const { title, description, updated, draft = true } = Astro.props;
+const { title, description, effective, updated, draft = false } = Astro.props;
 ---
 <BaseLayout title={title} description={description}>
   <PageHero
@@ -20,54 +23,178 @@ const { title, description, updated, draft = true } = Astro.props;
     crumbs={[{ label: 'Home', href: '/' }, { label: title }]}
     icon="file-text"
   >
-    <p class="mt-6 text-[0.88rem] text-ink-faint">Last updated: {updated}</p>
+    <dl class="mt-7 flex flex-wrap gap-x-10 gap-y-3 text-[0.85rem]">
+      <div>
+        <dt class="text-ink-faint">Effective date</dt>
+        <dd class="mt-0.5 font-display font-semibold text-ink">{effective}</dd>
+      </div>
+      {
+        updated && (
+          <div>
+            <dt class="text-ink-faint">Last updated</dt>
+            <dd class="mt-0.5 font-display font-semibold text-ink">{updated}</dd>
+          </div>
+        )
+      }
+    </dl>
   </PageHero>
 
   <section class="shell py-14 lg:py-20">
-    <div class="mx-auto max-w-3xl">
-      {
-        draft && (
-          <p class="mb-10 flex items-start gap-3 rounded-2xl border border-gold-500/25 bg-gold-500/[0.07] px-5 py-4 text-[0.85rem] leading-relaxed text-gold-200/90">
-            <Icon name="info" size={18} class="mt-px shrink-0" />
-            <span>
-              <strong class="font-semibold">Template pending review.</strong> This document is a
-              starting point and has not been reviewed by counsel. Replace it with your own policy
-              before the site handles live customer data.
-            </span>
-          </p>
-        )
-      }
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-16">
+      <!-- Contents, built from the headings so it can never drift out of step. -->
+      <nav class="lg:sticky lg:top-28 lg:self-start" aria-labelledby="toc-heading" data-legal-toc hidden>
+        <p id="toc-heading" class="eyebrow mb-4">Contents</p>
+        <ol class="max-h-[70vh] space-y-1 overflow-y-auto pr-2 text-[0.83rem]"></ol>
+      </nav>
 
-      <div class="legal-body prose-gg">
-        <slot />
+      <div>
+        {
+          draft && (
+            <p class="mb-10 flex items-start gap-3 rounded-2xl border border-gold-500/25 bg-gold-500/[0.07] px-5 py-4 text-[0.85rem] leading-relaxed text-gold-200/90">
+              <Icon name="info" size={18} class="mt-px shrink-0" />
+              <span>
+                <strong class="font-semibold">Template pending review.</strong> Replace this document
+                with your own policy before the site handles live customer data.
+              </span>
+            </p>
+          )
+        }
+
+        <article class="legal-body" data-legal-body>
+          <slot />
+        </article>
       </div>
     </div>
   </section>
 </BaseLayout>
 
+<script>
+  // Give every top-level section a stable id and build the contents list.
+  const body = document.querySelector<HTMLElement>('[data-legal-body]');
+  const toc = document.querySelector<HTMLElement>('[data-legal-toc]');
+  const list = toc?.querySelector('ol');
+
+  if (body && toc && list) {
+    const headings = [...body.querySelectorAll('h2')];
+    const slug = (text: string) =>
+      text
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 60);
+
+    headings.forEach((heading, i) => {
+      if (!heading.id) heading.id = `${i + 1}-${slug(heading.textContent ?? '')}`;
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `#${heading.id}`;
+      link.textContent = heading.textContent ?? '';
+      link.className =
+        'block rounded-lg px-3 py-1.5 leading-snug text-ink-faint transition-colors hover:bg-white/[0.05] hover:text-ink aria-[current=true]:bg-brand-500/12 aria-[current=true]:text-brand-200';
+      li.appendChild(link);
+      list.appendChild(li);
+    });
+
+    if (headings.length) toc.hidden = false;
+
+    // Highlight the section currently in view.
+    if ('IntersectionObserver' in window) {
+      const links = new Map(
+        [...list.querySelectorAll('a')].map((a) => [a.getAttribute('href')!.slice(1), a])
+      );
+      const seen = new Set<string>();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) seen.add(entry.target.id);
+            else seen.delete(entry.target.id);
+          });
+          const first = headings.find((h) => seen.has(h.id));
+          links.forEach((a, id) => a.setAttribute('aria-current', String(Boolean(first && id === first.id))));
+        },
+        { rootMargin: '-96px 0px -70% 0px' }
+      );
+      headings.forEach((h) => observer.observe(h));
+    }
+  }
+</script>
+
 <style is:global>
+  .legal-body {
+    counter-reset: legal-section;
+  }
   .legal-body h2 {
-    margin-top: 2.75rem;
-    margin-bottom: 0.9rem;
-    font-size: 1.4rem;
+    counter-increment: legal-section;
+    counter-reset: legal-clause;
+    scroll-margin-top: 7rem;
+    margin-top: 3.25rem;
+    margin-bottom: 1rem;
+    font-size: 1.32rem;
     font-weight: 700;
+    line-height: 1.3;
+  }
+  .legal-body h2::before {
+    content: counter(legal-section) ". ";
+    color: var(--color-brand-300);
+    font-variant-numeric: tabular-nums;
   }
   .legal-body h2:first-child { margin-top: 0; }
+
   .legal-body h3 {
-    margin-top: 1.9rem;
+    scroll-margin-top: 7rem;
+    margin-top: 2rem;
     margin-bottom: 0.6rem;
-    font-size: 1.08rem;
+    font-size: 1.04rem;
     font-weight: 600;
+    color: var(--color-ink);
   }
-  .legal-body p { margin-bottom: 1.1rem; }
-  .legal-body ul {
-    margin-bottom: 1.3rem;
-    padding-left: 1.3rem;
-    list-style: disc;
-  }
-  .legal-body li {
-    margin-bottom: 0.5rem;
+
+  .legal-body p {
+    margin-bottom: 1.05rem;
     color: var(--color-ink-muted);
-    line-height: 1.7;
+    line-height: 1.78;
+  }
+  .legal-body strong { color: var(--color-ink); font-weight: 600; }
+  .legal-body a { color: var(--color-brand-300); text-decoration: underline; text-underline-offset: 3px; }
+
+  .legal-body ul,
+  .legal-body ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .legal-body ul { list-style: disc; }
+  .legal-body ol { list-style: lower-alpha; }
+  .legal-body li {
+    margin-bottom: 0.55rem;
+    color: var(--color-ink-muted);
+    line-height: 1.72;
+  }
+  .legal-body li::marker { color: var(--color-ink-faint); }
+
+  /* Clauses that carry real legal weight are set in caps by convention. */
+  .legal-body .legal-emphasis {
+    display: block;
+    margin-bottom: 1.05rem;
+    border-left: 2px solid var(--color-gold-500);
+    padding-left: 1.1rem;
+    color: var(--color-ink);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.75;
+  }
+
+  .legal-body .legal-note {
+    margin-bottom: 1.25rem;
+    border: 1px solid rgb(148 190 236 / 0.16);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.03);
+    padding: 1.1rem 1.25rem;
+    font-size: 0.92rem;
+  }
+  .legal-body .legal-note p:last-child { margin-bottom: 0; }
+
+  @media print {
+    .legal-body { color: #000; }
+    .legal-body p, .legal-body li { color: #222; }
   }
 </style>

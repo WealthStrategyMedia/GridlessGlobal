@@ -21,13 +21,13 @@ const heroStats = [
 const differentiators: { icon: IconName; title: string; body: string }[] = [
   {
     icon: 'shield-check',
-    title: 'We self-perform',
-    body: 'Licensed electricians, roofers and builders on staff. Your schedule is not hostage to a subcontractor who stopped answering the phone.',
+    title: 'One manager, every trade',
+    body: 'You deal with us, not with five contractors blaming each other. We hold the scope, the schedule and the quality, and chase everyone else so you do not have to.',
   },
   {
     icon: 'gauge',
-    title: 'Measurement before sales',
-    body: 'Every recommendation starts with metered data and a ranked payback list. Sometimes that means telling you not to buy the thing you asked about.',
+    title: 'Independent by design',
+    body: 'Our fee buys judgement, not a product line, so nothing skews the recommendation. Every option starts from metered data and a ranked payback list - sometimes that means telling you not to buy the thing you asked about.',
   },
   {
     icon: 'network',
@@ -55,7 +55,7 @@ const process = [
   { step: 'Consult', body: 'A real conversation about the property, the budget and what you are actually trying to solve.' },
   { step: 'Analyse', body: 'Metered data, site survey and tariff review establish what is true before anything is proposed.' },
   { step: 'Design', body: 'One integrated scope across every trade, priced transparently with the incentives already applied.' },
-  { step: 'Build', body: 'Self-performed crews, managed permits and a sequence that keeps the site working.' },
+  { step: 'Deliver', body: 'We appoint the trades, manage permits and hold a sequence that keeps the site working.' },
   { step: 'Support', body: 'Monitoring, maintenance and one number to call for the life of the system.' },
 ];
 
@@ -99,7 +99,7 @@ const homeFaqs = [
   },
   {
     q: 'Are you licensed and insured?',
-    a: 'Yes. Our electricians are licensed, our crews are insured, and we carry the bonding that commercial and institutional clients require. Documentation is provided with every proposal.',
+    a: 'Yes. Every specialist we appoint is licensed, insured and bonded to the level your project requires, and we verify those credentials before anyone sets foot on site. Documentation is provided with every proposal.',
   },
 ];
 
@@ -132,7 +132,7 @@ const segments = [
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal-400 opacity-70"></span>
               <span class="relative inline-flex h-2 w-2 rounded-full bg-signal-400"></span>
             </span>
-            Powering a Connected Future
+            Project management &amp; energy consulting
           </p>
 
           <h1 class="mt-7 font-display text-[2.6rem] font-extrabold leading-[1.04] sm:text-6xl xl:text-7xl">
@@ -141,9 +141,11 @@ const segments = [
           </h1>
 
           <p class="mt-7 max-w-2xl text-[1.08rem] leading-relaxed text-ink-muted lg:text-[1.18rem]">
-            Gridless Global builds and operates power - utility-scale solar, hydro, thermal, storage
-            and microgrids - and brings the same engineering to homes and businesses: solar,
-            electrical, roofing, construction and the analysis that shows which of them actually pays.
+            <strong class="font-semibold text-ink">We run the whole project, so you deal with one team,
+            one schedule and one point of accountability.</strong> Gridless Global plans, prices and manages energy projects - utility-scale solar, hydro,
+            thermal, storage and microgrids - and brings the same discipline to homes and businesses:
+            solar, electrical, roofing, construction, and the analysis that shows which of them
+            actually pays.
           </p>
 
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -155,7 +157,7 @@ const segments = [
 
           <ul class="mt-10 flex flex-wrap gap-x-7 gap-y-3">
             {
-              ['Licensed & insured', 'Self-performing crews', 'Incentives handled', 'One warranty'].map((point) => (
+              ['Independent advice', 'Vetted specialists', 'Incentives handled', 'One accountable manager'].map((point) => (
                 <li class="flex items-center gap-2 text-[0.85rem] text-ink-muted">
                   <Icon name="check" size={16} class="text-signal-400" />
                   {point}
@@ -246,7 +248,7 @@ const segments = [
       </h2>
       <p class="mt-4 max-w-2xl text-[1.02rem] leading-relaxed text-ink-muted">
         The same capability, scaled to the property. Every energy service we offer is available to
-        both, and the trades work is in-house either way.
+        both, and the same managed trade network delivers it either way.
       </p>
     </div>
 

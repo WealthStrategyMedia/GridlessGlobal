@@ -1,92 +1,269 @@
 ---
 import LegalLayout from '~/layouts/LegalLayout.astro';
 import { site } from '~/data/site';
+
+const company = site.legalName;
+const effective = 'September 27, 2026';
 ---
 <LegalLayout
   title="Privacy Policy"
-  description={`How ${site.name} collects, uses and protects personal information.`}
-  updated="26 September 2026"
+  description={`How ${site.legalName} collects, uses, discloses and protects personal information through its website and services.`}
+  effective={effective}
 >
-  <h2>Overview</h2>
+  <div class="legal-note">
+    <p>
+      <strong>Summary.</strong> {company} collects only what it needs to answer your enquiry,
+      prepare an estimate and perform work you engage us for. We do not sell personal information.
+      We never receive or store your full payment card number. This Policy explains what we collect,
+      why, who we share it with, how long we keep it, and the choices available to you.
+    </p>
+  </div>
+
+  <h2>Scope and Application</h2>
   <p>
-    {site.legalName} ("we", "us") provides energy, electrical and construction services. This policy
-    explains what personal information we collect through this website, why we collect it, and the
-    choices you have.
+    This Privacy Policy (the <strong>"Policy"</strong>) describes how {company}, a Florida limited
+    liability company based in Orlando, Osceola County, Florida (<strong>"Gridless Global"</strong>,
+    <strong>"we"</strong>, <strong>"us"</strong> or <strong>"our"</strong>), collects, uses,
+    discloses, retains and safeguards personal information in connection with this website (the
+    <strong>"Site"</strong>) and the products and services we provide (the <strong>"Services"</strong>).
+  </p>
+  <p>
+    This Policy forms part of, and is incorporated by reference into, our
+    <a href="/terms">Terms of Service</a>. By using the Site or engaging us, you acknowledge that you
+    have read and understood this Policy. If you do not agree with it, please do not use the Site or
+    submit information to us.
+  </p>
+  <p>
+    This Policy does not apply to the practices of any third party we do not own or control,
+    including our payment provider, our form intake provider, the operators of any linked or
+    embedded third-party content, utilities, permitting authorities, funding bodies or manufacturers.
   </p>
 
-  <h2>Information we collect</h2>
-  <p>We collect only what we need to respond to you and deliver work you have asked for.</p>
+  <h2>Information We Collect</h2>
+  <h3>Information you provide</h3>
   <ul>
-    <li><strong>Information you give us.</strong> Name, email, phone number, property address, and details about your project submitted through our contact, quote or payment forms.</li>
-    <li><strong>Payment information.</strong> Card details are entered on our payment provider's hosted page and are never transmitted to or stored on our servers. We receive only a confirmation, the amount and a reference.</li>
-    <li><strong>Technical information.</strong> Standard server logs such as IP address, browser type and pages visited, used to keep the site secure and working.</li>
+    <li><strong>Contact details</strong> - first and last name, email address, telephone number.</li>
+    <li><strong>Property and project details</strong> - the property address or location, property type, approximate square footage, roof age, typical monthly energy spend, desired timeline, and the nature of the work you are enquiring about.</li>
+    <li><strong>Enquiry content</strong> - the substance of any message, note or instruction you send us.</li>
+    <li><strong>Billing and payment context</strong> - the name on the account, the email address for a receipt, an invoice or job number, the amount, and any note you attach to a payment.</li>
+    <li><strong>Subscription details</strong> - the email address you give us for our newsletter.</li>
+    <li><strong>Project records</strong> - where you engage us, information necessary to perform and document the work, which may include utility account numbers and interval usage data, meter readings, tariff and rate schedule information, site photographs, structural and electrical observations, equipment serial numbers, and inspection and commissioning records.</li>
   </ul>
 
-  <h2>How we use it</h2>
+  <h3>Information collected automatically</h3>
   <ul>
-    <li>To respond to enquiries, prepare estimates and deliver contracted work.</li>
-    <li>To process payments and issue receipts.</li>
-    <li>To submit permit, interconnection, incentive and grant applications on your behalf, where you have engaged us to do so.</li>
-    <li>To send service updates, and marketing messages only where you have opted in.</li>
-    <li>To meet legal, tax and regulatory obligations.</li>
+    <li><strong>Server and delivery logs</strong> - IP address, browser type and version, device and operating system, referring page, pages requested, and date and time of access. These are generated by our hosting provider in the ordinary course of serving the Site and are used for security, abuse prevention, diagnostics and aggregate traffic measurement.</li>
+    <li><strong>Page context on submission</strong> - the page address a form was sent from, so we know which service an enquiry relates to.</li>
+    <li><strong>Local browser storage</strong> - a small amount of information may be stored in your browser to remember interface preferences. It stays on your device and is not transmitted to us.</li>
   </ul>
 
-  <h2>Sharing</h2>
-  <p>We do not sell personal information. We share it only where it is necessary:</p>
-  <ul>
-    <li>With service providers acting on our behalf, such as our payment processor and hosting provider, under contractual confidentiality obligations.</li>
-    <li>With utilities, permitting authorities and funding bodies where you have asked us to act for you.</li>
-    <li>Where required by law or to protect our legal rights.</li>
-  </ul>
-
-  <h2>Retention</h2>
+  <h3>Information we do not collect</h3>
+  <p class="legal-emphasis">
+    WE DO NOT RECEIVE, PROCESS, TRANSMIT OR STORE FULL PAYMENT CARD NUMBERS, CARD VERIFICATION
+    VALUES, OR BANK ACCOUNT CREDENTIALS. CARD DETAILS ARE ENTERED DIRECTLY INTO THE SECURE,
+    PCI-COMPLIANT ENVIRONMENT OF OUR PAYMENT PROVIDER AND ITS PROCESSOR. WE RECEIVE ONLY A
+    CONFIRMATION OF THE TRANSACTION, THE AMOUNT, AND A REFERENCE IDENTIFIER.
+  </p>
   <p>
-    Enquiry records are kept for as long as needed to respond and for a reasonable period afterwards.
-    Project and financial records are retained for the period required by tax, warranty and regulatory
-    obligations.
+    We do not knowingly collect Social Security numbers, government identification numbers,
+    biometric data, precise geolocation, health information, or information revealing racial or
+    ethnic origin, religious belief, political opinion, sexual orientation or trade union
+    membership. Please do not send such information to us. Where you volunteer it unsolicited, you
+    do so at your own risk and we may delete it.
   </p>
 
-  <h2>Your choices</h2>
+  <h2>How We Use Information</h2>
+  <p>We use personal information for the following purposes, and no others without your consent:</p>
   <ul>
-    <li>You can unsubscribe from marketing email at any time using the link in any message.</li>
-    <li>You can ask us for a copy of the personal information we hold about you, or ask us to correct or delete it, subject to the records we are legally required to keep.</li>
-    <li>You can ask us to stop contacting you entirely.</li>
+    <li>to respond to enquiries, answer questions and provide requested information;</li>
+    <li>to assess a property, prepare estimates, proposals, designs and energy analyses;</li>
+    <li>to plan, schedule, supervise, document and administer contracted work, and to instruct and manage the trade partners carrying it out;</li>
+    <li>to process payments, issue receipts and invoices, and pursue amounts owed;</li>
+    <li>to submit permit applications, interconnection applications, incentive, rebate, grant and carbon registry filings on your behalf where you have engaged us to do so;</li>
+    <li>to provide customer support, service and warranty administration;</li>
+    <li>to send operational messages about an active enquiry or project;</li>
+    <li>to send newsletters and marketing communications where you have opted in;</li>
+    <li>to maintain the security and integrity of the Site, prevent fraud and abuse, and enforce our Terms;</li>
+    <li>to improve our services, content and internal processes, generally using aggregated or de-identified information; and</li>
+    <li>to comply with legal, tax, licensing, insurance, warranty and regulatory obligations, and to establish, exercise or defend legal claims.</li>
   </ul>
+
+  <h2>Disclosure of Information</h2>
+  <p class="legal-emphasis">
+    WE DO NOT SELL PERSONAL INFORMATION, AND WE DO NOT SHARE PERSONAL INFORMATION FOR CROSS-CONTEXT
+    BEHAVIOURAL ADVERTISING OR TARGETED ADVERTISING.
+  </p>
+  <p>We disclose personal information only as follows:</p>
+  <ul>
+    <li><strong>Service providers.</strong> Vendors who perform functions on our behalf, including website hosting and content delivery, form intake and customer relationship management, payment processing, email delivery, and professional advisers. They are permitted to use the information only to provide those services to us.</li>
+    <li><strong>Trade partners and suppliers.</strong> The independent licensed contractors and suppliers we tender to and appoint on your behalf, to the extent necessary to quote, schedule, supply or carry out the work you engaged us to manage.</li>
+    <li><strong>Authorities and counterparties, at your direction.</strong> Utilities, grid operators, building departments and other authorities having jurisdiction, inspectors, incentive and rebate administrators, funding agencies, registries and verification bodies, and financing providers, where required to progress an application or project you have asked us to pursue.</li>
+    <li><strong>Manufacturers.</strong> Where necessary to register or administer an equipment warranty for you.</li>
+    <li><strong>Legal and protective disclosures.</strong> Where we believe in good faith that disclosure is required by law, subpoena, court order, or governmental request, or is necessary to enforce our Terms, investigate suspected fraud or a security incident, protect the rights, property or safety of Gridless Global, our customers or the public, or establish or defend legal claims.</li>
+    <li><strong>Corporate transactions.</strong> In connection with a merger, acquisition, financing, reorganisation, sale of assets, or insolvency, in which case personal information may be transferred as a business asset, subject to this Policy or a successor policy no less protective.</li>
+    <li><strong>With your consent.</strong> For any other purpose disclosed to you at the time.</li>
+  </ul>
+
+  <h2>Payments</h2>
   <p>
-    To make any of these requests, email
-    <a href={`mailto:${site.email}`}>{site.email}</a> or call <a href={site.phoneHref}>{site.phone}</a>.
+    Payments made through the Site are handled by our third-party payment provider and its
+    underlying card processor. When you proceed to payment, you are presented with the provider's
+    own secure payment form. The information you enter there is collected directly by the provider
+    under its own privacy policy and security controls. We receive confirmation of the outcome,
+    the amount, the reason for payment, any invoice or job reference, the name and email you
+    supplied for the receipt, and a transaction identifier. We use this solely to apply the payment
+    to your account, issue a receipt, and maintain our financial records.
   </p>
 
-  <h2>Cookies</h2>
+  <h2>Cookies and Tracking Technologies</h2>
   <p>
-    This site uses only what is necessary to function. If analytics or marketing cookies are added
-    later, this policy will be updated and consent will be requested before they are set.
+    The Site is built as a static website and does not use advertising cookies, third-party
+    analytics profiling, cross-site trackers, pixels or fingerprinting. Any storage used is limited
+    to what is necessary for the Site to function or to remember an interface preference on your own
+    device.
   </p>
+  <p>
+    Embedded third-party content, such as an interactive educational model or a hosted payment form,
+    is delivered by the third party and may set its own cookies or local storage when it loads,
+    under that party's own policy. Most browsers allow you to refuse or delete cookies through their
+    settings; doing so may affect the functioning of embedded features. We do not currently respond
+    to browser Do Not Track signals, as no common standard for their interpretation has been
+    adopted; we do honour recognised opt-out preference signals where required by applicable law.
+  </p>
+
+  <h2>Communications, Calls and Text Messages</h2>
+  <p>
+    Where you provide a telephone number, you consent to be contacted at that number by Gridless
+    Global and its authorised representatives regarding your enquiry, estimate or project, including
+    by call and text message and including through automated means. Message and data rates may
+    apply. Message frequency varies.
+  </p>
+  <p>
+    You may withdraw consent to marketing communications at any time by replying <strong>STOP</strong>
+    to any text message, using the unsubscribe link in any marketing email, or contacting us using
+    the details below. Operational messages necessary to an active project, and records we are
+    required to retain, may continue. <strong>Consent to marketing communications is not a condition
+    of purchasing any product or service.</strong>
+  </p>
+
+  <h2>Data Retention</h2>
+  <p>
+    We retain personal information only as long as necessary for the purposes described in this
+    Policy, and thereafter as required to comply with legal, tax, accounting, licensing, warranty,
+    insurance and regulatory obligations, or to establish, exercise or defend legal claims.
+  </p>
+  <ul>
+    <li>Enquiries that do not proceed are retained for a limited period and then deleted or de-identified.</li>
+    <li>Project, contract, warranty and financial records are retained for the periods required by Florida law, applicable statutes of limitation and repose, warranty duration and tax requirements.</li>
+    <li>Newsletter subscriptions are retained until you unsubscribe, plus a short suppression record to ensure we honour your opt-out.</li>
+    <li>Server logs are retained for a short period for security and diagnostic purposes.</li>
+  </ul>
 
   <h2>Security</h2>
   <p>
-    The site is served over HTTPS, and payment handling is delegated to a PCI-compliant processor. No
-    system is perfectly secure, but we take reasonable technical and organisational measures to
-    protect the information we hold.
+    We maintain reasonable administrative, technical and physical safeguards designed to protect
+    personal information against unauthorised access, disclosure, alteration and destruction. The
+    Site is served exclusively over encrypted HTTPS connections, payment handling is delegated to a
+    PCI-compliant provider, and access to project records is limited to personnel with a legitimate
+    need.
+  </p>
+  <p class="legal-emphasis">
+    NO METHOD OF TRANSMISSION OVER THE INTERNET AND NO METHOD OF ELECTRONIC STORAGE IS COMPLETELY
+    SECURE. WHILE WE APPLY REASONABLE SAFEGUARDS, WE CANNOT AND DO NOT GUARANTEE THE ABSOLUTE
+    SECURITY OF ANY INFORMATION, AND WE DISCLAIM LIABILITY FOR ANY UNAUTHORISED ACCESS, ACQUISITION
+    OR DISCLOSURE NOT CAUSED BY OUR GROSS NEGLIGENCE OR WILFUL MISCONDUCT, TO THE FULLEST EXTENT
+    PERMITTED BY LAW. YOU TRANSMIT INFORMATION TO US AT YOUR OWN RISK.
+  </p>
+  <p>
+    You are responsible for maintaining the confidentiality of any credentials or access details
+    associated with your project and for the security of the devices and email accounts you use to
+    communicate with us.
   </p>
 
-  <h2>Children</h2>
+  <h2>Your Choices and Rights</h2>
+  <p>Subject to applicable law and to the records we are obliged to retain, you may:</p>
+  <ul>
+    <li><strong>Access</strong> - request confirmation of whether we hold personal information about you and obtain a copy;</li>
+    <li><strong>Correct</strong> - request correction of inaccurate or incomplete information;</li>
+    <li><strong>Delete</strong> - request deletion of information we are not required to keep;</li>
+    <li><strong>Portability</strong> - request a copy in a portable format, where applicable law provides that right;</li>
+    <li><strong>Opt out</strong> - unsubscribe from marketing email, stop text messages, or ask that we cease contacting you entirely; and</li>
+    <li><strong>Withdraw consent</strong> - where processing is based on consent, withdraw it prospectively.</li>
+  </ul>
   <p>
-    This site is not directed at children under 13 and we do not knowingly collect their personal
-    information.
+    To exercise any right, contact us using the details below. We will verify your identity by
+    reasonable means before acting, which may require you to confirm information already associated
+    with your enquiry or project. We will respond within the period required by applicable law. We
+    will not discriminate against you for exercising any right. You may use an authorised agent
+    where permitted by law, subject to proof of authority.
   </p>
 
-  <h2>Changes</h2>
+  <h2>State Privacy Rights</h2>
   <p>
-    We may update this policy from time to time. The date at the top reflects the most recent
-    revision.
+    Residents of certain states, including under the Florida Digital Bill of Rights and comparable
+    legislation in California, Virginia, Colorado, Connecticut, Utah and other states, may have
+    additional rights regarding personal data, including rights of access, correction, deletion,
+    portability, and the right to opt out of targeted advertising, the sale of personal data, and
+    certain profiling.
+  </p>
+  <p>
+    As stated above, <strong>Gridless Global does not sell personal information, does not share it
+    for cross-context behavioural advertising, and does not engage in profiling that produces legal
+    or similarly significant effects.</strong> Requests to exercise state privacy rights may be
+    submitted using the contact details below. Where a request is denied, you may appeal by replying
+    to our decision, and we will respond in writing with our reasoning within the period required by
+    law.
   </p>
 
-  <h2>Contact</h2>
+  <h2>Children's Privacy</h2>
   <p>
-    {site.legalName}<br />
+    The Site is directed to a general and business audience and is not intended for children. We do
+    not knowingly collect personal information from anyone under the age of thirteen (13), and we do
+    not knowingly sell or share the personal information of anyone under the age of sixteen (16). If
+    you believe a child has provided us personal information, contact us and we will delete it
+    promptly.
+  </p>
+
+  <h2>Third-Party Sites and Embedded Content</h2>
+  <p>
+    The Site links to and, in places, embeds content operated by third parties. Such links and
+    embeds are provided for convenience and reference only and do not constitute endorsement. We do
+    not control and are not responsible for the content, security, availability, accuracy or privacy
+    practices of any third party. Reviewing the privacy policy of any third party before providing
+    information to it is your responsibility.
+  </p>
+
+  <h2>Users Outside the United States</h2>
+  <p>
+    The Site is operated from the United States and is intended for users located in the United
+    States. If you access the Site from another jurisdiction, you do so on your own initiative and
+    are responsible for compliance with local law. Any information you provide will be transferred
+    to, stored and processed in the United States, where data protection laws may differ from those
+    of your jurisdiction. By using the Site you consent to that transfer and processing.
+  </p>
+
+  <h2>Changes to This Policy</h2>
+  <p>
+    We may update this Policy from time to time to reflect changes in our practices, technology,
+    legal requirements or business. The revised version will be posted on this page with an updated
+    effective date, and takes effect upon posting. Where changes are material, we will take
+    reasonable steps to provide additional notice. Your continued use of the Site after the revised
+    Policy takes effect constitutes acceptance.
+  </p>
+
+  <h2>Contact Us</h2>
+  <p>
+    To ask a question about this Policy, exercise a privacy right, or raise a concern about how we
+    handle personal information, contact:
+  </p>
+  <p>
+    {company}<br />
     {site.location.label}<br />
-    <a href={`mailto:${site.email}`}>{site.email}</a> &middot;
-    <a href={site.phoneHref}>{site.phone}</a>
+    Email: <a href={`mailto:${site.email}`}>{site.email}</a><br />
+    Telephone: <a href={site.phones[0].href}>{site.phones[0].number}</a> or
+    <a href={site.phones[1].href}>{site.phones[1].number}</a>
+  </p>
+  <p>
+    <strong>Effective date:</strong> {effective}.
   </p>
 </LegalLayout>

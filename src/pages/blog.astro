@@ -20,12 +20,10 @@ import { site } from '~/data/site';
  * so a failed fetch degrades to the client-side path.
  */
 let posts: BlogPost[] = [];
-let buildFetchFailed = false;
 
 try {
   posts = await fetchPosts();
 } catch (error) {
-  buildFetchFailed = true;
   console.warn(`[gridless] Blog feed unavailable at build time, falling back to client fetch: ${error}`);
 }
 

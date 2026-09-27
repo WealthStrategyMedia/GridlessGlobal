@@ -4,8 +4,22 @@ Guidance for Claude Code when working in this repository.
 
 ## What this is
 
-Static marketing site for Gridless Global (energy generation, solar, electrical, roofing,
-construction). Astro 5 + Tailwind CSS 4, `output: 'static'`, deployed to Netlify's free
+Static marketing site for Gridless Global, a **project management and energy consulting
+firm**. This matters for every word of copy: Gridless Global plans, prices, tenders and
+manages energy and construction projects; the physical work is carried out by independent
+licensed trade partners it vets and supervises.
+
+**Copy rules, non-negotiable:**
+- Never write that Gridless Global self-performs, has crews or trades "in-house", or
+  employs electricians, roofers or builders. That language was removed deliberately.
+- Public pages sell the management value positively - one accountable manager, vetted
+  specialists, competitive tendering, superior results at a materially lower total cost.
+  Do **not** state on public pages that the company does not do the work itself.
+- The explicit disclosure lives in the Terms, in "Nature of Gridless Global; Project
+  Management and Consulting Only". Keep that section and its liability carve-out for trade
+  partner acts and omissions intact.
+
+Services covered: energy generation, solar, electrical, roofing, construction. Astro 5 + Tailwind CSS 4, `output: 'static'`, deployed to Netlify's free
 tier. Two Netlify Functions handle payments and optional form relay — everything else is
 prerendered HTML.
 
@@ -40,6 +54,11 @@ shipping a dead link — keep that guard.
 **Generated assets are committed.** `public/images/*` is derived from `Context/` by
 `scripts/prepare-assets.mjs`. Do not edit those files by hand; change the script and re-run
 it. Netlify does not run it.
+
+**The supplied logo is already a transparent PNG.** Do not add background removal, recolour
+the wordmark or rebuild it as live text — ship the exact artwork. Its wordmark is deep navy
+and fails contrast on the dark UI, so `Logo.astro` puts the lockup on a white plate on dark
+surfaces; that is the sanctioned fix, not editing the mark.
 
 ## Conventions
 
@@ -140,6 +159,24 @@ previous day).
 
 `BlogCard.astro` and the `cardMarkup` template inside `blog.astro` render the same card —
 one for the build, one for the client refresh. Change both together.
+
+## Events
+
+`/events` mirrors the blog (build-time fetch + client refresh + designed empty state) and
+adds ticket and sponsorship purchasing through the same modal pattern as Pay a Bill.
+
+**The purchase request body is inferred, not observed** — no event exists yet and the
+endpoints 404 on event lookup before validating. Everything uncertain lives in
+`PURCHASE_FIELDS` / `buildPurchaseBody` in `src/lib/events.ts`; correct it there rather
+than scattering fixes. `startPurchase` accepts `embedUrl`, `checkoutUrl` or
+`clientSecret` in the response and `paymentUrlFrom` picks the frameable one.
+
+Purchase buttons carry their own `data-event-id` / `data-ticket-id` / `data-package-id`.
+Do not key them by array index — a grid refresh after a purchase used to make a stale index
+resolve to the wrong event.
+
+Keep the `event.origin` check on the `message` listener; it is the only thing stopping
+another page from faking a completed purchase.
 
 ## Loading indicator and the hero globe
 

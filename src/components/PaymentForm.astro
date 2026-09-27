@@ -224,10 +224,44 @@ const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
     <div class="relative min-h-0 flex-1 bg-white" data-checkout-frame-slot>
       <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-navy-900" data-checkout-loading>
         <span class="gg-spinner" aria-hidden="true">
-          <img src="/images/logo-mark.png" alt="" width="280" height="248" />
+          <img src="/images/logo-mark.png" alt="" width="280" height="259" />
         </span>
         <p class="font-display text-[0.9rem] font-semibold text-ink">Opening secure checkout...</p>
         <p class="text-[0.78rem] text-ink-faint">One moment.</p>
+      </div>
+
+      {/* If the card form never becomes usable, say so and offer a way out,
+          rather than leaving the payer staring at an empty panel. */}
+      <div
+        class="absolute inset-x-0 bottom-0 hidden border-t border-gold-500/30 bg-navy-950/97 px-5 py-4 sm:px-7"
+        data-checkout-stalled
+        role="status"
+      >
+        <p class="flex items-start gap-2.5 font-display text-[0.88rem] font-semibold text-gold-300">
+          <Icon name="alert" size={17} class="mt-px shrink-0" />
+          The card form is taking longer than usual
+        </p>
+        <p class="mt-1.5 text-[0.82rem] leading-relaxed text-ink-muted">
+          Nothing has been charged. Open checkout in its own tab to finish, or close this and try
+          again shortly.
+        </p>
+        <div class="mt-3.5 flex flex-wrap gap-2.5">
+          <button
+            type="button"
+            data-checkout-stalled-newtab
+            class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-5 py-2.5 font-display text-[0.82rem] font-semibold text-navy-950 transition-transform hover:-translate-y-0.5"
+          >
+            Open checkout in a new tab
+            <Icon name="arrow-up-right" size={15} />
+          </button>
+          <button
+            type="button"
+            data-checkout-stalled-retry
+            class="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 font-display text-[0.82rem] font-semibold text-ink transition-colors hover:border-brand-400/60"
+          >
+            Reload checkout
+          </button>
+        </div>
       </div>
     </div>
 
@@ -289,10 +323,29 @@ const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
     const modalSummary = modal.querySelector('[data-checkout-summary]');
 
     const newTabLink = modal.querySelector('[data-checkout-newtab]');
+    const stalledBox = modal.querySelector('[data-checkout-stalled]');
 
     let lastFocused = null;
     let settled = false;
     let currentCheckoutUrl = null;
+    let stallTimer = null;
+
+    // The checkout runs on Tweeble's origin, so we cannot inspect whether its
+    // card fields actually mounted. If nothing has happened well after the
+    // frame loaded, assume it did not and offer a way forward.
+    const STALL_AFTER_MS = 15000;
+
+    const clearStall = () => {
+      window.clearTimeout(stallTimer);
+      stallTimer = null;
+      stalledBox?.classList.add('hidden');
+    };
+    const armStall = () => {
+      window.clearTimeout(stallTimer);
+      stallTimer = window.setTimeout(() => {
+        if (!settled && !modal.classList.contains('hidden')) stalledBox?.classList.remove('hidden');
+      }, STALL_AFTER_MS);
+    };
 
     /* ---------------- status banner ---------------- */
     function show(kind, title, body) {
@@ -392,6 +445,7 @@ const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
       frame.addEventListener('load', function () {
         modalLoading.classList.add('hidden');
         modalLoading.classList.remove('flex');
+        armStall();
       });
       frameSlot.appendChild(frame);
 
@@ -399,6 +453,7 @@ const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
     }
 
     function closeModal() {
+      clearStall();
       modal.classList.add('hidden');
       modal.classList.remove('flex');
       document.body.style.overflow = '';
@@ -437,6 +492,27 @@ const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
         );
       });
     }
+
+    modal.querySelector('[data-checkout-stalled-newtab]')?.addEventListener('click', function () {
+      if (!currentCheckoutUrl) return;
+      window.open(currentCheckoutUrl, '_blank', 'noopener');
+      settled = true;
+      closeModal();
+      show(
+        'info',
+        'Checkout opened in a new tab',
+        'Finish your payment there. This page will not update automatically, so check your email for the receipt.'
+      );
+    });
+
+    modal.querySelector('[data-checkout-stalled-retry]')?.addEventListener('click', function () {
+      const frame = frameSlot.querySelector('[data-checkout-frame]');
+      if (!frame || !currentCheckoutUrl) return;
+      stalledBox?.classList.add('hidden');
+      modalLoading.classList.remove('hidden');
+      modalLoading.classList.add('flex');
+      frame.src = currentCheckoutUrl;
+    });
 
     modal.querySelector('[data-checkout-close]').addEventListener('click', () => cancelPayment());
     modal.querySelector('[data-checkout-backdrop]').addEventListener('click', () => cancelPayment());
@@ -496,6 +572,7 @@ const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
       const data = event.data;
       if (!data || data.type !== 'tweeble:purchase') return;
 
+      clearStall();
       const status = String(data.status || '').toLowerCase();
       if (status === 'cancelled' || status === 'canceled') {
         cancelPayment();

@@ -63,8 +63,12 @@ const schemas = [organizationSchema, ...(Array.isArray(schema) ? schema : schema
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta name="theme-color" content="#010b16" />
-    <link rel="icon" type="image/png" href="/images/logo-mark-512.png" />
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <!-- Favicons: the globe from the logo. .ico first for older browsers. -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />

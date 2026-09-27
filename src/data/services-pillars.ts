@@ -23,7 +23,7 @@ export const pillars: Service[] = [
     highlights: [
       'Greenfield development and interconnection strategy',
       'Single-axis tracker, fixed-tilt and bifacial designs',
-      'EPC delivery with in-house licensed electricians',
+      'EPC delivery managed end to end on your behalf',
       'O&M contracts with performance guarantees',
     ],
     offerings: [
@@ -41,7 +41,7 @@ export const pillars: Service[] = [
       },
       {
         title: 'EPC construction',
-        body: 'Self-performed electrical scope, vetted civil and racking crews, procurement leverage on modules and inverters, and a commissioning package that actually matches the as-builts.',
+        body: 'We competitively bid the electrical, civil and racking scopes to vetted specialists, use our procurement leverage on modules and inverters, and hold the contractors to a commissioning package that actually matches the as-builts.',
       },
       {
         title: 'Operations & maintenance',
@@ -56,7 +56,7 @@ export const pillars: Service[] = [
       { title: 'Screen', body: 'Resource, grid and land constraints are modelled before anything is committed.' },
       { title: 'Develop', body: 'Site control, interconnection, permits and offtake are secured in parallel.' },
       { title: 'Engineer', body: 'Design is optimised for lifetime yield, not just lowest install cost.' },
-      { title: 'Build', body: 'Self-performed electrical plus managed civil crews under one schedule.' },
+      { title: 'Build', body: 'Specialist contractors competitively bid and managed under one schedule.' },
       { title: 'Operate', body: 'Monitored, maintained and reported against guaranteed availability.' },
     ],
     faqs: [
@@ -581,22 +581,22 @@ export const pillars: Service[] = [
     summary:
       'Everything your home needs from one licensed team - solar, storage, electrical, energy analysis, carbon credits, roofing, siding and the trades work in between.',
     intro:
-      'Most homeowners end up juggling four contractors who each blame the other three. Gridless Global covers the whole envelope: the solar array and the battery behind it, the panel upgrade that makes both possible, the roof underneath, the siding around it, and the energy analysis that tells you which of those actually pays. One licensed team, one schedule, one warranty conversation.',
+      'Most homeowners end up juggling four contractors who each blame the other three. Gridless Global takes that off you. We work out what the house actually needs, competitively bid every scope to specialists we have already vetted, and manage the whole programme to completion: the solar array and the battery behind it, the panel upgrade that makes both possible, the roof underneath, the siding around it. One plan, one schedule, one person accountable to you.',
     icon: 'home',
     accent: 'green',
     group: 'property',
     segments: ['residential'],
     pillar: true,
     highlights: [
-      'Solar, battery and EV charging under one contract',
-      'Licensed electricians on every job',
-      'Roofing, siding and construction in-house',
+      'Solar, battery and EV charging under one managed plan',
+      'Licensed, insured and vetted specialists on every job',
+      'Roofing, siding and construction managed under one plan',
       'Energy analysis before you spend anything',
     ],
     offerings: [
       {
         title: 'Solar installation & upgrades',
-        body: 'New rooftop and ground-mount arrays, plus additions, inverter replacement and repair on systems another company installed.',
+        body: 'New rooftop and ground-mount arrays, plus additions, inverter replacement and repair on systems another company installed - scoped by us, delivered by specialists we manage.',
       },
       {
         title: 'Home battery & backup',
@@ -608,23 +608,23 @@ export const pillars: Service[] = [
       },
       {
         title: 'Electrical & panel upgrades',
-        body: 'Service upgrades, rewiring, sub-panels, EV circuits, lighting and code corrections by licensed electricians.',
+        body: 'Service upgrades, rewiring, sub-panels, EV circuits, lighting and code corrections, delivered by licensed electricians we appoint and supervise.',
       },
       {
         title: 'Roofing & siding',
-        body: 'Full replacement and repair, coordinated with solar removal and re-install so the two trades never work against each other.',
+        body: 'Full replacement and repair, coordinated with solar removal and re-install so the two trades never work against each other or bill you twice.',
       },
       {
         title: 'Construction & handyman',
-        body: 'Additions, remodels, garages and the long list of smaller jobs, handled by the same company that holds your other warranties.',
+        body: 'Additions, remodels, garages and the long list of smaller jobs, managed by the same team that holds your other project records.',
       },
     ],
     process: [
       { title: 'Assess', body: 'A measured energy analysis of the house, not a sales walkthrough.' },
       { title: 'Prioritise', body: 'Improvements ranked by payback so the budget goes to the right place first.' },
       { title: 'Design', body: 'One integrated scope across every trade involved.' },
-      { title: 'Install', body: 'Sequenced so roofing, electrical and solar do not collide.' },
-      { title: 'Support', body: 'Monitoring, maintenance and a single number to call.' },
+      { title: 'Deliver', body: 'We appoint the trades and sequence them so roofing, electrical and solar never collide.' },
+      { title: 'Support', body: 'Monitoring, maintenance and a single number to call - ours.' },
     ],
     faqs: [
       {
@@ -641,8 +641,8 @@ export const pillars: Service[] = [
       },
     ],
     stats: [
-      { value: '1 team', label: 'Every trade under one warranty' },
-      { value: 'Licensed', label: 'Electricians on every project' },
+      { value: '1 plan', label: 'Every trade under one manager' },
+      { value: 'Vetted', label: 'Licensed specialists on every project' },
       { value: 'Free', label: 'Initial consultation and estimate' },
     ],
     freeOffer: true,
@@ -657,7 +657,7 @@ export const pillars: Service[] = [
     summary:
       'Solar, energy analysis, efficiency and carbon credits for facilities and portfolios - plus the electrical, roofing and construction capability to execute it.',
     intro:
-      'Energy is one of the few operating costs a business can genuinely re-engineer. Gridless Global works with facility managers, portfolio owners, REITs, manufacturers, municipalities and institutions to cut consumption, shave demand charges, generate on site, monetise carbon and keep the building envelope sound - with a self-performing trades arm so the plan does not die waiting on a subcontractor.',
+      'Energy is one of the few operating costs a business can genuinely re-engineer. Gridless Global works with facility managers, portfolio owners, REITs, manufacturers, municipalities and institutions to cut consumption, shave demand charges, generate on site, monetise carbon and keep the building envelope sound - then manages the delivery of every measure, so the plan does not die on a spreadsheet waiting for someone to own it.',
     icon: 'building',
     accent: 'blue',
     group: 'property',
@@ -688,18 +688,18 @@ export const pillars: Service[] = [
       },
       {
         title: 'Electrical & infrastructure',
-        body: 'Service upgrades, switchgear, lighting retrofits, EV charging and power quality work by licensed commercial electricians.',
+        body: 'Service upgrades, switchgear, lighting retrofits, EV charging and power quality work, competitively bid to licensed commercial electricians and managed by us.',
       },
       {
         title: 'Roofing & building envelope',
-        body: 'Commercial roofing, siding, cladding and construction, sequenced around solar and operations so the site keeps running.',
+        body: 'Commercial roofing, siding, cladding and construction, procured and sequenced around solar and operations so the site keeps running.',
       },
     ],
     process: [
       { title: 'Benchmark', body: 'Every site scored against its peers to find where the money is.' },
       { title: 'Model', body: 'Measures ranked by NPV, payback and carbon impact.' },
       { title: 'Fund', body: 'Incentives, grants and financing structures assembled around the plan.' },
-      { title: 'Execute', body: 'Self-performed trades keep the schedule under our control.' },
+      { title: 'Execute', body: 'We appoint and drive the trades, so the schedule stays under our control.' },
       { title: 'Report', body: 'Measurement and verification proves the savings were real.' },
     ],
     faqs: [

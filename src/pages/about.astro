@@ -16,7 +16,7 @@ const values: { icon: IconName; title: string; body: string }[] = [
   {
     icon: 'shield-check',
     title: 'Own the outcome',
-    body: 'Self-performing the trades means there is nobody to blame when something slips. That is deliberate - it keeps us honest about schedules.',
+    body: 'We carry the schedule and the quality, whoever is holding the tools. When something slips it is ours to fix, not ours to explain away.',
   },
   {
     icon: 'users',
@@ -31,7 +31,7 @@ const values: { icon: IconName; title: string; body: string }[] = [
 ];
 
 const capabilities = [
-  { value: 'Utility scale', label: 'Solar, hydro, thermal, storage and microgrid development, EPC and operations' },
+  { value: 'Utility scale', label: 'Solar, hydro, thermal, storage and microgrid development, procurement and delivery management' },
   { value: 'Commercial', label: 'Portfolio audits, on-site generation, demand management, carbon and ESG' },
   { value: 'Residential', label: 'Solar, batteries, EV charging, electrical, roofing, siding and construction' },
   { value: 'Advisory', label: 'Grant writing, carbon credits, training, workshops and speaker services' },
@@ -39,27 +39,27 @@ const capabilities = [
 
 const milestones = [
   {
-    title: 'One company, every trade',
-    body: 'Most energy firms sell hardware and subcontract the rest. We built the electrical, roofing and construction divisions in-house precisely because that hand-off is where projects go wrong - the roofer will not touch the panels, the solar company will not touch the roof, and the homeowner is left refereeing.',
+    title: 'One manager, every trade',
+    body: 'Most energy firms sell you hardware and leave the coordination to you. That hand-off is exactly where projects go wrong - the roofer will not touch the panels, the solar company will not touch the roof, and the owner is left refereeing. We take that whole problem on: one scope, one schedule, one person answerable for the result.',
   },
   {
     title: 'Generation and the meter, together',
     body: 'Developing utility-scale plants and wiring a family home look like different businesses. They are not. The same physics, the same interconnection rules and the same economics apply, and working at both ends means the lessons travel in both directions.',
   },
   {
-    title: 'Funding is part of engineering',
+    title: 'Funding is part of the plan',
     body: 'A project that is technically sound and financially unfunded is just a drawing. Grant writing, incentive capture and carbon monetisation sit alongside engineering in our scope because they frequently decide whether anything gets built.',
   },
 ];
 ---
 <BaseLayout
   title="About Us"
-  description={`${site.name} designs, builds, finances and maintains energy systems end to end - utility-scale generation through to residential solar, electrical, roofing and construction.`}
+  description={`${site.name} is a project management and energy consulting firm - planning, pricing and managing projects from utility-scale generation through to residential solar, electrical, roofing and construction.`}
 >
   <PageHero
     eyebrow="About Gridless Global"
     title="Energy is a system, not a product"
-    lead="We build and operate power at every scale, and we keep the trades in-house so the engineering survives contact with the job site."
+    lead="We plan, price and manage energy projects at every scale - and stay independent of the people holding the tools, so the engineering survives contact with the job site."
     crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
     icon="globe"
   />
@@ -82,13 +82,22 @@ const milestones = [
           We work across the whole space because the boundaries between its parts are artificial. A
           solar array is a roofing problem and an electrical problem before it is an energy problem.
           A battery is a tariff problem. A microgrid is a controls problem. Treating those as
-          separate trades is how projects end up over budget and underperforming, so we brought them
-          under one roof instead.
+          separate jobs, bought separately from people who never speak to each other, is how
+          projects end up over budget and underperforming. We put them under one plan instead.
         </p>
         <p class="mt-5 text-[1.02rem]">
-          What that means in practice: <strong>licensed electricians, roofers and builders on staff</strong>,
-          engineering that starts from measured data, and funding work - grants, incentives, carbon -
-          treated as part of the design rather than an afterthought.
+          What that means in practice: we establish what the property actually needs from measured
+          data, write a scope precise enough to be priced properly, put it out to specialists we
+          have already vetted, and then <strong>manage the delivery ourselves</strong> - schedule,
+          quality, permits, inspections and sign-off.
+        </p>
+        <p class="mt-5 text-[1.02rem]">
+          Because our interests sit with you rather than with any supplier, two things follow.
+          <strong>The recommendation is honest</strong> - there is no product line pushing us to
+          specify more than you need. And
+          <strong>the economics are better</strong> - competitive bidding, real buying power and a scope
+          tight enough that nobody prices in risk they do not have. Superior results, at a
+          materially lower total cost.
         </p>
       </div>
 

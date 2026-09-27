@@ -1,0 +1,568 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PageHero from '~/components/PageHero.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import Button from '~/components/Button.astro';
+import NewsletterForm from '~/components/forms/NewsletterForm.astro';
+import EventPurchase from '~/components/EventPurchase.astro';
+import { fetchEvents, EVENTS_ENDPOINT, type EventItem } from '~/lib/events';
+import { site } from '~/data/site';
+
+/**
+ * Events index.
+ *
+ * Same pattern as the blog: fetched at build time so events are in the HTML for
+ * search engines, then refreshed in the browser so anything published since the
+ * last deploy appears without a rebuild. A feed outage never fails the build.
+ */
+let events: EventItem[] = [];
+try {
+  events = await fetchEvents();
+} catch (error) {
+  console.warn(`[gridless] Events feed unavailable at build time, falling back to client fetch: ${error}`);
+}
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${site.name} events`,
+  url: `${site.url}/events`,
+  itemListElement: events.slice(0, 20).map((event, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Event',
+      name: event.title,
+      ...(event.start ? { startDate: event.start } : {}),
+      ...(event.end ? { endDate: event.end } : {}),
+      ...(event.summary ? { description: event.summary } : {}),
+      ...(event.image ? { image: event.image } : {}),
+      eventAttendanceMode: event.isOnline
+        ? 'https://schema.org/OnlineEventAttendanceMode'
+        : 'https://schema.org/OfflineEventAttendanceMode',
+      ...(event.locationLabel
+        ? { location: { '@type': 'Place', name: event.locationLabel } }
+        : {}),
+      organizer: { '@type': 'Organization', name: site.name, url: site.url },
+    },
+  })),
+};
+---
+<BaseLayout
+  title="Events"
+  description="Workshops, training days, briefings and community events from Gridless Global. Book tickets or reserve a sponsorship package."
+  schema={schema}
+>
+  <PageHero
+    eyebrow="What's on"
+    title="Events & workshops"
+    lead="Hands-on training for facilities teams, briefings for boards and communities, and the occasional day out on real equipment. Book a seat or sponsor an event."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Events' }]}
+    icon="calendar"
+  />
+
+  <section class="shell py-14 lg:py-20" aria-labelledby="events-heading" data-events-root data-endpoint={EVENTS_ENDPOINT}>
+    <h2 id="events-heading" class="sr-only">Upcoming events</h2>
+
+    <div class="grid gap-6 lg:grid-cols-2 2xl:grid-cols-3" data-events-grid hidden={events.length === 0}></div>
+
+    <!-- Loading skeleton -->
+    <div class="grid gap-6 lg:grid-cols-2 2xl:grid-cols-3" data-events-skeleton hidden={events.length > 0} aria-hidden="true">
+      {
+        Array.from({ length: 2 }).map(() => (
+          <div class="overflow-hidden rounded-3xl border border-white/[0.07] bg-navy-900/40">
+            <div class="aspect-[16/9] w-full animate-pulse bg-white/[0.04]" />
+            <div class="space-y-3 p-7">
+              <div class="h-3 w-24 animate-pulse rounded-full bg-white/[0.06]" />
+              <div class="h-5 w-3/4 animate-pulse rounded-full bg-white/[0.06]" />
+              <div class="h-3 w-full animate-pulse rounded-full bg-white/[0.04]" />
+              <div class="h-11 w-40 animate-pulse rounded-full bg-white/[0.05]" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Nothing scheduled yet -->
+    <div class="hidden" data-events-empty>
+      <div class="aurora relative overflow-hidden rounded-4xl border border-white/10 bg-navy-900/50 px-7 py-16 text-center sm:px-12 lg:py-24">
+        <div class="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-gold-500/12 blur-3xl" aria-hidden="true"></div>
+        <div class="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-brand-500/12 blur-3xl" aria-hidden="true"></div>
+
+        <div class="relative mx-auto max-w-xl">
+          <img
+            src="/images/logo-mark.png"
+            alt=""
+            aria-hidden="true"
+            width="280"
+            height="265"
+            class="animate-float mx-auto w-24 opacity-90 drop-shadow-[0_0_55px_rgba(63,208,106,.3)] sm:w-28"
+          />
+
+          <p class="eyebrow mt-8">Nothing on the calendar</p>
+          <h3 class="mt-3 font-display text-3xl font-bold sm:text-4xl">
+            No events scheduled <span class="text-gradient">just yet</span>
+          </h3>
+          <p class="mt-5 text-[1.02rem] leading-relaxed text-ink-muted">
+            We are putting the next round of workshops and briefings together now. Check back
+            shortly, or let us know what you would find useful and we will tell you when it is
+            booked.
+          </p>
+
+          <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <Button href="/services/education-hub" variant="gold" size="lg" icon="arrow-right">
+              See our training and workshops
+            </Button>
+            <Button href="/contact" variant="outline" size="lg" icon="mail" iconPosition="start">
+              Request a session
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel mt-6 rounded-4xl p-7 sm:p-10">
+        <NewsletterForm />
+      </div>
+    </div>
+
+    <!-- Feed unreachable -->
+    <div class="hidden" data-events-error>
+      <div class="panel rounded-4xl px-7 py-14 text-center sm:px-12">
+        <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-gold-500/30 bg-gold-500/10 text-gold-400">
+          <Icon name="alert" size={30} />
+        </span>
+        <h3 class="mt-6 font-display text-2xl font-bold">We could not load the events</h3>
+        <p class="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-ink-muted">
+          Something went wrong reaching our events service. It is usually brief - please try again
+          in a moment.
+        </p>
+        <button type="button" data-events-retry
+          class="mt-7 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-6 py-3 font-display text-[0.88rem] font-semibold text-ink transition-colors hover:border-brand-400/60">
+          <Icon name="arrow-right" size={16} /> Try again
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <EventPurchase />
+
+  <CtaBand
+    class="pb-8"
+    title="Want a session for your own team?"
+    body="We run workshops on your site and on your own equipment - solar operations, battery safety, microgrid operation and energy accounting. Tell us the gap and we will build the session around it."
+    primaryLabel="Arrange a private session"
+    primaryHref="/contact?service=education-hub"
+  />
+</BaseLayout>
+
+<script>
+  import { fetchEvents, formatMoney, startPurchase, paymentUrlFrom, ticketPurchaseUrl, sponsorshipPurchaseUrl, type EventItem, type TicketTier, type SponsorPackage } from '~/lib/events';
+
+  const root = document.querySelector<HTMLElement>('[data-events-root]');
+  const modal = document.getElementById('event-purchase-modal');
+  if (root && modal) {
+    const grid = root.querySelector<HTMLElement>('[data-events-grid]');
+    const skeleton = root.querySelector<HTMLElement>('[data-events-skeleton]');
+    const empty = root.querySelector<HTMLElement>('[data-events-empty]');
+    const errorBox = root.querySelector<HTMLElement>('[data-events-error]');
+
+    const TWEEBLE_ORIGIN = 'https://www.tweeble.com';
+
+    const esc = (v: string) =>
+      v.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] as string);
+
+    const showOnly = (visible: HTMLElement | null) => {
+      [grid, skeleton, empty, errorBox].forEach((el) => {
+        if (!el) return;
+        const on = el === visible;
+        el.hidden = !on;
+        el.classList.toggle('hidden', !on);
+      });
+    };
+
+    /* ---------------- rendering ---------------- */
+    const ticketRow = (e: EventItem, t: TicketTier) => `
+      <li class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+        <span class="min-w-0">
+          <span class="block font-display text-[0.9rem] font-semibold text-ink">${esc(t.name)}</span>
+          ${t.description ? `<span class="mt-0.5 block text-[0.78rem] text-ink-faint">${esc(t.description)}</span>` : ''}
+        </span>
+        <span class="flex shrink-0 items-center gap-3">
+          <span class="font-display text-[0.95rem] font-bold text-gold-400">${esc(formatMoney(t.priceCents))}</span>
+          ${
+            t.soldOut
+              ? '<span class="rounded-full border border-white/12 px-3 py-1.5 text-[0.75rem] text-ink-faint">Sold out</span>'
+              : `<button type="button" data-buy-ticket
+                   data-event-id="${esc(e.id)}" data-event-title="${esc(e.title)}"
+                   data-ticket-id="${esc(t.id ?? '')}" data-ticket-name="${esc(t.name)}"
+                   data-price="${t.priceCents ?? ''}" data-max="${t.maxPerOrder}"
+                   class="rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-5 py-2 font-display text-[0.8rem] font-semibold text-navy-950 transition-transform hover:-translate-y-0.5">Buy tickets</button>`
+          }
+        </span>
+      </li>`;
+
+    const sponsorRow = (e: EventItem, p: SponsorPackage) => `
+      <li class="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <span class="min-w-0">
+            <span class="block font-display text-[0.9rem] font-semibold text-ink">${esc(p.name)}</span>
+            ${p.description ? `<span class="mt-0.5 block text-[0.78rem] leading-relaxed text-ink-faint">${esc(p.description)}</span>` : ''}
+          </span>
+          <span class="flex shrink-0 items-center gap-3">
+            <span class="font-display text-[0.95rem] font-bold text-signal-400">${esc(formatMoney(p.priceCents))}</span>
+            ${
+              p.soldOut
+                ? '<span class="rounded-full border border-white/12 px-3 py-1.5 text-[0.75rem] text-ink-faint">Taken</span>'
+                : `<button type="button" data-buy-sponsor
+                     data-event-id="${esc(e.id)}" data-event-title="${esc(e.title)}"
+                     data-package-id="${esc(p.id)}" data-package-name="${esc(p.name)}"
+                     data-price="${p.priceCents ?? ''}"
+                     class="rounded-full border border-signal-500/50 bg-signal-500/12 px-5 py-2 font-display text-[0.8rem] font-semibold text-signal-300 transition-colors hover:bg-signal-500/20">Reserve package</button>`
+            }
+          </span>
+        </div>
+        ${
+          p.benefits.length
+            ? `<ul class="mt-3 grid gap-1.5 sm:grid-cols-2">${p.benefits
+                .map((b) => `<li class="flex items-start gap-2 text-[0.78rem] text-ink-muted"><span class="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-signal-400"></span>${esc(b)}</li>`)
+                .join('')}</ul>`
+            : ''
+        }
+      </li>`;
+
+    const card = (e: EventItem) => {
+      const meta = [
+        e.dateLabel ? `<span class="flex items-center gap-1.5">${e.dateLabel}${e.timeLabel ? ` &middot; ${e.timeLabel}` : ''}</span>` : '',
+        e.locationLabel ? `<span class="flex items-center gap-1.5">${esc(e.locationLabel)}</span>` : '',
+      ].filter(Boolean).join('<span aria-hidden="true">&middot;</span>');
+
+      const cover = e.image
+        ? `<img src="${esc(e.image)}" alt="" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.04]">`
+        : `<div class="flex h-full w-full items-center justify-center"><img src="/images/logo-mark.png" alt="" aria-hidden="true" width="280" height="265" loading="lazy" class="w-20 opacity-25"></div>`;
+
+      return `
+        <article class="group reveal is-visible flex flex-col overflow-hidden rounded-3xl border border-white/[0.09] bg-navy-900/55 transition-all duration-500 hover:border-brand-400/40">
+          <div class="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-navy-800 to-navy-950">
+            ${cover}
+            ${e.past ? '<span class="absolute left-4 top-4 rounded-full bg-navy-950/90 px-3 py-1.5 text-[0.72rem] font-semibold text-ink-faint">Past event</span>' : ''}
+            ${e.soldOut && !e.past ? '<span class="absolute left-4 top-4 rounded-full bg-navy-950/90 px-3 py-1.5 text-[0.72rem] font-semibold text-gold-300">Sold out</span>' : ''}
+          </div>
+          <div class="flex flex-1 flex-col p-6 sm:p-7">
+            ${meta ? `<p class="flex flex-wrap items-center gap-2 text-[0.8rem] text-brand-300">${meta}</p>` : ''}
+            <h3 class="mt-2.5 font-display text-[1.3rem] font-bold leading-snug text-ink">${esc(e.title)}</h3>
+            ${e.summary ? `<p class="mt-3 text-[0.89rem] leading-relaxed text-ink-muted">${esc(e.summary)}</p>` : ''}
+            ${
+              e.priceFromCents != null
+                ? `<p class="mt-4 text-[0.85rem] text-ink-faint">From <span class="font-display font-bold text-gold-400">${esc(formatMoney(e.priceFromCents))}</span></p>`
+                : ''
+            }
+
+            ${
+              e.tickets.length && !e.past
+                ? `<div class="mt-5"><p class="eyebrow mb-2.5">Tickets</p><ul class="space-y-2">${e.tickets.map((t) => ticketRow(e, t)).join('')}</ul></div>`
+                : ''
+            }
+            ${
+              e.sponsorships.length && !e.past
+                ? `<div class="mt-5"><p class="eyebrow mb-2.5">Sponsorship</p><ul class="space-y-2">${e.sponsorships.map((p) => sponsorRow(e, p)).join('')}</ul></div>`
+                : ''
+            }
+            ${
+              e.url
+                ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 font-display text-[0.83rem] font-semibold text-brand-300">Full details</a>`
+                : ''
+            }
+          </div>
+        </article>`;
+    };
+
+    const render = (events: EventItem[]) => {
+      if (!events.length) return showOnly(empty);
+      if (grid) {
+        grid.innerHTML = events.map(card).join('');
+        showOnly(grid);
+      }
+    };
+
+    const load = async () => {
+      if (!(grid?.children.length)) showOnly(skeleton);
+      try {
+        render(await fetchEvents());
+      } catch (err) {
+        console.warn('[gridless] Could not load the events feed:', err);
+        if (!(grid?.children.length)) showOnly(errorBox);
+      }
+    };
+
+    /* ---------------- purchase modal ---------------- */
+    const form = modal.querySelector<HTMLFormElement>('[data-ep-form]')!;
+    const stepDetails = modal.querySelector<HTMLElement>('[data-ep-step="details"]')!;
+    const stepPayment = modal.querySelector<HTMLElement>('[data-ep-step="payment"]')!;
+    const stepDone = modal.querySelector<HTMLElement>('[data-ep-step="done"]')!;
+    const frameSlot = modal.querySelector<HTMLElement>('[data-ep-frame-slot]')!;
+    const loadingEl = modal.querySelector<HTMLElement>('[data-ep-loading]')!;
+    const stalledEl = modal.querySelector<HTMLElement>('[data-ep-stalled]')!;
+    const qtyBlock = modal.querySelector<HTMLElement>('[data-ep-quantity-block]')!;
+    const qtyInput = modal.querySelector<HTMLInputElement>('[data-ep-quantity]')!;
+    const totalEl = modal.querySelector<HTMLElement>('[data-ep-total]')!;
+    const unitEl = modal.querySelector<HTMLElement>('[data-ep-unit]')!;
+    const maxNote = modal.querySelector<HTMLElement>('[data-ep-max-note]')!;
+    const titleEl = modal.querySelector<HTMLElement>('[data-ep-title]')!;
+    const subtitleEl = modal.querySelector<HTMLElement>('[data-ep-subtitle]')!;
+    const statusEl = modal.querySelector<HTMLElement>('[data-ep-status]')!;
+    const submitBtn = modal.querySelector<HTMLButtonElement>('[data-ep-submit]')!;
+    const submitText = modal.querySelector<HTMLElement>('[data-ep-submit-text]')!;
+    const companyReq = modal.querySelector<HTMLElement>('[data-ep-company-required]')!;
+
+    type Ctx = { kind: 'ticket' | 'sponsor'; url: string; unitCents: number | null; max: number; ticketId: string | null };
+    let ctx: Ctx | null = null;
+    let lastFocused: Element | null = null;
+    let paymentUrl: string | null = null;
+    let settled = false;
+    let stallTimer: number | undefined;
+
+    const setStatus = (kind: 'error' | 'info', title: string, body?: string) => {
+      statusEl.className =
+        'mt-5 rounded-2xl border px-5 py-4 text-sm ' +
+        (kind === 'error' ? 'border-red-400/40 bg-red-500/10 text-red-200' : 'border-gold-500/40 bg-gold-500/10 text-gold-200');
+      statusEl.innerHTML = '';
+      const h = document.createElement('p');
+      h.className = 'font-display font-semibold';
+      h.textContent = title;
+      statusEl.appendChild(h);
+      if (body) {
+        const p = document.createElement('p');
+        p.className = 'mt-1 leading-relaxed opacity-90';
+        p.textContent = body;
+        statusEl.appendChild(p);
+      }
+      statusEl.setAttribute('role', 'alert');
+    };
+    const clearStatus = () => { statusEl.className = 'hidden'; statusEl.innerHTML = ''; };
+
+    const setFieldError = (el: Element, msg: string | null) => {
+      const wrap = el.closest('[data-field]');
+      const t = wrap?.querySelector('[data-error]') as HTMLElement | null;
+      if (t) { t.textContent = msg ?? ''; t.classList.toggle('hidden', !msg); }
+      if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+    };
+
+    const updateTotal = () => {
+      if (!ctx) return;
+      const qty = ctx.kind === 'ticket' ? Math.max(1, Number(qtyInput.value) || 1) : 1;
+      totalEl.textContent = ctx.unitCents == null ? '-' : formatMoney(ctx.unitCents * qty);
+    };
+
+    const showStep = (which: 'details' | 'payment' | 'done') => {
+      for (const [el, name] of [[stepDetails, 'details'], [stepPayment, 'payment'], [stepDone, 'done']] as const) {
+        const on = name === which;
+        el.classList.toggle('hidden', !on);
+        if (name !== 'details') el.classList.toggle('flex', false);
+      }
+    };
+
+    const closeModal = () => {
+      window.clearTimeout(stallTimer);
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      frameSlot.querySelector('[data-ep-frame]')?.remove();
+      stalledEl.classList.add('hidden');
+      if (lastFocused instanceof HTMLElement) lastFocused.focus();
+    };
+
+    const openModal = (context: Ctx, title: string, subtitle: string) => {
+      ctx = context;
+      settled = false;
+      paymentUrl = null;
+      lastFocused = document.activeElement;
+
+      titleEl.textContent = title;
+      subtitleEl.textContent = subtitle;
+      form.reset();
+      clearStatus();
+      form.querySelectorAll('[data-error]').forEach((e) => e.classList.add('hidden'));
+
+      const isTicket = context.kind === 'ticket';
+      qtyBlock.classList.toggle('hidden', !isTicket);
+      companyReq.classList.toggle('hidden', isTicket);
+      qtyInput.max = String(context.max);
+      qtyInput.value = '1';
+      unitEl.textContent = context.unitCents == null ? '' : `${formatMoney(context.unitCents)} each`;
+      maxNote.textContent = isTicket ? `Up to ${context.max} per order.` : '';
+      updateTotal();
+
+      showStep('details');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector<HTMLButtonElement>('[data-ep-close]')?.focus();
+    };
+
+    // Quantity stepper
+    const step = (delta: number) => {
+      const max = Number(qtyInput.max) || 10;
+      qtyInput.value = String(Math.min(max, Math.max(1, (Number(qtyInput.value) || 1) + delta)));
+      updateTotal();
+    };
+    modal.querySelector('[data-ep-step-up]')?.addEventListener('click', () => step(1));
+    modal.querySelector('[data-ep-step-down]')?.addEventListener('click', () => step(-1));
+    qtyInput.addEventListener('input', updateTotal);
+
+    modal.querySelectorAll('[data-ep-close]').forEach((b) => b.addEventListener('click', closeModal));
+    modal.querySelector('[data-ep-backdrop]')?.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    });
+
+    // Buy buttons, delegated. Each button carries its own event and tier or
+    // package id, so a grid refresh can never make a stale index point at the
+    // wrong event.
+    root.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      const price = (el: HTMLElement) => (el.dataset.price ? Number(el.dataset.price) : null);
+
+      const ticketBtn = target.closest<HTMLElement>('[data-buy-ticket]');
+      if (ticketBtn) {
+        const max = Number(ticketBtn.dataset.max) || 10;
+        openModal(
+          {
+            kind: 'ticket',
+            url: ticketPurchaseUrl(ticketBtn.dataset.eventId!),
+            unitCents: price(ticketBtn),
+            max,
+            ticketId: ticketBtn.dataset.ticketId || null,
+          },
+          'Buy tickets',
+          `${ticketBtn.dataset.eventTitle} - ${ticketBtn.dataset.ticketName}`
+        );
+        return;
+      }
+
+      const sponsorBtn = target.closest<HTMLElement>('[data-buy-sponsor]');
+      if (sponsorBtn) {
+        openModal(
+          {
+            kind: 'sponsor',
+            url: sponsorshipPurchaseUrl(sponsorBtn.dataset.eventId!, sponsorBtn.dataset.packageId!),
+            unitCents: price(sponsorBtn),
+            max: 1,
+            ticketId: null,
+          },
+          'Reserve sponsorship',
+          `${sponsorBtn.dataset.eventTitle} - ${sponsorBtn.dataset.packageName}`
+        );
+      }
+    });
+
+    /* ---------------- submit ---------------- */
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!ctx) return;
+
+      let firstInvalid: HTMLElement | null = null;
+      for (const el of form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[name]:not([data-honeypot])')) {
+        const value = el.value.trim();
+        let msg: string | null = null;
+        if (el.hasAttribute('required') && !value) msg = `${el.dataset.label || 'This field'} is required.`;
+        else if (el.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) msg = 'Enter a valid email address.';
+        else if (el.name === 'company' && ctx.kind === 'sponsor' && !value) msg = 'Organisation is required for a sponsorship.';
+        setFieldError(el, msg);
+        if (msg && !firstInvalid) firstInvalid = el;
+      }
+      if (firstInvalid) {
+        firstInvalid.focus();
+        setStatus('error', 'Check the highlighted fields', 'A few details are needed before we can continue.');
+        return;
+      }
+
+      const read = (n: string) => (form.querySelector<HTMLInputElement>(`[name="${n}"]`)?.value ?? '').trim();
+      submitBtn.disabled = true;
+      submitText.textContent = 'Preparing payment...';
+      clearStatus();
+
+      try {
+        const start = await startPurchase(ctx.url, {
+          quantity: ctx.kind === 'ticket' ? Math.max(1, Number(qtyInput.value) || 1) : undefined,
+          ticketId: ctx.ticketId,
+          name: read('name'),
+          email: read('email'),
+          phone: read('phone'),
+          company: read('company'),
+          notes: read('notes'),
+          honeypot: read('website_url'),
+        });
+
+        paymentUrl = paymentUrlFrom(start);
+        if (!paymentUrl) throw new Error('The payment step could not be started. Please try again or contact us.');
+
+        showStep('payment');
+        loadingEl.classList.remove('hidden');
+        stalledEl.classList.add('hidden');
+
+        const frame = document.createElement('iframe');
+        frame.src = paymentUrl;
+        frame.title = 'Secure payment';
+        frame.className = 'absolute inset-0 h-full w-full border-0';
+        frame.allow = 'payment *';
+        frame.setAttribute('data-ep-frame', '');
+        frame.addEventListener('load', () => {
+          loadingEl.classList.add('hidden');
+          window.clearTimeout(stallTimer);
+          stallTimer = window.setTimeout(() => {
+            if (!settled && !modal.classList.contains('hidden')) stalledEl.classList.remove('hidden');
+          }, 15000);
+        });
+        frameSlot.appendChild(frame);
+      } catch (err) {
+        setStatus('error', 'We could not start the purchase', err instanceof Error ? err.message : 'Please try again, or contact us.');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Continue to payment';
+      }
+    });
+
+    modal.querySelector('[data-ep-newtab]')?.addEventListener('click', () => {
+      if (!paymentUrl) return;
+      window.open(paymentUrl, '_blank', 'noopener');
+      settled = true;
+      closeModal();
+    });
+    modal.querySelector('[data-ep-reload]')?.addEventListener('click', () => {
+      const frame = frameSlot.querySelector<HTMLIFrameElement>('[data-ep-frame]');
+      if (frame && paymentUrl) { stalledEl.classList.add('hidden'); loadingEl.classList.remove('hidden'); frame.src = paymentUrl; }
+    });
+
+    // Tweeble signals the outcome. Origin check is what makes this safe.
+    window.addEventListener('message', (event) => {
+      if (event.origin !== TWEEBLE_ORIGIN) return;
+      const data = event.data;
+      if (!data || typeof data !== 'object' || !String(data.type ?? '').startsWith('tweeble:')) return;
+
+      window.clearTimeout(stallTimer);
+      const status = String(data.status ?? '').toLowerCase();
+      if (status === 'cancelled' || status === 'canceled') {
+        // Back to the details step with everything still filled in.
+        frameSlot.querySelector('[data-ep-frame]')?.remove();
+        stalledEl.classList.add('hidden');
+        showStep('details');
+        setStatus('info', 'Payment cancelled', 'Nothing has been charged. Your details are still here whenever you are ready.');
+        return;
+      }
+      settled = true;
+      const ref = data.orderId ?? data.sessionId ?? null;
+      if (ref) {
+        const box = modal.querySelector<HTMLElement>('[data-ep-reference]');
+        const val = modal.querySelector<HTMLElement>('[data-ep-reference-value]');
+        if (box && val) { val.textContent = String(ref); box.classList.remove('hidden'); }
+      }
+      frameSlot.querySelector('[data-ep-frame]')?.remove();
+      showStep('done');
+      stepDone.focus();
+    });
+
+    root.querySelector('[data-events-retry]')?.addEventListener('click', load);
+    load();
+  }
+</script>
