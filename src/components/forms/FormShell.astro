@@ -35,22 +35,9 @@ const connected = Boolean((import.meta.env.PUBLIC_FORMS_ENDPOINT ?? '').trim());
   <!-- Honeypot: hidden from people, irresistible to bots. Clipped rather than
        pushed off-screen, so it can never extend the page's scrollable area. -->
   <div class="gg-honeypot" aria-hidden="true">
-    <label>
-      Do not fill this in
-      <input type="text" name="company_website" data-honeypot tabindex="-1" autocomplete="off" />
-    </label>
+    <input type="text" name="company_website" data-honeypot tabindex="-1" autocomplete="off" />
   </div>
 
   <div data-form-status class="hidden"></div>
 </form>
 
-<style is:global>
-  .gg-honeypot {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-</style>

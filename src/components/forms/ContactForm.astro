@@ -93,10 +93,7 @@ const layoutFor = (field: (typeof contactFields)[number]) =>
 
       <!-- Honeypot. Tweeble rejects a submission where this is filled in. -->
       <div class="gg-honeypot" aria-hidden="true">
-        <label>
-          Do not fill this in
-          <input type="text" name="website_url" data-honeypot tabindex="-1" autocomplete="off" />
-        </label>
+        <input type="text" name="website_url" data-honeypot tabindex="-1" autocomplete="off" />
       </div>
 
       <div data-contact-status class="hidden"></div>
