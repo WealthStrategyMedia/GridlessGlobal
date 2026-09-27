@@ -78,7 +78,14 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
                 data-mega-panel
               >
                 <div class="panel rounded-4xl p-7 shadow-[0_40px_90px_-30px_rgba(1,11,22,.95)]">
-                  <div class="grid grid-cols-4 gap-7">
+                  <!-- Column count follows the data, so adding a section to
+                       primaryNav does not silently overflow the row. -->
+                  <div
+                    class:list={[
+                      'grid gap-7',
+                      item.columns.length >= 5 ? 'grid-cols-5' : 'grid-cols-4',
+                    ]}
+                  >
                     {item.columns.map((col) => (
                       <div>
                         <p class="eyebrow mb-4">{col.heading}</p>
@@ -114,7 +121,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
                         All services
                       </Button>
                       <Button href="/quote" variant="gold" size="sm" icon="arrow-right">
-                        Free estimate
+                        Free consultation
                       </Button>
                     </div>
                   </div>
@@ -147,7 +154,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
         <span class="2xl:hidden">Call</span>
       </a>
       <span class="hidden sm:block">
-        <Button href="/quote" variant="gold" size="sm" icon="arrow-right">Get a Free Quote</Button>
+        <Button href="/quote" variant="gold" size="sm" icon="arrow-right">Free Consultation</Button>
       </span>
 
       <button
@@ -226,7 +233,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     </ul>
 
     <div class="mt-8 grid gap-3 sm:grid-cols-2">
-      <Button href="/quote" variant="gold" size="lg" full icon="arrow-right">Get a Free Quote</Button>
+      <Button href="/quote" variant="gold" size="lg" full icon="arrow-right">Book a Free Consultation</Button>
       <Button href={site.phoneHref} variant="outline" size="lg" full icon="phone" iconPosition="start">
         {site.phone}
       </Button>

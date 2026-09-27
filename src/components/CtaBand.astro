@@ -14,7 +14,7 @@ interface Props {
 const {
   title = 'Let us start with the numbers',
   body = 'A measured energy analysis tells you which improvements actually pay, and in what order. It is the cheapest thing we do and the most useful place to begin.',
-  primaryLabel = 'Get a free estimate',
+  primaryLabel = 'Book a free consultation',
   primaryHref = '/quote',
   class: className = '',
 } = Astro.props;
@@ -51,10 +51,10 @@ const {
       <ul class="space-y-4 lg:justify-self-end">
         {
           [
-            'No-obligation consultation and estimate',
+            'No-obligation consultation and budget guidance',
             'Independent - we answer to you, not to a contractor',
-            'Incentives and permits handled for you',
-            'One warranty across every trade',
+            'Incentives handled, permits tracked for you',
+            'One warranty desk across every trade - we enforce it',
           ].map((point) => (
             <li class="flex items-start gap-3 text-[0.93rem] text-ink-muted">
               <Icon name="check-circle" size={20} class="mt-px shrink-0 text-signal-400" />

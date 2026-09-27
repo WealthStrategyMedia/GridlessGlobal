@@ -72,7 +72,6 @@ export const primaryNav: NavGroup[] = [
           { label: 'Residential', href: '/services/residential', description: 'Everything for the home' },
           { label: 'Commercial', href: '/services/commercial', description: 'Portfolios and facilities' },
           { label: 'Eco-Smart Living', href: '/services/eco-smart-living', description: 'Connected community energy' },
-          { label: 'Education Hub', href: '/services/education-hub', description: 'Workshops, classes, speakers' },
         ],
       },
       {
@@ -99,6 +98,12 @@ export const primaryNav: NavGroup[] = [
           { label: 'Siding & Exteriors', href: '/services/siding' },
           { label: 'Construction', href: '/services/construction' },
           { label: 'Handyman Services', href: '/services/handyman' },
+        ],
+      },
+      {
+        heading: 'Learning',
+        links: [
+          { label: 'Education Hub', href: '/services/education-hub', description: 'Workshops, classes, speakers' },
         ],
       },
     ],
@@ -151,7 +156,7 @@ export const footerNav = [
       { label: 'Events', href: '/events' },
       { label: 'Insights & News', href: '/blog' },
       { label: 'All Services', href: '/services' },
-      { label: 'Request a Quote', href: '/quote' },
+      { label: 'Request a Consultation', href: '/quote' },
       { label: 'Make a Payment', href: '/pay' },
       { label: 'Contact', href: '/contact' },
       { label: 'Privacy Policy', href: '/privacy' },

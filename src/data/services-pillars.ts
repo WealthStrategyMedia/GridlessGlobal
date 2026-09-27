@@ -12,9 +12,9 @@ export const pillars: Service[] = [
     short: 'Solar Power Plant',
     kicker: 'Generation & Grid',
     summary:
-      'Utility-scale and distributed photovoltaic plants, developed and built end to end - from land screening and interconnection through commissioning and long-term operations.',
+      'Utility-scale and distributed photovoltaic plants, developed and managed end to end - from land screening and interconnection through commissioning and long-term operations.',
     intro:
-      'Gridless Global develops, engineers, builds and operates solar generation at every scale, from a 250 kW carport array behind a single meter to a 200 MW plant feeding a regional transmission node. We carry the project the whole way: site control, resource modelling, interconnection queue strategy, permitting, procurement, EPC delivery and the operations contract that keeps the asset performing for the next thirty years.',
+      'Gridless Global develops and manages solar generation at every scale, from a 250 kW carport array behind a single meter to a 200 MW plant feeding a regional transmission node. We carry the project the whole way: site control, resource modelling, interconnection queue strategy, permitting, procurement, EPC selection and oversight, and the operations contract that keeps the asset performing for the next thirty years.',
     icon: 'sun',
     accent: 'gold',
     group: 'generation',
@@ -37,15 +37,15 @@ export const pillars: Service[] = [
       },
       {
         title: 'Engineering & design',
-        body: 'Stamped civil, structural and electrical packages, PVsyst yield modelling, DC/AC ratio optimisation and medium-voltage collection design.',
+        body: 'Civil, structural and electrical packages stamped by the licensed professional engineers engaged for the project, with PVsyst yield modelling, DC/AC ratio optimisation and medium-voltage collection design procured and managed as one package.',
       },
       {
-        title: 'EPC construction',
-        body: 'We competitively bid the electrical, civil and racking scopes to vetted specialists, use our procurement leverage on modules and inverters, and hold the contractors to a commissioning package that actually matches the as-builts.',
+        title: 'EPC procurement & oversight',
+        body: 'We competitively bid the electrical, civil and racking scopes to vetted licensed specialists, use our procurement leverage on modules and inverters, and hold those contractors to a commissioning package that actually matches the as-builts.',
       },
       {
         title: 'Operations & maintenance',
-        body: 'SCADA monitoring, preventive maintenance, module washing, vegetation control, inverter service and availability reporting against contracted guarantees.',
+        body: 'SCADA monitoring and availability reporting against contracted guarantees, with preventive maintenance, module washing, vegetation control and inverter service contracted to specialist providers and managed by us.',
       },
       {
         title: 'Repowering & asset recovery',
@@ -98,7 +98,7 @@ export const pillars: Service[] = [
     summary:
       'Run-of-river, small hydro and pumped storage - efficient, dispatchable generation from natural water flow, plus modernisation of ageing hydro assets.',
     intro:
-      'Water is the most dependable renewable resource there is, and it runs at night. Gridless Global develops new small and run-of-river hydro, refurbishes turbines and controls on plants that have been in service for decades, and engineers pumped storage where the topography earns it. Hydro is unforgiving of sloppy hydrology and even less forgiving of sloppy permitting, so we front-load both.',
+      'Water is the most dependable renewable resource there is, and it runs at night. Gridless Global develops new small and run-of-river hydro, manages the refurbishment of turbines and controls on plants that have been in service for decades, and brings the engineering together for pumped storage where the topography earns it. Hydro is unforgiving of sloppy hydrology and even less forgiving of sloppy permitting, so we front-load both.',
     icon: 'droplet',
     accent: 'cyan',
     group: 'generation',
@@ -188,7 +188,7 @@ export const pillars: Service[] = [
     summary:
       'Continuous, clean thermal generation - combined heat and power, biomass, waste heat recovery and geothermal, engineered for round-the-clock reliability.',
     intro:
-      'Thermal plants carry the load when the sun is down and the wind is still. Gridless Global builds and operates clean thermal generation: combined heat and power for campuses and industrial hosts, biomass and biogas plants that turn a waste stream into revenue, organic Rankine cycle systems that harvest heat already going up a stack, and geothermal where the resource supports it.',
+      'Thermal plants carry the load when the sun is down and the wind is still. Gridless Global develops and manages clean thermal generation: combined heat and power for campuses and industrial hosts, biomass and biogas plants that turn a waste stream into revenue, organic Rankine cycle systems that harvest heat already going up a stack, and geothermal where the resource supports it.',
     icon: 'flame',
     accent: 'gold',
     group: 'generation',
@@ -222,15 +222,15 @@ export const pillars: Service[] = [
         body: 'Air permit applications, BACT analysis, SCR and oxidation catalyst design and continuous emissions monitoring systems.',
       },
       {
-        title: 'Plant operations',
-        body: 'Staffed or remote operations, outage planning, major overhauls and heat-rate optimisation across the fleet.',
+        title: 'Operations management',
+        body: 'Operator selection and oversight, outage and overhaul planning, and heat-rate optimisation tracked across the fleet.',
       },
     ],
     process: [
       { title: 'Profile', body: 'Electrical and thermal load profiles are measured across a full seasonal cycle.' },
       { title: 'Size', body: 'Plant is sized to the thermal load, which is what makes cogeneration pay.' },
       { title: 'Permit', body: 'Air, noise and interconnection approvals are pursued in parallel.' },
-      { title: 'Install', body: 'Mechanical, electrical and controls delivered under a single contract.' },
+      { title: 'Install', body: 'Mechanical, electrical and controls delivered to a single coordinated schedule.' },
       { title: 'Optimise', body: 'Heat rate and availability tracked continuously against the pro forma.' },
     ],
     faqs: [
@@ -279,7 +279,7 @@ export const pillars: Service[] = [
     summary:
       'High-capacity battery storage for grid stability, peak shaving and backup - from a wall-mounted home battery to a multi-hour front-of-meter reserve.',
     intro:
-      'Storage is what turns intermittent generation into dependable power. Gridless Global designs, installs and operates battery energy storage across the full range: a single cabinet keeping a home running through an outage, a containerised system shaving a factory peak demand charge, or a front-of-meter reserve providing frequency response and capacity to the grid. The economics live in the dispatch strategy, so we model that before we specify a single cell.',
+      'Storage is what turns intermittent generation into dependable power. Gridless Global specifies, procures and manages battery energy storage across the full range: a single cabinet keeping a home running through an outage, a containerised system shaving a factory peak demand charge, or a front-of-meter reserve providing frequency response and capacity to the grid. The economics live in the dispatch strategy, so we model that before we specify a single cell.',
     icon: 'battery',
     accent: 'green',
     group: 'generation',
@@ -354,7 +354,7 @@ export const pillars: Service[] = [
     summary:
       'Integrated energy distribution for local resilience - generation, storage and intelligent controls that can island from the utility and keep critical loads alive.',
     intro:
-      'A microgrid is the difference between an outage being an inconvenience and an outage being a catastrophe. Gridless Global builds microgrids for campuses, industrial parks, military and municipal sites, hospitals and residential communities: local generation, storage, smart switching and a controller that decides second by second what to run, what to charge and when to disconnect from the utility entirely.',
+      'A microgrid is the difference between an outage being an inconvenience and an outage being a catastrophe. Gridless Global develops and manages microgrids for campuses, industrial parks, military and municipal sites, hospitals and residential communities: local generation, storage, smart switching and a controller that decides second by second what to run, what to charge and when to disconnect from the utility entirely.',
     icon: 'network',
     accent: 'blue',
     group: 'generation',
@@ -579,9 +579,9 @@ export const pillars: Service[] = [
     short: 'Residential',
     kicker: 'Property Solutions',
     summary:
-      'Everything your home needs from one licensed team - solar, storage, electrical, energy analysis, carbon credits, roofing, siding and the trades work in between.',
+      'Everything your home needs, coordinated through one point of contact - solar, storage, electrical, energy analysis, carbon credits, roofing, siding and the trades work in between, each delivered by licensed specialists.',
     intro:
-      'Most homeowners end up juggling four contractors who each blame the other three. Gridless Global takes that off you. We work out what the house actually needs, competitively bid every scope to specialists we have already vetted, and manage the whole programme to completion: the solar array and the battery behind it, the panel upgrade that makes both possible, the roof underneath, the siding around it. One plan, one schedule, one person accountable to you.',
+      'Most homeowners end up juggling four contractors who each blame the other three. Gridless Global takes that off you. We work out what the house actually needs, competitively bid every scope to specialists we have already vetted, and manage the whole programme to completion: the solar array and the battery behind it, the panel upgrade that makes both possible, the roof underneath, the siding around it. One plan, one schedule, one point of contact.',
     icon: 'home',
     accent: 'green',
     group: 'property',
@@ -590,13 +590,14 @@ export const pillars: Service[] = [
     highlights: [
       'Solar, battery and EV charging under one managed plan',
       'Licensed, insured and vetted specialists on every job',
-      'Roofing, siding and construction managed under one plan',
+      'Roofing, siding and construction coordinated with the energy work',
+      'The Gridless Global Guarantee - we hold and enforce every warranty',
       'Energy analysis before you spend anything',
     ],
     offerings: [
       {
         title: 'Solar installation & upgrades',
-        body: 'New rooftop and ground-mount arrays, plus additions, inverter replacement and repair on systems another company installed - scoped by us, delivered by specialists we manage.',
+        body: 'New rooftop and ground-mount arrays, plus additions, inverter replacement and repair on systems another company installed - scoped by us, delivered by licensed specialists we coordinate.',
       },
       {
         title: 'Home battery & backup',
@@ -608,7 +609,7 @@ export const pillars: Service[] = [
       },
       {
         title: 'Electrical & panel upgrades',
-        body: 'Service upgrades, rewiring, sub-panels, EV circuits, lighting and code corrections, delivered by licensed electricians we appoint and supervise.',
+        body: 'Service upgrades, rewiring, sub-panels, EV circuits, lighting and code corrections, delivered by licensed electricians we help you select and coordinate.',
       },
       {
         title: 'Roofing & siding',
@@ -623,7 +624,7 @@ export const pillars: Service[] = [
       { title: 'Assess', body: 'A measured energy analysis of the house, not a sales walkthrough.' },
       { title: 'Prioritise', body: 'Improvements ranked by payback so the budget goes to the right place first.' },
       { title: 'Design', body: 'One integrated scope across every trade involved.' },
-      { title: 'Deliver', body: 'We appoint the trades and sequence them so roofing, electrical and solar never collide.' },
+      { title: 'Deliver', body: 'We help you engage the right trades and sequence them so roofing, electrical and solar never collide.' },
       { title: 'Support', body: 'Monitoring, maintenance and a single number to call - ours.' },
     ],
     faqs: [
@@ -633,11 +634,11 @@ export const pillars: Service[] = [
       },
       {
         q: 'My roof needs replacing and I have solar. Now what?',
-        a: 'That is exactly the case we are built for. We remove the array, replace the roof and re-install the array as one project under one warranty, instead of you coordinating two contractors who each disclaim responsibility for the other.',
+        a: 'That is exactly the case we are built for. The detach, the roof and the re-install run as one project on one schedule, with every warranty held and enforced by us in one place - instead of you coordinating two contractors who each disclaim responsibility for the other.',
       },
       {
         q: 'Do you handle incentives and paperwork?',
-        a: 'Yes. Federal credits, state and utility rebates, interconnection applications and permits are all part of our scope. You sign; we file.',
+        a: 'Yes. Federal credits, state and utility rebates and interconnection applications are all part of our scope - you sign, we prepare and submit. Building permits are filed and carried by the licensed contractor performing the work, and we keep that process moving so it never becomes your problem.',
       },
     ],
     stats: [
@@ -668,6 +669,7 @@ export const pillars: Service[] = [
       'Rooftop, carport and ground-mount commercial solar',
       'Demand-charge and tariff optimisation',
       'Carbon credit generation and ESG reporting',
+      'The Gridless Global Guarantee on every managed scope',
     ],
     offerings: [
       {
@@ -676,7 +678,7 @@ export const pillars: Service[] = [
       },
       {
         title: 'Commercial solar',
-        body: 'Rooftop, carport and ground-mount systems with structural review, roof warranty coordination and financing structures including PPAs and leases.',
+        body: 'Rooftop, carport and ground-mount systems, with structural review by a licensed engineer, roof warranty coordination and financing options including PPAs and leases modelled side by side.',
       },
       {
         title: 'Demand & tariff management',
@@ -688,7 +690,7 @@ export const pillars: Service[] = [
       },
       {
         title: 'Electrical & infrastructure',
-        body: 'Service upgrades, switchgear, lighting retrofits, EV charging and power quality work, competitively bid to licensed commercial electricians and managed by us.',
+        body: 'Service upgrades, switchgear, lighting retrofits, EV charging and power quality work, scoped by us, competitively priced by licensed commercial electricians, and coordinated through to sign-off.',
       },
       {
         title: 'Roofing & building envelope',
@@ -698,8 +700,8 @@ export const pillars: Service[] = [
     process: [
       { title: 'Benchmark', body: 'Every site scored against its peers to find where the money is.' },
       { title: 'Model', body: 'Measures ranked by NPV, payback and carbon impact.' },
-      { title: 'Fund', body: 'Incentives, grants and financing structures assembled around the plan.' },
-      { title: 'Execute', body: 'We appoint and drive the trades, so the schedule stays under our control.' },
+      { title: 'Fund', body: 'Incentives and grants prepared, and financing options modelled around the plan.' },
+      { title: 'Execute', body: 'We put the work to licensed trades and drive the schedule, so the plan does not drift.' },
       { title: 'Report', body: 'Measurement and verification proves the savings were real.' },
     ],
     faqs: [

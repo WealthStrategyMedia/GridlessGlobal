@@ -13,7 +13,7 @@ export const energyServices: Service[] = [
     summary:
       'Rooftop, ground-mount and carport photovoltaic systems designed around your actual consumption, competitively priced and delivered under our management.',
     intro:
-      'A solar array is only as good as the analysis behind it. We start from twelve months of real consumption data and a structural assessment of what you are mounting to, then design a system sized to your load and your tariff rather than to whatever fits on the roof. That scope goes out to licensed installers we have already vetted, and we manage the build, the permits, the interconnection and the incentive paperwork through to sign-off.',
+      'A solar array is only as good as the analysis behind it. We start from twelve months of real consumption data, commission a structural review by a licensed engineer where the mounting calls for one, and specify a system sized to your load and your tariff rather than to whatever fits on the roof. That scope goes to licensed installers we have already vetted, and we coordinate the build, track the permit your installer files, and prepare the interconnection and incentive paperwork through to sign-off.',
     icon: 'panel',
     accent: 'gold',
     group: 'energy',
@@ -21,7 +21,7 @@ export const energyServices: Service[] = [
     highlights: [
       'Design driven by twelve months of real usage data',
       'Structural and roof-condition assessment included',
-      'Permits, interconnection and incentives handled',
+      'Permits tracked, interconnection and incentives prepared',
       'Installed by licensed electricians we vet and manage',
     ],
     offerings: [
@@ -29,14 +29,14 @@ export const energyServices: Service[] = [
       { title: 'Ground-mount arrays', body: 'Where roof area, shading or orientation make ground mounting the better producer.' },
       { title: 'Solar carports', body: 'Covered parking that generates power and pairs naturally with EV charging.' },
       { title: 'Shade & yield modelling', body: 'Site-specific production modelling so the estimate you receive is one we will stand behind.' },
-      { title: 'Monitoring & commissioning', body: 'Panel-level or string-level monitoring, commissioned and demonstrated before we leave.' },
-      { title: 'Financing & incentives', body: 'Cash, loan, lease and PPA options, with federal, state and utility incentives filed on your behalf.' },
+      { title: 'Monitoring & commissioning', body: 'Panel-level or string-level monitoring, commissioned and demonstrated to you at handover.' },
+      { title: 'Financing & incentives', body: 'Cash, loan, lease and PPA options modelled and compared side by side, with federal, state and utility incentive applications prepared and filed on your behalf.' },
     ],
     process: [
       { title: 'Analyse', body: 'Twelve months of bills and interval data establish the target.' },
       { title: 'Survey', body: 'Roof, structure, service panel and shading assessed on site.' },
       { title: 'Design', body: 'Layout, equipment and financing presented as one proposal.' },
-      { title: 'Install', body: 'Permitting, build and inspection managed end to end.' },
+      { title: 'Install', body: 'Permitting, build and inspection coordinated end to end.' },
       { title: 'Activate', body: 'Interconnection, commissioning and monitoring handover.' },
     ],
     faqs: [
@@ -87,13 +87,13 @@ export const energyServices: Service[] = [
       { title: 'Verify', body: 'Post-work production confirms the gain was real.' },
     ],
     faqs: [
-      { q: 'My production dropped. What causes that?', a: 'Most often a failed optimiser or micro-inverter, a tripped string, soiling, or new shading from tree growth. Occasionally it is module degradation. Diagnostics settle it in a single visit rather than by guesswork.' },
+      { q: 'My production dropped. What causes that?', a: 'Most often a failed optimiser or micro-inverter, a tripped string, soiling, or new shading from tree growth. Occasionally it is module degradation. A diagnostic visit by a licensed technician settles it rather than guesswork.' },
       { q: 'Can I add panels to an old system?', a: 'Usually, though it depends on inverter headroom, service capacity and your interconnection agreement. Where mixing old and new modules is a problem, a separate string with its own inverter is often the cleaner answer.' },
-      { q: 'Do you service systems you did not install?', a: 'Routinely. A large share of our service work is on arrays installed by companies that are no longer trading.' },
+      { q: 'Can you take on a system another company installed?', a: 'Routinely. A large share of the programmes we manage are on arrays installed by companies that are no longer trading.' },
     ],
     stats: [
       { value: '10-15 yr', label: 'Typical inverter service life' },
-      { value: 'Any brand', label: 'Equipment we will service' },
+      { value: 'Any brand', label: 'Equipment we will scope and manage' },
       { value: '5-20%', label: 'Common recoverable output loss' },
     ],
     freeOffer: true,
@@ -105,23 +105,23 @@ export const energyServices: Service[] = [
     title: 'Solar Removal & Re-Install',
     kicker: 'Energy Services',
     summary:
-      'Panel removal and re-installation for roof replacement, repairs, storm damage or relocation - one contractor, one warranty, no finger-pointing.',
+      'Panel removal and re-installation for roof replacement, repairs, storm damage or relocation - one schedule, one warranty desk, no finger-pointing.',
     intro:
-      'When the roof under an array needs work, most homeowners discover their roofer will not touch the panels and their solar company will not touch the roof. Gridless Global does both. We detach and store the array, complete the roofing scope, then re-install and re-commission the system - with a single warranty covering the roof penetrations and the array alike.',
+      'When the roof under an array needs work, most homeowners discover their roofer will not touch the panels and their solar company will not touch the roof. Gridless Global brings both together. We scope the detach, the roofing and the re-install as one job and run them to one schedule, then hold the warranties on the roof penetrations and the array alike and enforce them from one desk - rather than leaving you between two firms pointing at each other.',
     icon: 'layers',
     accent: 'gold',
     group: 'energy',
     segments: ['residential', 'commercial'],
     highlights: [
       'Detach and re-install for roof replacement',
-      'Safe on-site storage of modules and electronics',
+      'Labelled, secure on-site storage of modules and electronics',
       'Storm and insurance work supported',
-      'One warranty covering roof and array together',
+      'Roof and array warranties held and enforced together',
     ],
     offerings: [
       { title: 'Detach & re-install', body: 'Full removal, labelled storage and re-installation with new flashing and attachment hardware.' },
       { title: 'Roof replacement coordination', body: 'The roofing and solar scopes run to one schedule we control, so the house is never left open while two contractors wait on each other.' },
-      { title: 'Storm & insurance claims', body: 'Damage assessment, documentation and direct work with your adjuster.' },
+      { title: 'Storm & insurance documentation', body: 'Condition recorded in detail and a fully itemised scope your claim can be built on.' },
       { title: 'System relocation', body: 'Moving an array to a new roof section, a ground mount, or a new property entirely.' },
       { title: 'Decommissioning', body: 'Permanent removal with responsible module recycling and electrical make-safe.' },
       { title: 'Re-commissioning', body: 'Full electrical testing and production verification before we call the job done.' },
@@ -129,18 +129,18 @@ export const energyServices: Service[] = [
     process: [
       { title: 'Document', body: 'Existing layout, wiring and production recorded before anything moves.' },
       { title: 'Detach', body: 'Array removed, labelled and stored securely on site.' },
-      { title: 'Roof', body: 'Roofing scope completed by our appointed roofing specialist.' },
+      { title: 'Roof', body: 'Roofing scope completed by the licensed roofer engaged for the job.' },
       { title: 'Re-install', body: 'New flashing and hardware, array returned to its layout.' },
       { title: 'Verify', body: 'Production tested against the pre-removal baseline.' },
     ],
     faqs: [
       { q: 'How long is my system offline?', a: 'Typically three to seven days for a standard residential roof replacement. We schedule detach and re-install around the roofing crew so the gap stays as short as the work allows.' },
-      { q: 'Will removal void my panel warranty?', a: 'Not when a licensed contractor performs it and documents the work, which we do as standard. Removal by an unqualified crew is a genuine warranty risk, which is much of the reason this service exists.' },
-      { q: 'Can you handle the insurance claim?', a: 'Yes. We document the damage, provide the itemised scope your adjuster needs and work directly with the carrier.' },
+      { q: 'Will removal void my panel warranty?', a: 'Not when a licensed contractor performs and documents the work, which is exactly how we scope it. Removal by an unqualified crew is a genuine warranty risk, which is much of the reason this service exists.' },
+      { q: 'Can you help with an insurance claim?', a: 'On the documentation, yes, and that is usually what a claim turns on. We record the condition in detail and prepare the itemised scope your claim needs. Adjusting, negotiating or settling the claim itself is for you, a licensed public adjuster or your attorney - we will tell you when you need one rather than blur that line.' },
     ],
     stats: [
       { value: '3-7 days', label: 'Typical system downtime' },
-      { value: '1 contractor', label: 'Roof and array under one scope' },
+      { value: '1 schedule', label: 'Roof and array under one scope' },
       { value: '100%', label: 'New flashing on re-install' },
     ],
     related: ['roofing', 'solar-upgrades', 'solar-installation', 'residential'],
@@ -247,7 +247,7 @@ export const energyServices: Service[] = [
     summary:
       'Turn verified emissions reductions into a revenue stream - eligibility assessment, registry work, verification support, monetisation and clean reporting.',
     intro:
-      'Projects that reduce emissions can often generate tradeable credits, but only if the measurement, additionality and registry work are done correctly from the start. Gridless Global assesses eligibility, builds the monitoring infrastructure, manages registry listing and third-party verification, and takes the resulting credits to market - while producing the ESG reporting your lenders and stakeholders are asking for anyway.',
+      'Projects that reduce emissions can often generate tradeable credits, but only if the measurement, additionality and registry work are done correctly from the start. Gridless Global assesses eligibility, specifies the monitoring infrastructure, manages registry listing and third-party verification, and takes the resulting credits to market - while producing the ESG reporting your lenders and stakeholders are asking for anyway.',
     icon: 'leaf',
     accent: 'green',
     group: 'advisory',
@@ -445,7 +445,7 @@ export const energyServices: Service[] = [
       'Networked billing and access control',
     ],
     offerings: [
-      { title: 'Home charging', body: 'Level 2 installation with the circuit and panel work done properly, including load calculations and permits.' },
+      { title: 'Home charging', body: 'Level 2 installation with the circuit and panel work done properly, including the load calculation and permit your licensed electrician carries.' },
       { title: 'Workplace & multifamily', body: 'Shared charging with access control, cost allocation and submetering that keeps billing fair.' },
       { title: 'Fleet depots', body: 'Depot design around duty cycles and dwell time, with managed charging that avoids setting new demand peaks.' },
       { title: 'DC fast charging', body: 'High-power installations including utility coordination, transformer work and site civils.' },
@@ -455,7 +455,7 @@ export const energyServices: Service[] = [
     process: [
       { title: 'Assess', body: 'Service capacity, panel space and duty cycles established first.' },
       { title: 'Plan', body: 'Phased layout with conduit and capacity for later stages.' },
-      { title: 'Install', body: 'Licensed electrical work, permits and inspection, managed for you.' },
+      { title: 'Install', body: 'Licensed electrical work, permits and inspection, coordinated for you.' },
       { title: 'Network', body: 'Access control, billing and monitoring configured.' },
       { title: 'Manage', body: 'Load management tuned so charging never sets a new peak.' },
     ],

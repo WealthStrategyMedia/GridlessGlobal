@@ -6,15 +6,16 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build && node scripts/check-links.mjs",
+    "build": "astro check && astro build && node scripts/check-links.mjs && node scripts/check-positioning.mjs",
     "build:fast": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "audit": "node scripts/check-links.mjs",
+    "audit": "node scripts/check-links.mjs && node scripts/check-positioning.mjs",
     "assets": "node scripts/prepare-assets.mjs",
     "measure-map": "node scripts/measure-map.mjs",
     "astro": "astro",
-    "sync:forms": "node scripts/sync-tweeble-forms.mjs"
+    "sync:forms": "node scripts/sync-tweeble-forms.mjs",
+    "audit:positioning": "node scripts/check-positioning.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

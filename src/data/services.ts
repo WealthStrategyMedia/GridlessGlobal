@@ -28,6 +28,28 @@ export const pillarServices = services.filter((s) => s.pillar);
 
 export const GROUP_ORDER: ServiceGroup[] = ['generation', 'property', 'energy', 'advisory', 'trades'];
 
+/**
+ * Services whose scope is purely advisory - analysis, modelling, funding,
+ * reporting and education - and which therefore involve no regulated trade
+ * work. Every other service page carries the licensed-trade-partner notice.
+ * A new service defaults to carrying the notice, which is the safe direction:
+ * add a slug here only when the scope genuinely involves no permitted work.
+ */
+export const ADVISORY_ONLY_SLUGS = new Set<string>([
+  'energy-analysis',
+  'energy-bill-savings',
+  'carbon-credits',
+  'energy-management',
+  'demand-side-management',
+  'energy-grant-writing',
+  'education-hub',
+]);
+
+/** True where a scope involves work performed by a licensed trade partner. */
+export function involvesRegulatedWork(slug: string): boolean {
+  return !ADVISORY_ONLY_SLUGS.has(slug);
+}
+
 /* ==========================================================================
    Interactive services map
    --------------------------------------------------------------------------

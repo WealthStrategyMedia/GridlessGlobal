@@ -11,9 +11,9 @@ export const tradeServices: Service[] = [
     title: 'Electrical Services & Wiring',
     kicker: 'Trades & Construction',
     summary:
-      'Licensed electricians for service upgrades, rewiring, panels, lighting, EV circuits, troubleshooting and code correction - residential and commercial.',
+      'Service upgrades, rewiring, panels, lighting, EV circuits, troubleshooting and code correction - scoped by us and delivered by licensed electricians, residential and commercial.',
     intro:
-      'Electrical is the backbone of everything else we manage. Solar, storage, microgrids and EV charging all terminate in a panel that somebody has to get right, so we scope it carefully, put it to licensed electricians we have already vetted, and supervise the result. The same programme covers conventional electrical work: service upgrades, rewiring, lighting, troubleshooting and bringing older installations back into code compliance.',
+      'Electrical is the backbone of everything else we coordinate. Solar, storage, microgrids and EV charging all terminate in a panel that somebody has to get right, so we scope it carefully, help you select from licensed electricians we have already vetted, and review the result against that scope. The same programme covers conventional electrical work: service upgrades, rewiring, lighting, troubleshooting and bringing older installations back into code compliance.',
     icon: 'bolt',
     accent: 'gold',
     group: 'trades',
@@ -30,23 +30,23 @@ export const tradeServices: Service[] = [
       { title: 'Commercial & industrial', body: 'Three-phase distribution, switchgear, motor controls, transformers and machine connections.' },
       { title: 'Lighting', body: 'LED retrofits, controls and occupancy sensing, interior, exterior and parking areas.' },
       { title: 'Troubleshooting & repair', body: 'Intermittent faults, nuisance tripping, power quality problems and thermal imaging of panels.' },
-      { title: 'Code compliance & inspection', body: 'Correction work, pre-sale inspections and documentation for insurers and authorities.' },
+      { title: 'Code compliance & documentation', body: 'Correction scopes, condition reporting and the documentation insurers and authorities ask for.' },
     ],
     process: [
       { title: 'Inspect', body: 'Existing service, panel and wiring condition assessed and documented.' },
-      { title: 'Calculate', body: 'Load calculations confirm what the service can genuinely carry.' },
-      { title: 'Permit', body: 'Applications filed and inspections scheduled by us.' },
-      { title: 'Install', body: 'Carried out by licensed electricians we appoint, with our supervision throughout.' },
+      { title: 'Calculate', body: 'A load calculation by the licensed electrician confirms what the service can genuinely carry.' },
+      { title: 'Permit', body: 'The licensed electrician on your job files the permit; we track it and keep inspections moving.' },
+      { title: 'Install', body: 'Carried out by the licensed electrician you engage, with us coordinating access, sequence and sign-off.' },
       { title: 'Certify', body: 'Testing, labelling and inspection sign-off before handover.' },
     ],
     faqs: [
       { q: 'How do I know if I need a service upgrade?', a: 'Common signs are a 100A or smaller service with modern loads, a full panel with no space, repeated breaker trips, or plans to add solar, a battery or EV charging. A load calculation settles it definitively.' },
       { q: 'Do you handle emergencies?', a: 'Yes, 24/7. Burning smells, sparking, partial power loss and water contact with electrical equipment should be treated as emergencies - shut off power at the main if it is safe to do so and call us.' },
-      { q: 'Is a permit really necessary?', a: 'For anything beyond simple like-for-like replacement, yes. Unpermitted electrical work causes real problems at sale, can void insurance and frequently has to be redone. We include permitting as standard.' },
+      { q: 'Is a permit really necessary?', a: 'For anything beyond simple like-for-like replacement, yes. Unpermitted electrical work causes real problems at sale, can void insurance and frequently has to be redone. Permitting is written into every scope we prepare, and the licensed electrician on your job files it.' },
     ],
     stats: [
       { value: '24/7', label: 'Emergency response' },
-      { value: 'Vetted', label: 'Credentials verified before appointment' },
+      { value: 'Vetted', label: 'Credentials verified before anyone starts' },
       { value: '400A+', label: 'Residential service capacity' },
     ],
     freeOffer: true,
@@ -60,7 +60,7 @@ export const tradeServices: Service[] = [
     summary:
       'Standby generators, transfer switches and battery backup - engineered so the transition from grid to backup is automatic, tested and genuinely reliable.',
     intro:
-      'Backup power that has never been tested is a hope, not a plan. We size standby systems against the loads you actually need to keep alive, specify the transfer switching properly, appoint the right installer and put the system on a maintenance and exercise schedule so it starts on the day it matters. Where batteries make more sense than fuel - and increasingly they do - we will say so.',
+      'Backup power that has never been tested is a hope, not a plan. We size standby systems against the loads you actually need to keep alive, specify the transfer switching properly, help you engage the right licensed installer and put the system on a maintenance and exercise schedule so it starts on the day it matters. Where batteries make more sense than fuel - and increasingly they do - we will say so.',
     icon: 'shield',
     accent: 'blue',
     group: 'trades',
@@ -82,7 +82,7 @@ export const tradeServices: Service[] = [
     process: [
       { title: 'Prioritise', body: 'Critical, desirable and non-essential loads separated and costed.' },
       { title: 'Size', body: 'Generator or battery sized to measured starting and running loads.' },
-      { title: 'Install', body: 'Pad, fuel, exhaust, transfer switch and wiring delivered by our appointed specialists.' },
+      { title: 'Install', body: 'Pad, fuel, exhaust, transfer switch and wiring delivered by the licensed specialists engaged for your project.' },
       { title: 'Test', body: 'Live transfer testing under load before handover.' },
       { title: 'Maintain', body: 'Scheduled service and exercise so it works when called on.' },
     ],
@@ -105,7 +105,7 @@ export const tradeServices: Service[] = [
     title: 'Roofing',
     kicker: 'Trades & Construction',
     summary:
-      'Residential and commercial roofing - replacement, repair, storm damage and solar-ready installation from the contractor who also handles your array.',
+      'Residential and commercial roofing - replacement, repair, storm damage and solar-ready installation, planned by the same team that runs your solar programme.',
     intro:
       'The roof is the single most important component in any solar project, and the one most often skipped over. We manage roof replacement and repair across every common system, and because we also run the solar programme we specify the roof to receive an array - flashing, attachment layout and future penetration planning - rather than leaving that problem for a second contractor to solve badly.',
     icon: 'roof',
@@ -122,7 +122,7 @@ export const tradeServices: Service[] = [
       { title: 'Residential replacement', body: 'Architectural asphalt, standing-seam metal, tile and slate, with full tear-off, decking inspection and ventilation correction.' },
       { title: 'Commercial roofing', body: 'TPO, EPDM, PVC, modified bitumen and coating systems, including tapered insulation and drainage correction.' },
       { title: 'Repair & maintenance', body: 'Leak diagnosis, flashing repair, targeted replacement and preventive inspection programmes.' },
-      { title: 'Storm damage & insurance', body: 'Damage assessment, documented scope for your adjuster and full restoration work.' },
+      { title: 'Storm damage documentation', body: 'Condition recorded in detail, a fully itemised restoration scope for your claim, and management of the restoration once it is approved.' },
       { title: 'Solar-ready roofing', body: 'Attachment layout and flashing planned at roofing stage so the future array never compromises the roof.' },
       { title: 'Ventilation & insulation', body: 'Attic ventilation and insulation corrected during replacement, where much of the energy benefit actually is.' },
     ],
@@ -134,9 +134,9 @@ export const tradeServices: Service[] = [
       { title: 'Warrant', body: 'Manufacturer and workmanship warranties registered on your behalf.' },
     ],
     faqs: [
-      { q: 'Should I replace the roof before adding solar?', a: 'If the roof has less than about ten years of life left, yes. A twenty-five year array on a ten year roof means paying twice to remove and re-install the panels. Doing both together under one contract is materially cheaper.' },
+      { q: 'Should I replace the roof before adding solar?', a: 'If the roof has less than about ten years of life left, yes. A twenty-five year array on a ten year roof means paying twice to remove and re-install the panels. Doing both together as one coordinated project, on one schedule, is materially cheaper.' },
       { q: 'How long does a roof replacement take?', a: 'A typical home is one to three days. Commercial projects run from a few days to several weeks depending on area, deck condition and whether operations must continue beneath.' },
-      { q: 'Do you work with insurance?', a: 'Regularly. We document damage thoroughly, provide the itemised scope adjusters expect and deal with the carrier directly on your behalf.' },
+      { q: 'Do you work with insurance?', a: 'Regularly, on the documentation and scoping side - which is where most claims are won or lost. We record the damage thoroughly and prepare the itemised scope adjusters expect. Negotiating and settling with the carrier is for you, a licensed public adjuster or your attorney; we do not represent you to your insurer.' },
     ],
     stats: [
       { value: '1-3 days', label: 'Typical residential replacement' },
@@ -201,7 +201,7 @@ export const tradeServices: Service[] = [
     summary:
       'Additions, remodels, tenant improvements and ground-up work - built efficient from the start, with the energy systems designed in rather than added later.',
     intro:
-      'Gridless Global runs construction programmes. Residential additions and remodels, garages and accessory dwellings, commercial tenant improvements and ground-up light construction. What distinguishes our work is that the energy design is native to it: envelope performance, electrical capacity, solar readiness and EV conduit are specified at framing, when they cost almost nothing, rather than retrofitted later at many times the price. We write the scope, competitively bid it and manage the builders through to sign-off.',
+      'Gridless Global manages construction programmes. Residential additions and remodels, garages and accessory dwellings, commercial tenant improvements and ground-up light construction. What distinguishes our work is that the energy design is native to it: envelope performance, electrical capacity, solar readiness and EV conduit are specified at framing, when they cost almost nothing, rather than retrofitted later at many times the price. We write the scope, competitively bid it and manage the builders through to sign-off.',
     icon: 'hammer',
     accent: 'gold',
     group: 'trades',
@@ -214,28 +214,28 @@ export const tradeServices: Service[] = [
     ],
     offerings: [
       { title: 'Additions & remodels', body: 'Room additions, second storeys, kitchen and bathroom remodels and full interior renovation.' },
-      { title: 'Garages & ADUs', body: 'Detached garages, workshops and accessory dwelling units, permitted and built to current code.' },
+      { title: 'Garages & ADUs', body: 'Detached garages, workshops and accessory dwelling units, built to current code by licensed contractors who carry the permit.' },
       { title: 'Tenant improvements', body: 'Commercial build-outs including demising walls, mechanical, electrical, finishes and occupancy sign-off.' },
-      { title: 'Ground-up construction', body: 'Light commercial and residential new build with high-performance envelope specification.' },
-      { title: 'Design-build delivery', body: 'One point of responsibility covering design, permitting and construction, so it never lands between two firms.' },
+      { title: 'Ground-up construction', body: 'Light commercial and residential new build, managed end to end with high-performance envelope specification.' },
+      { title: 'Single-point coordination', body: 'One team coordinating design, permitting and construction on your behalf, so nothing lands in the gap between two firms.' },
       { title: 'Energy-ready infrastructure', body: 'Conduit, panel capacity, roof structure and mounting provisions specified at framing for future systems.' },
     ],
     process: [
       { title: 'Define', body: 'Scope, budget and schedule established before design begins.' },
       { title: 'Design', body: 'Drawings and specifications including envelope and energy provisions.' },
-      { title: 'Permit', body: 'Applications, plan review and approvals managed by us.' },
+      { title: 'Permit', body: 'Plan review and approvals tracked by us; your licensed contractor files the applications.' },
       { title: 'Build', body: 'Managed trades with a single project manager accountable to you.' },
       { title: 'Close', body: 'Inspections, punch list, warranty documentation and handover.' },
     ],
     faqs: [
-      { q: 'Do you handle design and permits?', a: 'Yes. Design-build is our default because it removes the gap between the designer and the builder, which is where most cost overruns and schedule disputes originate.' },
+      { q: 'Who handles the design and the permits?', a: 'We coordinate both. Design is prepared by the appropriate licensed professional, and the permit is filed and carried by the licensed contractor performing the work - that is how Florida requires it. What we do is keep the two in step with each other, which is where most cost overruns and schedule disputes actually originate.' },
       { q: 'What does energy-ready construction cost extra?', a: 'Very little at framing stage - conduit, panel capacity and roof blocking are inexpensive while the walls are open. Retrofitting the same provisions later routinely costs five to ten times as much.' },
       { q: 'Can you work in an occupied building?', a: 'Yes. Phased scheduling, dust and noise containment, temporary services and out-of-hours work are all normal parts of how we plan occupied projects.' },
     ],
     stats: [
-      { value: 'Design-build', label: 'Single-contract delivery' },
+      { value: 'One plan', label: 'Design and build kept in step' },
       { value: '5-10x', label: 'Cost of retrofitting later' },
-      { value: 'One super', label: 'Accountable on every site' },
+      { value: 'One PM', label: 'Accountable on every site' },
     ],
     freeOffer: true,
     related: ['roofing', 'siding', 'electrical', 'eco-smart-living'],
@@ -248,7 +248,7 @@ export const tradeServices: Service[] = [
     summary:
       'The smaller jobs, handled properly - repairs, installations, maintenance and punch lists by insured tradespeople, for homes and commercial properties alike.',
     intro:
-      'Not everything needs a full programme and a permit. Our handyman service covers the long tail of work that property owners struggle to get anyone to show up for: repairs, fixture installation, door and window adjustment, drywall, carpentry, seasonal maintenance and the punch list that never quite gets finished. Same vetted tradespeople, same standards, considerably smaller invoice.',
+      'Not everything needs a full programme and a permit. Our handyman programme covers the long tail of work that property owners struggle to get anyone to show up for: repairs, fixture installation, door and window adjustment, drywall, carpentry, seasonal maintenance and the punch list that never quite gets finished. Same vetted tradespeople, same standards, considerably smaller invoice.',
     icon: 'wrench',
     accent: 'blue',
     group: 'trades',
@@ -272,7 +272,7 @@ export const tradeServices: Service[] = [
       { title: 'Quote', body: 'Hourly or fixed-price estimate, agreed before work starts.' },
       { title: 'Schedule', body: 'A real appointment window that we keep.' },
       { title: 'Complete', body: 'Work done, area cleaned, materials disposed of.' },
-      { title: 'Follow up', body: 'Workmanship warranty and an easy route to call us back.' },
+      { title: 'Follow up', body: 'Workmanship warranty from the trade that did the work, held and enforced by us, and an easy route to call us back.' },
     ],
     faqs: [
       { q: 'Is there a minimum charge?', a: 'We have a minimum service call to cover travel and setup, which is why bundling several small items into one visit is far better value than calling us out repeatedly.' },
