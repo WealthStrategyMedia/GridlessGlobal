@@ -83,8 +83,12 @@ const control =
         <div class="relative">
           <select id={id} name={name} required={required} data-label={label} class={`${control} appearance-none pr-11`}>
             <option value="">{placeholder ?? 'Please select...'}</option>
+            {/* A select is preselected via `selected` on the option - unlike an
+                input, the `value` prop has no effect here. */}
             {options.map((o) => (
-              <option value={o.value}>{o.label}</option>
+              <option value={o.value} selected={value != null && value === o.value}>
+                {o.label}
+              </option>
             ))}
           </select>
           <svg
