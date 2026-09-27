@@ -14,152 +14,290 @@ import {
 /**
  * Payment intake, wired to the live Tweeble payment form.
  *
- * This is our own markup rather than Tweeble's embed script, so the form
- * matches the rest of the site. It posts straight to their submit endpoint and
- * forwards the payer to the hosted checkout URL that comes back. Card details
- * are only ever entered on that hosted page.
+ * The whole flow stays on this page. Submitting creates a checkout session and
+ * opens Tweeble's secure card form inside a modal rather than navigating away.
+ * Tweeble's checkout posts a message to us when it finishes:
+ *
+ *   { type: "tweeble:purchase", status: "cancelled" | ..., sessionId }
+ *
+ * Cancelling closes the modal and hands the payer straight back to their
+ * part-filled form; paying shows a success panel in place. Card details are
+ * only ever typed into Stripe's frames inside Tweeble's page.
  *
  * Field ids and the minimum amount come from the committed form snapshot - see
  * src/data/payments.ts.
  */
 
 const reasonOptions = PAYMENT_REASONS.map((reason) => ({ value: reason, label: reason }));
-const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` : 'Amount';
+const TWEEBLE_ORIGIN = new URL(paymentForm.submitUrl).origin;
 ---
-<div class="panel rounded-4xl p-7 sm:p-10">
-  <div class="flex items-start justify-between gap-6">
-    <div>
-      <h2 class="font-display text-2xl font-bold sm:text-3xl">{paymentForm.name}</h2>
-      <p class="mt-2 max-w-lg text-[0.92rem] text-ink-muted">
-        Pay an invoice, deposit or service call securely. You will be taken to our payment
-        provider to enter card details - we never handle or store them ourselves.
-      </p>
+<div class="panel rounded-4xl p-7 sm:p-10" data-payment-root>
+  <!-- ============ The form ============ -->
+  <div data-payment-pane="form">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <h2 class="font-display text-2xl font-bold sm:text-3xl">{paymentForm.name}</h2>
+        <p class="mt-2 max-w-lg text-[0.92rem] text-ink-muted">
+          Pay an invoice, deposit or service call securely. Your card details are entered on our
+          payment provider's secure form - we never see or store them.
+        </p>
+      </div>
+      <span class="hidden shrink-0 items-center gap-2 rounded-full border border-signal-500/30 bg-signal-500/10 px-3.5 py-2 text-[0.75rem] font-semibold text-signal-300 sm:flex">
+        <Icon name="lock" size={14} /> Secure checkout
+      </span>
     </div>
-    <span class="hidden shrink-0 items-center gap-2 rounded-full border border-signal-500/30 bg-signal-500/10 px-3.5 py-2 text-[0.75rem] font-semibold text-signal-300 sm:flex">
-      <Icon name="lock" size={14} /> Secure checkout
-    </span>
+
+    <form
+      id="payment-form"
+      class="mt-8"
+      novalidate
+      data-submit-url={paymentForm.submitUrl}
+      data-submit-label={paymentForm.submitLabel}
+    >
+      <div class="grid gap-5 sm:grid-cols-2">
+        <Field
+          name="reason"
+          label="What is this payment for?"
+          type="select"
+          required={isRequired(PAYMENT_FIELDS.reason)}
+          options={reasonOptions}
+          placeholder="Choose one"
+          class="sm:col-span-2"
+        />
+
+        <Field
+          name="invoiceNumber"
+          label="Invoice or job number"
+          required={isRequired(PAYMENT_FIELDS.invoiceNumber)}
+          placeholder="INV-10482"
+          hint="If you do not have one, enter the property address or the job we quoted."
+        />
+
+        {
+          amountIsPayerChosen ? (
+            <div data-field class="group">
+              <label
+                for="pay-amount"
+                class="mb-2 block font-display text-[0.8rem] font-semibold tracking-wide text-ink-muted"
+              >
+                Amount
+                <span class="ml-1 text-gold-400" aria-hidden="true">*</span>
+              </label>
+              <div class="relative">
+                <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-display text-[0.95rem] text-ink-faint">
+                  $
+                </span>
+                <input
+                  id="pay-amount"
+                  name="amount"
+                  type="number"
+                  min={minimumAmount}
+                  step="0.01"
+                  required
+                  inputmode="decimal"
+                  placeholder="0.00"
+                  data-label="Amount"
+                  class="w-full rounded-2xl border border-white/12 bg-navy-900/60 py-3.5 pl-8 pr-4 text-[0.95rem] text-ink placeholder:text-ink-faint/70 transition-colors hover:border-white/20 focus:border-brand-400/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25"
+                />
+              </div>
+              <p class="mt-1.5 text-[0.78rem] text-ink-faint">Minimum ${minimumAmount.toFixed(2)}.</p>
+              <p data-error class="mt-1.5 hidden text-[0.8rem] text-red-300" />
+            </div>
+          ) : (
+            <div class="flex flex-col justify-end">
+              <p class="font-display text-[0.8rem] font-semibold tracking-wide text-ink-muted">Amount</p>
+              <p class="mt-2 font-display text-2xl font-bold text-gold-400">${fixedAmount?.toFixed(2)}</p>
+            </div>
+          )
+        }
+
+        <Field name="name" label="Name on the account" required={isRequired(PAYMENT_FIELDS.name)} autocomplete="name" />
+        <Field name="email" label="Email for receipt" type="email" required={isRequired(PAYMENT_FIELDS.email)} autocomplete="email" />
+        <Field
+          name="note"
+          label="Note (optional)"
+          type="textarea"
+          rows={3}
+          required={isRequired(PAYMENT_FIELDS.note)}
+          class="sm:col-span-2"
+          placeholder="Anything our accounts team should know about this payment."
+        />
+      </div>
+
+      <!-- Honeypot. Tweeble rejects a submission where this is filled in. -->
+      <div class="gg-honeypot" aria-hidden="true">
+        <label>
+          Do not fill this in
+          <input type="text" name="website_url" data-honeypot tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+
+      <div id="payment-status" class="hidden"></div>
+
+      <button
+        type="submit"
+        id="payment-submit"
+        class="mt-7 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-8 py-4 font-display text-base font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_46px_-12px_rgba(248,184,40,.95)] disabled:pointer-events-none disabled:opacity-50 sm:w-auto"
+      >
+        <Icon name="credit-card" size={19} />
+        <span data-submit-text>{paymentForm.submitLabel}</span>
+      </button>
+
+      <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.78rem] text-ink-faint">
+        <span class="flex items-center gap-2">
+          <Icon name="shield-check" size={15} class="text-signal-400" />
+          Card details never touch this site
+        </span>
+        <span class="flex items-center gap-1.5">
+          Payments powered by
+          <a
+            href="https://tweeble.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-brand-300 underline underline-offset-2 hover:text-brand-200"
+          >
+            Tweeble
+          </a>
+        </span>
+      </div>
+    </form>
   </div>
 
-  <form id="payment-form" class="mt-8" novalidate data-submit-url={paymentForm.submitUrl}>
-    <div class="grid gap-5 sm:grid-cols-2">
-      <Field
-        name="reason"
-        label="What is this payment for?"
-        type="select"
-        required={isRequired(PAYMENT_FIELDS.reason)}
-        options={reasonOptions}
-        placeholder="Choose one"
-        class="sm:col-span-2"
-      />
-
-      <Field
-        name="invoiceNumber"
-        label="Invoice or job number"
-        required={isRequired(PAYMENT_FIELDS.invoiceNumber)}
-        placeholder="INV-10482"
-        hint="If you do not have one, enter the property address or the job we quoted."
-      />
-
-      {
-        amountIsPayerChosen ? (
-          <div data-field class="group">
-            <label
-              for="pay-amount"
-              class="mb-2 block font-display text-[0.8rem] font-semibold tracking-wide text-ink-muted"
-            >
-              {amountLabel}
-              <span class="ml-1 text-gold-400" aria-hidden="true">*</span>
-            </label>
-            <div class="relative">
-              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-display text-[0.95rem] text-ink-faint">
-                $
-              </span>
-              <input
-                id="pay-amount"
-                name="amount"
-                type="number"
-                min={minimumAmount}
-                step="0.01"
-                required
-                inputmode="decimal"
-                placeholder="0.00"
-                data-label="Amount"
-                data-min-amount={minimumAmount}
-                class="w-full rounded-2xl border border-white/12 bg-navy-900/60 py-3.5 pl-8 pr-4 text-[0.95rem] text-ink placeholder:text-ink-faint/70 transition-colors hover:border-white/20 focus:border-brand-400/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25"
-              />
-            </div>
-            <p class="mt-1.5 text-[0.78rem] text-ink-faint">
-              Minimum ${minimumAmount.toFixed(2)}.
-            </p>
-            <p data-error class="mt-1.5 hidden text-[0.8rem] text-red-300"></p>
-          </div>
-        ) : (
-          <div class="flex flex-col justify-end">
-            <p class="font-display text-[0.8rem] font-semibold tracking-wide text-ink-muted">Amount</p>
-            <p class="mt-2 font-display text-2xl font-bold text-gold-400">
-              ${fixedAmount?.toFixed(2)}
-            </p>
-          </div>
-        )
-      }
-
-      <Field
-        name="name"
-        label="Name on the account"
-        required={isRequired(PAYMENT_FIELDS.name)}
-        autocomplete="name"
-      />
-      <Field
-        name="email"
-        label="Email for receipt"
-        type="email"
-        required={isRequired(PAYMENT_FIELDS.email)}
-        autocomplete="email"
-      />
-      <Field
-        name="note"
-        label="Note (optional)"
-        type="textarea"
-        rows={3}
-        required={isRequired(PAYMENT_FIELDS.note)}
-        class="sm:col-span-2"
-        placeholder="Anything our accounts team should know about this payment."
-      />
-    </div>
-
-    <!-- Honeypot. Tweeble rejects a submission where this is filled in. -->
-    <div class="gg-honeypot" aria-hidden="true">
-      <label>
-        Do not fill this in
-        <input type="text" name="website_url" data-honeypot tabindex="-1" autocomplete="off" />
-      </label>
-    </div>
-
-    <div id="payment-status" class="hidden"></div>
-
-    <button
-      type="submit"
-      id="payment-submit"
-      class="mt-7 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-8 py-4 font-display text-base font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_46px_-12px_rgba(248,184,40,.95)] disabled:pointer-events-none disabled:opacity-50 sm:w-auto"
-    >
-      <Icon name="credit-card" size={19} />
-      {paymentForm.submitLabel}
-    </button>
-
-    <p class="mt-4 flex items-center gap-2 text-[0.78rem] text-ink-faint">
-      <Icon name="shield-check" size={15} class="text-signal-400" />
-      Card details are entered on our payment provider's hosted page, never on this site.
+  <!-- ============ Success, shown in place of the form ============ -->
+  <div data-payment-pane="success" class="hidden text-center" tabindex="-1">
+    <span class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-signal-500/40 bg-signal-500/12 text-signal-400">
+      <Icon name="check-circle" size={40} />
+    </span>
+    <h2 class="mt-7 font-display text-2xl font-bold sm:text-3xl">{paymentForm.successMessage}</h2>
+    <p class="mx-auto mt-4 max-w-md text-[0.95rem] leading-relaxed text-ink-muted">
+      A receipt is on its way to the email address you gave us. If anything looks wrong, our accounts
+      team will put it right quickly.
     </p>
-  </form>
+    <div class="mx-auto mt-7 hidden max-w-md rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-left" data-success-reference>
+      <p class="text-[0.72rem] uppercase tracking-wider text-ink-faint">Reference</p>
+      <p class="mt-1 break-all font-mono text-[0.82rem] text-ink" data-success-reference-value></p>
+    </div>
+    <button
+      type="button"
+      data-payment-reset
+      class="mt-8 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-6 py-3 font-display text-[0.88rem] font-semibold text-ink transition-colors hover:border-brand-400/60"
+    >
+      Make another payment
+    </button>
+  </div>
 </div>
 
-<script is:inline define:vars={{ FIELD_IDS: PAYMENT_FIELDS, MIN_AMOUNT: minimumAmount, PAYER_CHOOSES_AMOUNT: amountIsPayerChosen }}>
+<!-- ============ Checkout modal ============ -->
+<div
+  id="checkout-modal"
+  class="fixed inset-0 z-[60] hidden items-center justify-center p-0 sm:p-6"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="checkout-modal-title"
+>
+  <div class="absolute inset-0 bg-navy-950/85 backdrop-blur-sm" data-checkout-backdrop></div>
+
+  <!-- A definite height is required: the checkout frame below uses flex-1, which
+       resolves to zero against an auto-height parent. -->
+  <div class="panel relative flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-none sm:h-[min(92vh,50rem)] sm:rounded-4xl">
+    <!-- Our branding sits above Tweeble's form, so the payer always knows who they are paying. -->
+    <div class="flex shrink-0 items-center justify-between gap-4 border-b border-white/[0.08] px-5 py-4 sm:px-7">
+      <div class="flex min-w-0 items-center gap-3.5">
+        <img src="/images/logo-mark.png" alt="" aria-hidden="true" width="280" height="248" class="h-10 w-10 shrink-0 object-contain" />
+        <div class="min-w-0">
+          <p id="checkout-modal-title" class="truncate font-display text-[1rem] font-bold text-ink">
+            Gridless Global - secure payment
+          </p>
+          <p class="mt-0.5 text-[0.78rem] text-ink-faint">
+            <span data-checkout-summary>Complete your payment below</span>
+          </p>
+        </div>
+      </div>
+      <button
+        type="button"
+        data-checkout-close
+        aria-label="Close and return to the payment form"
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-ink-muted transition-colors hover:border-red-400/50 hover:text-ink"
+      >
+        <Icon name="close" size={19} />
+      </button>
+    </div>
+
+    <!-- Tweeble's hosted card form. Created on open so nothing loads early. -->
+    <div class="relative min-h-0 flex-1 bg-white" data-checkout-frame-slot>
+      <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-navy-900" data-checkout-loading>
+        <span class="gg-spinner" aria-hidden="true">
+          <img src="/images/logo-mark.png" alt="" width="280" height="248" />
+        </span>
+        <p class="font-display text-[0.9rem] font-semibold text-ink">Opening secure checkout...</p>
+        <p class="text-[0.78rem] text-ink-faint">One moment.</p>
+      </div>
+    </div>
+
+    <div class="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-white/[0.08] px-5 py-3.5 text-[0.76rem] text-ink-faint sm:px-7">
+      <span class="flex items-center gap-2">
+        <Icon name="lock" size={14} class="text-signal-400" />
+        Encrypted - your card is handled by our payment provider
+      </span>
+      <span class="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+        <!-- Always-available escape hatch: some browsers restrict a card form
+             running inside a nested frame, so never trap the payer here. -->
+        <a
+          href="#"
+          data-checkout-newtab
+          class="flex items-center gap-1.5 underline underline-offset-2 transition-colors hover:text-ink"
+        >
+          Trouble paying? Open in a new tab
+          <Icon name="arrow-up-right" size={13} />
+        </a>
+        <span class="flex items-center gap-1.5">
+          Payments powered by
+          <a
+            href="https://tweeble.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-brand-300 underline underline-offset-2 hover:text-brand-200"
+          >
+            Tweeble
+          </a>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script
+  is:inline
+  define:vars={{
+    FIELD_IDS: PAYMENT_FIELDS,
+    MIN_AMOUNT: minimumAmount,
+    PAYER_CHOOSES_AMOUNT: amountIsPayerChosen,
+    TWEEBLE_ORIGIN,
+  }}
+>
   (function () {
+    const root = document.querySelector('[data-payment-root]');
     const form = document.getElementById('payment-form');
-    if (!form) return;
+    if (!root || !form) return;
+
     const statusBox = document.getElementById('payment-status');
     const submit = document.getElementById('payment-submit');
+    const submitText = form.querySelector('[data-submit-text]');
+    const formPane = root.querySelector('[data-payment-pane="form"]');
+    const successPane = root.querySelector('[data-payment-pane="success"]');
 
+    const modal = document.getElementById('checkout-modal');
+    const frameSlot = modal.querySelector('[data-checkout-frame-slot]');
+    const modalLoading = modal.querySelector('[data-checkout-loading]');
+    const modalSummary = modal.querySelector('[data-checkout-summary]');
+
+    const newTabLink = modal.querySelector('[data-checkout-newtab]');
+
+    let lastFocused = null;
+    let settled = false;
+    let currentCheckoutUrl = null;
+
+    /* ---------------- status banner ---------------- */
     function show(kind, title, body) {
       if (!statusBox) return;
       const palette = {
@@ -181,7 +319,14 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
       }
       statusBox.setAttribute('role', kind === 'error' ? 'alert' : 'status');
     }
+    const clearStatus = () => {
+      if (statusBox) {
+        statusBox.className = 'hidden';
+        statusBox.innerHTML = '';
+      }
+    };
 
+    /* ---------------- validation ---------------- */
     function setFieldError(input, message) {
       const wrap = input.closest('[data-field]');
       const target = wrap ? wrap.querySelector('[data-error]') : null;
@@ -196,11 +341,9 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
 
     function validate() {
       let firstInvalid = null;
-      const controls = form.querySelectorAll('[name]:not([data-honeypot])');
-      controls.forEach(function (el) {
+      form.querySelectorAll('[name]:not([data-honeypot])').forEach(function (el) {
         const value = (el.value || '').trim();
         let message = null;
-
         if (el.hasAttribute('required') && !value) {
           message = (el.dataset.label || 'This field') + ' is required.';
         } else if (el.getAttribute('type') === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
@@ -211,7 +354,6 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
             message = 'Enter an amount of at least $' + MIN_AMOUNT.toFixed(2) + '.';
           }
         }
-
         setFieldError(el, message);
         if (message && !firstInvalid) firstInvalid = el;
       });
@@ -224,6 +366,148 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
       });
     });
 
+    /* ---------------- modal ---------------- */
+    const focusable = () =>
+      Array.from(
+        modal.querySelectorAll('button, a[href], iframe, input, select, textarea, [tabindex]:not([tabindex="-1"])')
+      ).filter((el) => el.offsetParent !== null || el.tagName === 'IFRAME');
+
+    function openModal(checkoutUrl, summary) {
+      lastFocused = document.activeElement;
+      settled = false;
+      currentCheckoutUrl = checkoutUrl;
+      if (newTabLink) newTabLink.setAttribute('href', checkoutUrl);
+      if (modalSummary && summary) modalSummary.textContent = summary;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+
+      modalLoading.classList.remove('hidden');
+      modalLoading.classList.add('flex');
+
+      const frame = document.createElement('iframe');
+      frame.src = checkoutUrl;
+      frame.title = 'Secure payment';
+      frame.className = 'absolute inset-0 h-full w-full border-0';
+      frame.allow = 'payment *';
+      frame.setAttribute('data-checkout-frame', '');
+      frame.addEventListener('load', function () {
+        modalLoading.classList.add('hidden');
+        modalLoading.classList.remove('flex');
+      });
+      frameSlot.appendChild(frame);
+
+      modal.querySelector('[data-checkout-close]').focus();
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      const frame = frameSlot.querySelector('[data-checkout-frame]');
+      if (frame) frame.remove();
+      modalLoading.classList.add('hidden');
+      modalLoading.classList.remove('flex');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    /** Closing without paying simply returns the payer to their filled-in form. */
+    function cancelPayment(message) {
+      closeModal();
+      if (!settled) {
+        show(
+          'info',
+          'Payment cancelled',
+          message || 'No payment was taken and nothing was charged. Your details are still here whenever you are ready.'
+        );
+      }
+    }
+
+    if (newTabLink) {
+      newTabLink.addEventListener('click', function (event) {
+        if (!currentCheckoutUrl) return;
+        event.preventDefault();
+        // Opening the same session elsewhere is not a cancellation, so close
+        // quietly and leave the form as it is.
+        window.open(currentCheckoutUrl, '_blank', 'noopener');
+        settled = true;
+        closeModal();
+        show(
+          'info',
+          'Checkout opened in a new tab',
+          'Finish your payment there. This page will not update automatically, so check your email for the receipt.'
+        );
+      });
+    }
+
+    modal.querySelector('[data-checkout-close]').addEventListener('click', () => cancelPayment());
+    modal.querySelector('[data-checkout-backdrop]').addEventListener('click', () => cancelPayment());
+    document.addEventListener('keydown', function (event) {
+      if (modal.classList.contains('hidden')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        cancelPayment();
+      }
+      if (event.key === 'Tab') {
+        const items = focusable();
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    /* ---------------- success ---------------- */
+    function showSuccess(sessionId) {
+      settled = true;
+      closeModal();
+      formPane.classList.add('hidden');
+      successPane.classList.remove('hidden');
+      if (sessionId) {
+        const box = successPane.querySelector('[data-success-reference]');
+        const value = successPane.querySelector('[data-success-reference-value]');
+        if (box && value) {
+          value.textContent = sessionId;
+          box.classList.remove('hidden');
+        }
+      }
+      successPane.focus();
+      root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    successPane.querySelector('[data-payment-reset]').addEventListener('click', function () {
+      successPane.classList.add('hidden');
+      formPane.classList.remove('hidden');
+      form.reset();
+      clearStatus();
+      form.querySelectorAll('[data-field]').forEach((f) => f.classList.remove('is-invalid'));
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    /* ---------------- messages from Tweeble ---------------- */
+    // The checkout posts to "*", so the origin check is what makes this safe:
+    // only Tweeble's own frame may drive this flow.
+    window.addEventListener('message', function (event) {
+      if (event.origin !== TWEEBLE_ORIGIN) return;
+      const data = event.data;
+      if (!data || data.type !== 'tweeble:purchase') return;
+
+      const status = String(data.status || '').toLowerCase();
+      if (status === 'cancelled' || status === 'canceled') {
+        cancelPayment();
+      } else {
+        showSuccess(data.sessionId);
+      }
+    });
+
+    /* ---------------- submit ---------------- */
     form.addEventListener('submit', async function (event) {
       event.preventDefault();
 
@@ -239,7 +523,6 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
         return el ? el.value.trim() : '';
       };
 
-      // Shape required by Tweeble: field ids as keys, amount in dollars.
       const payload = {
         [FIELD_IDS.reason]: read('reason'),
         [FIELD_IDS.invoiceNumber]: read('invoiceNumber'),
@@ -251,8 +534,9 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
       };
       if (PAYER_CHOOSES_AMOUNT) payload.amount = Number(read('amount'));
 
-      if (submit) submit.disabled = true;
-      show('info', 'Starting secure checkout...', 'One moment while we prepare your payment.');
+      submit.disabled = true;
+      if (submitText) submitText.textContent = 'Preparing checkout...';
+      clearStatus();
 
       try {
         const response = await fetch(form.dataset.submitUrl, {
@@ -260,12 +544,14 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        const result = await response.json().catch(function () {
-          return {};
-        });
+        const result = await response.json().catch(() => ({}));
 
         if (response.ok && result.checkoutUrl) {
-          window.location.assign(result.checkoutUrl);
+          const amount = PAYER_CHOOSES_AMOUNT ? Number(read('amount')) : null;
+          const summary = amount
+            ? '$' + amount.toFixed(2) + ' - ' + (read('reason') || 'Payment')
+            : read('reason') || 'Payment';
+          openModal(result.checkoutUrl, summary);
           return;
         }
 
@@ -282,7 +568,8 @@ const amountLabel = fixedAmount != null ? `Amount (${fixedAmount.toFixed(2)})` :
           'Check your connection and try again. If it persists, please call us and we will take payment over the phone.'
         );
       } finally {
-        if (submit) submit.disabled = false;
+        submit.disabled = false;
+        if (submitText) submitText.textContent = form.dataset.submitLabel || 'Pay Now';
       }
     });
   })();

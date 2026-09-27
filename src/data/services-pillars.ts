@@ -418,6 +418,7 @@ export const pillars: Service[] = [
       { value: '4-24 hr', label: 'Common designed island duration' },
       { value: '3+', label: 'Asset classes under one controller' },
     ],
+    freeOffer: true,
     related: ['energy-storage', 'solar-power-plant', 'eco-smart-living', 'demand-side-management'],
   },
 
@@ -493,6 +494,7 @@ export const pillars: Service[] = [
       { value: '100%', label: 'Units EV-ready by design' },
       { value: '1 partner', label: 'From master plan to operations' },
     ],
+    freeOffer: true,
     related: ['smart-microgrid', 'residential', 'ev-charging', 'energy-management'],
   },
 
@@ -643,6 +645,7 @@ export const pillars: Service[] = [
       { value: 'Licensed', label: 'Electricians on every project' },
       { value: 'Free', label: 'Initial consultation and estimate' },
     ],
+    freeOffer: true,
     related: ['solar-installation', 'energy-analysis', 'roofing', 'electrical'],
   },
 
@@ -718,6 +721,7 @@ export const pillars: Service[] = [
       { value: 'Level I-III', label: 'Audit depth available' },
       { value: 'M&V', label: 'Savings verified, not estimated' },
     ],
+    freeOffer: true,
     related: ['energy-analysis', 'demand-side-management', 'carbon-credits', 'solar-installation'],
   },
 ];

@@ -11,18 +11,22 @@ export const site = {
     'Gridless Global designs, builds, finances and maintains energy systems end to end - utility-scale generation, microgrids and storage, plus solar, electrical, roofing and construction for homes and businesses.',
   url: 'https://gridlessglobal.com',
 
-  // TODO: replace placeholders with the real published contact details.
-  phone: '(555) 123-4567',
-  phoneHref: 'tel:+15551234567',
-  email: 'info@gridlessglobal.com',
-  supportEmail: 'support@gridlessglobal.com',
-  address: {
-    line1: '1 Gridless Way',
-    line2: 'Suite 400',
-    city: 'Dallas',
-    region: 'TX',
-    postal: '75201',
+  /** Primary number. Both published numbers are listed in `phones`. */
+  phone: '603-918-3678',
+  phoneHref: 'tel:+16039183678',
+  phones: [
+    { number: '603-918-3678', href: 'tel:+16039183678' },
+    { number: '786-216-3191', href: 'tel:+17862163191' },
+  ],
+  email: 'gridlessglobal@gmail.com',
+  supportEmail: 'gridlessglobal@gmail.com',
+  /** Service area only - no street address is published. */
+  location: {
+    city: 'Orlando',
+    region: 'Florida',
+    regionCode: 'FL',
     country: 'USA',
+    label: 'Orlando, Florida',
   },
   hours: 'Mon-Fri 7:00am - 6:00pm - 24/7 emergency service',
 

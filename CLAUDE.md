@@ -19,6 +19,7 @@ npm run build        # astro check + build + audit dist/  <- use this before cla
 npm run audit        # link / alt / heading / meta audit of dist/
 npm run assets       # regenerate brand assets from Context/ (rarely needed)
 npm run measure-map  # re-measure services map hotspots (only if artwork changes)
+npm run sync:forms   # refresh Tweeble form snapshots after editing a form there
 ```
 
 `npm run build` is the gate: it typechecks, builds and audits. It must pass clean.
@@ -88,31 +89,53 @@ Note: once a model is running, this environment's screenshot capture stops
 producing frames for that tab. That is a capture limitation, not a site bug —
 verify those pages with `get_page_text` and DOM measurements instead.
 
-## Payments (live)
+## Tweeble forms and payments (all live)
 
-`/pay` posts directly from the browser to a Tweeble payment form and redirects to the
-`checkoutUrl` it returns. No server-side code and no environment variables are involved —
-Tweeble sends `Access-Control-Allow-Origin: *`. Do not reroute this through a Netlify
-function; the direct path costs no invocations and works on any static host.
+Contact, the footer subscribe box and `/pay` all post **directly from the browser** to
+Tweeble. Their API allows cross-origin requests, so there is no server-side code and no
+environment variables in any of these paths. Do not reroute them through a Netlify
+function — the direct path costs no invocations and works on any static host.
 
-Tweeble's field ids (`f_…`) are form-specific and must never be hard-coded. They come from
-`src/data/payment-form.json`, a committed snapshot refreshed with
-`npm run sync:payment-form`, and are resolved **by label** in `src/data/payments.ts` so a
-renamed field fails the build loudly instead of posting an incomplete submission.
+Field ids (`f_…`) are form-specific and must never be hard-coded. They come from the
+committed snapshots `src/data/{payment,contact,newsletter}-form.json`, refreshed with
+`npm run sync:forms`, and are resolved **by label** in `src/data/{payments,contact}.ts` so a
+renamed field fails the build loudly. Required flags, options and button labels are
+rendered from those snapshots too — edit the form in Tweeble, then re-sync.
 
-`amount` goes to Tweeble in **dollars**, not cents. Errors come back as `{ error }` and are
-payer-appropriate — show them verbatim.
+- `amount` goes to Tweeble in **dollars**, not cents.
+- Errors come back as `{ error }` and are user-appropriate — show them verbatim.
+- Every submission includes an empty `website_url` honeypot and `sourceUrl`.
+- The subscribe box keeps its own copy and button text ("Subscribe"); do not render the
+  upstream form name, which reads "Subscribe To Newsletter".
+- The contact form's consent checkbox is ours alone and is deliberately not transmitted.
 
-`netlify/functions/create-checkout-session.mts` (`/api/checkout`) is a complete but now
-**unused** Stripe implementation, as is `/pay/complete`. Leave them unless asked.
+**Payments stay on the page.** Checkout opens in a modal iframe; Tweeble posts back
+`{ type: "tweeble:purchase", status, sessionId }`. Cancelling returns the payer to their
+filled-in form — never navigate away or send them to a separate cancelled page. The
+message listener must keep checking `event.origin`. Keep the "open in a new tab" fallback:
+a nested card frame can be blocked in some browsers.
 
-## Forms (not yet connected)
+The "Tweeble" wordmark on the checkout card is rendered by Tweeble's page and cannot be
+changed here; our modal header carries the Gridless branding instead.
 
-Forms are complete but intentionally inert until an intake endpoint exists; they degrade
-to a clear, honest message rather than failing silently — preserve that behaviour. Set
-`PUBLIC_FORMS_ENDPOINT` to switch them on. See `src/lib/form-client.ts`.
+`/quote` is the one form with no Tweeble endpoint yet — it still uses the inert
+`PUBLIC_FORMS_ENDPOINT` path in `src/lib/form-client.ts` and degrades to an honest
+"not connected" message. Preserve that until an endpoint exists.
+
+The unused Stripe leftovers (`netlify/functions/*`, `/pay/complete`) are kept but dead.
+
+## Loading indicator and the hero globe
+
+Any wait shows **our** globe mark, never a third party's: `.gg-spinner` for in-page waits
+and `PageLoader.astro` for navigations (it holds back 250ms so quick loads never flash).
+
+`SpinningGlobe.astro` must keep the globe image **perfectly circular** — never rotate or
+non-uniformly scale it. A flat disc rotated in 3D squashes to an ellipse, which a sphere
+never does. The motion comes from the SVG orbit cage of energy arcs spinning around it;
+the cursor steers that cage.
 
 ## Placeholders to replace before launch
 
-Phone, email, address and social links in `src/data/site.ts`; the privacy and terms copy,
-which is a template flagged in-page as pending legal review.
+Social links in `src/data/site.ts` still point at generic profiles. The privacy and terms
+copy is a template flagged in-page as pending legal review. Phone, email and location are
+real.

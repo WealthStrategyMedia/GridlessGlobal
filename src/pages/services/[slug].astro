@@ -8,6 +8,7 @@ import CtaBand from '~/components/CtaBand.astro';
 import ServiceCard from '~/components/ServiceCard.astro';
 import ContactForm from '~/components/forms/ContactForm.astro';
 import ModelViewer from '~/components/ModelViewer.astro';
+import FreeOffer from '~/components/FreeOffer.astro';
 import { services, getService, ACCENTS, SEGMENT_LABELS } from '~/data/services';
 import { site } from '~/data/site';
 
@@ -110,21 +111,25 @@ const schema = [
         </ul>
       </div>
 
-      {
-        service.stats && (
-          <div class="panel reveal rounded-4xl p-8">
-            <p class="eyebrow">By the numbers</p>
-            <dl class="mt-6 space-y-7">
-              {service.stats.map((stat) => (
-                <div>
-                  <dt class={`font-display text-3xl font-extrabold ${accent.text}`}>{stat.value}</dt>
-                  <dd class="mt-1.5 text-[0.88rem] leading-relaxed text-ink-muted">{stat.label}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        )
-      }
+      <!-- Right rail: the numbers, then the standing free offer where it applies. -->
+      <div class="space-y-5">
+        {
+          service.stats && (
+            <div class="panel reveal rounded-4xl p-8">
+              <p class="eyebrow">By the numbers</p>
+              <dl class="mt-6 space-y-7">
+                {service.stats.map((stat) => (
+                  <div>
+                    <dt class={`font-display text-3xl font-extrabold ${accent.text}`}>{stat.value}</dt>
+                    <dd class="mt-1.5 text-[0.88rem] leading-relaxed text-ink-muted">{stat.label}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )
+        }
+        {service.freeOffer && <FreeOffer variant="panel" service={service.slug} />}
+      </div>
     </div>
   </section>
 

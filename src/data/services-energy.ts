@@ -49,6 +49,7 @@ export const energyServices: Service[] = [
       { value: '1-3 days', label: 'Typical residential install time' },
       { value: '30%', label: 'Federal credit we help you claim' },
     ],
+    freeOffer: true,
     related: ['solar-upgrades', 'energy-storage', 'roofing', 'energy-analysis'],
   },
 
@@ -95,6 +96,7 @@ export const energyServices: Service[] = [
       { value: 'Any brand', label: 'Equipment we will service' },
       { value: '5-20%', label: 'Common recoverable output loss' },
     ],
+    freeOffer: true,
     related: ['solar-installation', 'solar-removal-reinstall', 'energy-storage', 'energy-analysis'],
   },
 
@@ -187,6 +189,7 @@ export const energyServices: Service[] = [
       { value: '15-40%', label: 'Savings commonly identified' },
       { value: 'Ranked', label: 'Every measure, by payback' },
     ],
+    freeOffer: true,
     related: ['energy-bill-savings', 'energy-management', 'commercial', 'residential'],
   },
 
@@ -233,6 +236,7 @@ export const energyServices: Service[] = [
       { value: '2-4 yr', label: 'Typical billing recovery window' },
       { value: '24 mo', label: 'Billing history we review' },
     ],
+    freeOffer: true,
     related: ['energy-analysis', 'demand-side-management', 'energy-management', 'commercial'],
   },
 
@@ -325,6 +329,7 @@ export const energyServices: Service[] = [
       { value: 'Monthly', label: 'Reporting cadence' },
       { value: 'Live', label: 'Fault detection, not quarterly' },
     ],
+    freeOffer: true,
     related: ['demand-side-management', 'energy-analysis', 'eco-smart-living', 'commercial'],
   },
 
@@ -371,6 +376,7 @@ export const energyServices: Service[] = [
       { value: '15 min', label: 'Interval that sets the charge' },
       { value: 'Automated', label: 'Response without staff intervention' },
     ],
+    freeOffer: true,
     related: ['energy-storage', 'energy-management', 'energy-bill-savings', 'smart-microgrid'],
   },
 
@@ -463,6 +469,7 @@ export const energyServices: Service[] = [
       { value: 'L2 & DCFC', label: 'Charging levels installed' },
       { value: 'Phased', label: 'Designed for the next expansion' },
     ],
+    freeOffer: true,
     related: ['electrical', 'energy-storage', 'eco-smart-living', 'demand-side-management'],
   },
 ];

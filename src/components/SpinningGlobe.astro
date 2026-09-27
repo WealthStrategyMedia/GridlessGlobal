@@ -1,0 +1,219 @@
+---
+/**
+ * The hero globe: a perfectly circular globe with electricity orbiting it.
+ *
+ * The artwork is a flat disc, so rotating it in 3D would squash it to an
+ * ellipse at 90deg - which is exactly what a sphere never does. Instead the
+ * globe itself is never distorted: the motion comes from an orbital cage of
+ * energy arcs spinning around it, with charge travelling along each arc.
+ *
+ * Moving the cursor across it drives the spin - left/right steers direction and
+ * speed, up/down tips the orbits - with inertia, easing back to an idle drift
+ * once the pointer leaves. The globe stays a circle throughout.
+ *
+ * One requestAnimationFrame loop, paused when off screen or the tab is hidden.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+<div class={`gg-globe ${className}`} data-globe>
+  <div class="gg-globe__inner">
+    <!-- Orbiting energy. Purely decorative. -->
+    <svg
+      class="gg-globe__orbits"
+      viewBox="0 0 200 200"
+      fill="none"
+      aria-hidden="true"
+      data-globe-orbits
+    >
+      <defs>
+        <linearGradient id="gg-arc-blue" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1b8ef5" stop-opacity="0" />
+          <stop offset="50%" stop-color="#6fb6ff" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#1b8ef5" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="gg-arc-green" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3fd06a" stop-opacity="0" />
+          <stop offset="50%" stop-color="#86f0ad" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#3fd06a" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+
+      <g data-globe-cage>
+        <!-- Each ring carries a faint track and a bright charge running along it. -->
+        <g transform="rotate(-18 100 100)">
+          <ellipse cx="100" cy="100" rx="94" ry="34" stroke="url(#gg-arc-blue)" stroke-width="1.1" opacity="0.45" />
+          <ellipse class="gg-globe__charge gg-globe__charge--a" cx="100" cy="100" rx="94" ry="34" stroke="#8fd0ff" stroke-width="2.1" stroke-linecap="round" />
+        </g>
+        <g transform="rotate(26 100 100)">
+          <ellipse cx="100" cy="100" rx="90" ry="30" stroke="url(#gg-arc-green)" stroke-width="1.1" opacity="0.4" />
+          <ellipse class="gg-globe__charge gg-globe__charge--b" cx="100" cy="100" rx="90" ry="30" stroke="#9cf7bf" stroke-width="2" stroke-linecap="round" />
+        </g>
+        <g transform="rotate(72 100 100)">
+          <ellipse cx="100" cy="100" rx="86" ry="26" stroke="url(#gg-arc-blue)" stroke-width="1" opacity="0.3" />
+          <ellipse class="gg-globe__charge gg-globe__charge--c" cx="100" cy="100" rx="86" ry="26" stroke="#c9e8ff" stroke-width="1.7" stroke-linecap="round" />
+        </g>
+      </g>
+    </svg>
+
+    <!-- The globe. Never rotated or scaled non-uniformly, so it stays circular. -->
+    <img
+      src="/images/logo-mark.png"
+      alt=""
+      aria-hidden="true"
+      width="280"
+      height="248"
+      fetchpriority="high"
+      decoding="async"
+      class="gg-globe__img"
+    />
+  </div>
+</div>
+
+<style>
+  .gg-globe {
+    position: relative;
+    cursor: grab;
+    touch-action: pan-y;
+    aspect-ratio: 1;
+  }
+  .gg-globe:active { cursor: grabbing; }
+
+  .gg-globe__inner {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gg-globe__img {
+    position: relative;
+    z-index: 1;
+    grid-area: 1 / 1;
+    width: 78%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 55px rgb(63 208 106 / 0.35));
+    animation: gg-globe-breathe 7s ease-in-out infinite;
+  }
+
+  .gg-globe__orbits {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 0 7px rgb(60 160 255 / 0.55));
+  }
+
+  /* The bright charge is a short dash chasing round the ring. */
+  .gg-globe__charge {
+    stroke-dasharray: 26 360;
+    animation: gg-charge 3.6s linear infinite;
+  }
+  .gg-globe__charge--b { animation-duration: 5.2s; animation-delay: -1.4s; }
+  .gg-globe__charge--c { animation-duration: 4.4s; animation-delay: -2.6s; }
+
+  @keyframes gg-charge {
+    from { stroke-dashoffset: 386; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  @keyframes gg-globe-breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.028); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gg-globe { cursor: default; }
+    .gg-globe__img { animation: none; }
+    .gg-globe__charge { animation: none; stroke-dasharray: 3 12; opacity: 0.5; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-globe]').forEach((globe) => {
+    const cage = globe.querySelector<SVGGElement>('[data-globe-cage]');
+    const orbits = globe.querySelector<SVGSVGElement>('[data-globe-orbits]');
+    if (!cage || !orbits) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const IDLE_SPIN = 0.16; // degrees per frame
+    const FRICTION = 0.95;
+    const TILT_RETURN = 0.07;
+    const MAX_TILT = 16;
+
+    let angle = 0;
+    let tilt = 0;
+    let spinVelocity = 0;
+    let tiltVelocity = 0;
+    let pointerInside = false;
+    let lastX = 0;
+    let lastY = 0;
+    let running = false;
+    let frame = 0;
+
+    const render = () => {
+      angle += IDLE_SPIN + spinVelocity;
+      tilt += tiltVelocity;
+
+      spinVelocity *= FRICTION;
+      tiltVelocity *= FRICTION;
+      if (!pointerInside) tilt += (0 - tilt) * TILT_RETURN;
+      tilt = Math.max(-MAX_TILT, Math.min(MAX_TILT, tilt));
+
+      // Only the orbit cage moves. The globe image is never touched, so it
+      // cannot deform.
+      cage.setAttribute('transform', `rotate(${(angle % 360).toFixed(2)} 100 100)`);
+      orbits.style.transform = `perspective(600px) rotateX(${tilt.toFixed(2)}deg)`;
+
+      frame = requestAnimationFrame(render);
+    };
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      frame = requestAnimationFrame(render);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(frame);
+    };
+
+    globe.addEventListener('pointerenter', (event) => {
+      pointerInside = true;
+      lastX = event.clientX;
+      lastY = event.clientY;
+    });
+
+    globe.addEventListener('pointermove', (event) => {
+      if (!pointerInside) return;
+      const dx = event.clientX - lastX;
+      const dy = event.clientY - lastY;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      spinVelocity += dx * 0.05;
+      tiltVelocity += -dy * 0.05;
+      spinVelocity = Math.max(-5, Math.min(5, spinVelocity));
+      tiltVelocity = Math.max(-3, Math.min(3, tiltVelocity));
+    });
+
+    globe.addEventListener('pointerleave', () => {
+      pointerInside = false;
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => (entry.isIntersecting ? start() : stop())),
+      { threshold: 0.05 }
+    );
+    observer.observe(globe);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') stop();
+      else if (globe.getBoundingClientRect().top < window.innerHeight) start();
+    });
+  });
+</script>

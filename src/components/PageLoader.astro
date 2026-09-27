@@ -1,0 +1,72 @@
+---
+/**
+ * Gridless-branded loading indicator for page navigations.
+ *
+ * This is a multi-page site, so every internal link is a real page load. On a
+ * fast connection that is invisible, but on a slow one the browser sits on the
+ * old page with no feedback. This shows our own globe mark and a progress bar
+ * as soon as a navigation starts.
+ *
+ * Deliberately restrained: nothing appears for the first 250ms, so quick
+ * navigations never flash an overlay.
+ */
+---
+<div class="gg-progress" data-page-progress aria-hidden="true"></div>
+
+<div class="gg-page-loader" data-page-loader role="status" aria-live="polite" aria-label="Loading">
+  <span class="gg-spinner" aria-hidden="true">
+    <img src="/images/logo-mark.png" alt="" width="280" height="248" decoding="async" />
+  </span>
+  <p>Gridless Global</p>
+</div>
+
+<script>
+  const loader = document.querySelector<HTMLElement>('[data-page-loader]');
+  const progress = document.querySelector<HTMLElement>('[data-page-progress]');
+  if (loader && progress) {
+    let timer: number | undefined;
+
+    const start = () => {
+      window.clearTimeout(timer);
+      progress.dataset.active = '';
+      // Hold the overlay back briefly so a fast navigation shows nothing.
+      timer = window.setTimeout(() => {
+        loader.dataset.visible = '';
+      }, 250);
+    };
+
+    const stop = () => {
+      window.clearTimeout(timer);
+      delete loader.dataset.visible;
+      delete progress.dataset.active;
+    };
+
+    // A same-document or modified click is not a navigation.
+    const isPlainNavigation = (event: MouseEvent, link: HTMLAnchorElement) => {
+      if (event.defaultPrevented || event.button !== 0) return false;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
+      if (link.target && link.target !== '_self') return false;
+      if (link.hasAttribute('download')) return false;
+      const url = new URL(link.href, window.location.href);
+      if (url.origin !== window.location.origin) return false;
+      if (!/^https?:$/.test(url.protocol)) return false;
+      // Same page, different hash - no load happens.
+      return url.pathname !== window.location.pathname || url.search !== window.location.search;
+    };
+
+    document.addEventListener('click', (event) => {
+      const link = (event.target as HTMLElement | null)?.closest?.('a[href]') as HTMLAnchorElement | null;
+      if (link && isPlainNavigation(event as MouseEvent, link)) start();
+    });
+
+    // Non-link navigations (form GETs, scripted redirects).
+    window.addEventListener('beforeunload', start);
+
+    // Coming back via the back/forward cache must never leave the overlay up.
+    window.addEventListener('pageshow', stop);
+    window.addEventListener('pagehide', stop);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') stop();
+    });
+  }
+</script>

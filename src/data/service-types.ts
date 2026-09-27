@@ -68,6 +68,11 @@ export interface Service {
   process: Step[];
   faqs: Faq[];
   stats?: Stat[];
+  /**
+   * Shows the "free energy analysis and consultation" panel on this service's
+   * page. Set it wherever a free analysis genuinely applies.
+   */
+  freeOffer?: boolean;
   /** Interactive 3D models embedded on the detail page, if any. */
   models?: Model3D[];
   /** Slugs of services shown in the "works well with" rail. */

@@ -85,8 +85,7 @@ import { site } from '~/data/site';
   <h2>Contact</h2>
   <p>
     {site.legalName}<br />
-    {site.address.line1}, {site.address.line2}<br />
-    {site.address.city}, {site.address.region} {site.address.postal}<br />
+    {site.location.label}<br />
     <a href={`mailto:${site.email}`}>{site.email}</a> &middot;
     <a href={site.phoneHref}>{site.phone}</a>
   </p>

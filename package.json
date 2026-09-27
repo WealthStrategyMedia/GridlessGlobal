@@ -14,7 +14,7 @@
     "assets": "node scripts/prepare-assets.mjs",
     "measure-map": "node scripts/measure-map.mjs",
     "astro": "astro",
-    "sync:payment-form": "node scripts/sync-payment-form.mjs"
+    "sync:forms": "node scripts/sync-tweeble-forms.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

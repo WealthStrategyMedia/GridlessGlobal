@@ -1,0 +1,108 @@
+---
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { site } from '~/data/site';
+
+/**
+ * The two things Gridless Global gives away: a free energy analysis and a free
+ * consultation. Shown on the home page and on every service where it applies.
+ */
+interface Props {
+  /** `banner` for the home page, `panel` for the narrower service-page slot. */
+  variant?: 'banner' | 'panel';
+  /** Pre-selects the service on the quote form. */
+  service?: string;
+  class?: string;
+}
+
+const { variant = 'banner', service, class: className = '' } = Astro.props;
+const quoteHref = service ? `/quote?service=${service}` : '/quote?service=energy-analysis';
+
+const offers = [
+  {
+    icon: 'gauge' as const,
+    title: 'Free energy analysis',
+    body: 'We measure the property and hand you a ranked list of what actually pays - with the numbers behind each one. No charge, no obligation.',
+  },
+  {
+    icon: 'users' as const,
+    title: 'Free consultation',
+    body: 'A real conversation with a specialist about your property, your budget and what you are trying to solve. Not a sales script.',
+  },
+];
+---
+{
+  variant === 'banner' ? (
+    <section class={`shell ${className}`}>
+      <div class="aurora relative overflow-hidden rounded-4xl border border-gold-500/25 bg-gradient-to-br from-gold-500/[0.09] via-navy-900/70 to-navy-900/60 px-7 py-12 sm:px-12 lg:px-16 lg:py-16">
+        <div
+          class="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-gold-500/15 blur-3xl"
+          aria-hidden="true"
+        />
+
+        <div class="relative grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)] lg:items-center lg:gap-14">
+          <div>
+            <p class="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-500/15 px-4 py-2 font-display text-[0.74rem] font-bold uppercase tracking-[0.18em] text-gold-300">
+              <Icon name="sparkles" size={14} />
+              Always free
+            </p>
+            <h2 class="mt-5 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+              Start with a <span class="text-gold-400">free energy analysis</span>
+            </h2>
+            <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-ink-muted">
+              It is the cheapest thing we do and the most useful place to begin. Frequently the
+              highest-return item is not the one people arrive asking about - and knowing that before
+              you commit any money is the whole point.
+            </p>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button href={quoteHref} variant="gold" size="lg" icon="arrow-right">
+                Book my free analysis
+              </Button>
+              <Button href={site.phoneHref} variant="outline" size="lg" icon="phone" iconPosition="start">
+                {site.phone}
+              </Button>
+            </div>
+          </div>
+
+          <ul class="grid gap-4 sm:grid-cols-2">
+            {offers.map((offer) => (
+              <li class="panel reveal rounded-3xl p-6">
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold-500/30 bg-gold-500/10 text-gold-400">
+                  <Icon name={offer.icon} size={23} />
+                </span>
+                <h3 class="mt-5 font-display text-[1.08rem] font-bold">{offer.title}</h3>
+                <p class="mt-2 text-[0.88rem] leading-relaxed text-ink-muted">{offer.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <div class={`panel overflow-hidden rounded-4xl border-gold-500/25 bg-gold-500/[0.05] p-7 sm:p-8 ${className}`}>
+      <p class="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-500/15 px-3.5 py-1.5 font-display text-[0.7rem] font-bold uppercase tracking-[0.16em] text-gold-300">
+        <Icon name="sparkles" size={13} />
+        Always free
+      </p>
+      <h2 class="mt-4 font-display text-xl font-bold sm:text-2xl">
+        Free energy analysis &amp; consultation
+      </h2>
+      <p class="mt-3 text-[0.92rem] leading-relaxed text-ink-muted">
+        Before you spend anything, we measure the property and rank every improvement by payback. The
+        analysis and the consultation are both free, with no obligation to go ahead.
+      </p>
+      <ul class="mt-5 space-y-2.5">
+        {offers.map((offer) => (
+          <li class="flex items-start gap-2.5 text-[0.88rem] text-ink-muted">
+            <Icon name="check-circle" size={18} class="mt-px shrink-0 text-gold-400" />
+            {offer.title}
+          </li>
+        ))}
+      </ul>
+      <Button href={quoteHref} variant="gold" size="md" class="mt-6" full icon="arrow-right">
+        Book mine now
+      </Button>
+    </div>
+  )
+}

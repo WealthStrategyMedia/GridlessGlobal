@@ -1,25 +1,44 @@
 ---
-import FormShell from './FormShell.astro';
 import Icon from '~/components/Icon.astro';
+import {
+  newsletterForm,
+  newsletterEmailField,
+  NEWSLETTER_SUBMIT_LABEL,
+  NEWSLETTER_SUCCESS_MESSAGE,
+} from '~/data/newsletter';
+
+/**
+ * Footer subscribe box, wired to the live Tweeble newsletter form.
+ *
+ * Posts directly to Tweeble, same contract as the contact form. The field id
+ * and endpoint come from the committed snapshot; the button label is ours,
+ * because the upstream form is a generic contact form labelled "Send Message".
+ */
 ---
-<div>
+<div data-newsletter-root>
   <p class="eyebrow">Stay current</p>
   <h2 class="mt-2 font-display text-xl font-bold">Energy intelligence, once a month</h2>
   <p class="mt-2 max-w-md text-[0.88rem] text-ink-muted">
     Incentive deadlines, tariff changes and project notes from the field. No filler, unsubscribe any time.
   </p>
 
-  <FormShell kind="newsletter" class="mt-5 max-w-md" hideNotice>
+  <form
+    class="mt-5 max-w-md"
+    novalidate
+    data-newsletter-form
+    data-submit-url={newsletterForm.submitUrl}
+    data-field-id={newsletterEmailField.id}
+  >
     <div class="flex flex-col gap-3 sm:flex-row">
       <div data-field class="flex-1">
-        <label for="newsletter-email" class="sr-only">Email address</label>
+        <label for="newsletter-email" class="sr-only">{newsletterEmailField.label}</label>
         <input
           id="newsletter-email"
-          name="email"
+          name={newsletterEmailField.id}
           type="email"
-          required
-          data-label="Email address"
-          placeholder="you@example.com"
+          required={newsletterEmailField.required}
+          data-label={newsletterEmailField.label}
+          placeholder={newsletterEmailField.placeholder ?? 'you@example.com'}
           autocomplete="email"
           class="w-full rounded-full border border-white/12 bg-navy-900/60 px-5 py-3 text-[0.9rem] text-ink placeholder:text-ink-faint/70 transition-colors focus:border-brand-400/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25"
         />
@@ -27,11 +46,99 @@ import Icon from '~/components/Icon.astro';
       </div>
       <button
         type="submit"
-        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-500 to-brand-400 px-6 py-3 font-display text-[0.88rem] font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-12px_rgba(27,142,245,.9)]"
+        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-500 to-brand-400 px-6 py-3 font-display text-[0.88rem] font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_-12px_rgba(27,142,245,.9)] disabled:pointer-events-none disabled:opacity-60"
       >
-        Subscribe
+        <span data-newsletter-label>{NEWSLETTER_SUBMIT_LABEL}</span>
         <Icon name="arrow-right" size={16} />
       </button>
     </div>
-  </FormShell>
+
+    <!-- Honeypot. Tweeble rejects a submission where this is filled in. -->
+    <div class="gg-honeypot" aria-hidden="true">
+      <label>
+        Do not fill this in
+        <input type="text" name="website_url" data-honeypot tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+
+    <p data-newsletter-status class="hidden"></p>
+  </form>
 </div>
+
+<script define:vars={{ SUBMIT_LABEL: NEWSLETTER_SUBMIT_LABEL, SUCCESS_MESSAGE: NEWSLETTER_SUCCESS_MESSAGE }}>
+  document.querySelectorAll('[data-newsletter-root]').forEach((root) => {
+    const form = root.querySelector('[data-newsletter-form]');
+    if (!form) return;
+
+    const input = form.querySelector('input[type="email"]');
+    const errorEl = form.querySelector('[data-error]');
+    const statusEl = form.querySelector('[data-newsletter-status]');
+    const button = form.querySelector('button[type="submit"]');
+    const label = form.querySelector('[data-newsletter-label]');
+    const honeypot = form.querySelector('[data-honeypot]');
+    const loadedAt = Date.now();
+
+    const setError = (message) => {
+      if (!errorEl) return;
+      errorEl.textContent = message || '';
+      errorEl.classList.toggle('hidden', !message);
+      if (message) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+
+    const setStatus = (kind, message) => {
+      if (!statusEl) return;
+      statusEl.className =
+        'mt-3 px-2 text-[0.82rem] ' + (kind === 'success' ? 'text-signal-300' : 'text-red-300');
+      statusEl.textContent = message;
+      statusEl.setAttribute('role', kind === 'success' ? 'status' : 'alert');
+    };
+
+    input?.addEventListener('input', () => {
+      if (input.getAttribute('aria-invalid')) setError(null);
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const value = (input?.value || '').trim();
+
+      if (!value) return setError('Enter your email address.');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) return setError('Enter a valid email address.');
+      setError(null);
+
+      if (honeypot?.value || Date.now() - loadedAt < 1500) {
+        setStatus('success', SUCCESS_MESSAGE);
+        form.reset();
+        return;
+      }
+
+      button.disabled = true;
+      if (label) label.textContent = 'Subscribing...';
+
+      try {
+        const response = await fetch(form.dataset.submitUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            [form.dataset.fieldId]: value,
+            website_url: honeypot?.value || '',
+            sourceUrl: window.location.href,
+          }),
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (response.ok) {
+          setStatus('success', SUCCESS_MESSAGE);
+          form.reset();
+        } else {
+          setStatus('error', result.error || 'That did not go through. Please try again.');
+        }
+      } catch {
+        setStatus('error', 'Could not subscribe. Check your connection and try again.');
+      } finally {
+        button.disabled = false;
+        if (label) label.textContent = SUBMIT_LABEL;
+      }
+    });
+  });
+</script>

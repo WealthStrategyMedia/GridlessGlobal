@@ -30,98 +30,82 @@ The dev server prints its URL (usually <http://localhost:4321>).
 | `npm run audit` | Check `dist/` for broken links, missing alt text, duplicate ids, missing meta |
 | `npm run assets` | Regenerate brand assets from `Context/` (see below) |
 | `npm run measure-map` | Re-measure the services map hotspots |
-| `npm run sync:payment-form` | Refresh the Tweeble payment-form snapshot |
+| `npm run sync:forms` | Refresh all Tweeble form snapshots |
 
 ---
 
-## Forms and payments
+## Forms and payments (all live via Tweeble)
 
-Payments are **live**, through Tweeble. Forms are built but still need an intake endpoint.
+Three forms and the payment flow post directly to Tweeble from the browser. Their API
+sends `Access-Control-Allow-Origin: *`, so there is **no server-side code and no
+environment variables** in any of these paths — they work on any static host.
 
-### 1. Forms — not connected yet
+| Where | Tweeble form | Behaviour |
+| --- | --- | --- |
+| `/contact` | Contact Gridless Global | Inline success message |
+| Footer subscribe | Subscribe To Newsletter | Inline confirmation |
+| `/pay` | Make a payment | Opens checkout in a modal on the page |
+| `/quote` | — *(not yet supplied)* | Validates, then reports intake is not connected |
 
-Every form — contact, quote, newsletter — is complete, validated and accessible. Until an
-intake endpoint is configured they validate normally and then tell the visitor plainly
-that online intake is not connected yet, offering phone and email instead. Nothing is
-silently dropped.
+We render our own UI for each rather than Tweeble's embed script, so everything matches the
+site. Labels, options, required flags, minimum amounts and button text all come from the
+committed form snapshots.
 
-**To switch them on**, set one environment variable in Netlify:
-
-```
-PUBLIC_FORMS_ENDPOINT = https://your-intake-service/…
-```
-
-The browser will then `POST` JSON to that URL:
-
-```jsonc
-{
-  "formType": "quote",             // contact | quote | newsletter
-  "submittedAt": "2026-09-26T…",
-  "pageUrl": "https://…/quote",
-  "fields": { "firstName": "…", "email": "…", "interest_solar-installation": true }
-}
-```
-
-If the upstream service needs a secret that must not reach the browser, use the bundled
-relay instead — set `PUBLIC_FORMS_ENDPOINT=/api/forms`, plus `FORMS_UPSTREAM_URL` and
-`FORMS_UPSTREAM_TOKEN`. That path adds basic rate limiting and honeypot rejection.
-
-No markup changes are needed either way.
-
-### 2. Payments — live
-
-`/pay` is wired to a **Tweeble payment form** and works now. No environment variables and
-no server-side code are involved: Tweeble's API sends `Access-Control-Allow-Origin: *`, so
-the browser posts straight to their submit endpoint and follows the hosted checkout URL
-that comes back. Card details are only ever entered on Tweeble's hosted page.
-
-We render our own UI rather than Tweeble's embed script, so the form matches the rest of
-the site. The contract is:
-
-```jsonc
-// POST https://www.tweeble.com/api/public/<tenant>/payment-forms/<form>/submit
-{
-  "amount": 1249.50,                  // dollars, omitted when pricing is fixed
-  "f_2d9bbc81": "Project deposit",    // What is this payment for?  (required)
-  "f_b9c4b4d2": "INV-10482",          // Invoice or job number      (required)
-  "f_f022fb2b": "Jordan Rivera",      // Name on the account        (required)
-  "f_10a2fa01": "jordan@example.com", // Email for receipt          (required)
-  "f_40577d23": "Deposit for…",       // Note                       (optional)
-  "website_url": "",                  // honeypot — must stay empty
-  "sourceUrl": "https://…/pay"
-}
-// 200 → { "checkoutUrl": "…" }   browser is redirected here
-// 4xx → { "error": "…" }         shown to the payer verbatim
-```
-
-Those `f_…` ids belong to this specific form and change if it is rebuilt in Tweeble, so
-they are never hard-coded. They come from a committed snapshot of the form definition.
-
-**After editing the form in Tweeble**, refresh the snapshot:
+### Refreshing after editing a form in Tweeble
 
 ```bash
-npm run sync:payment-form
+npm run sync:forms
 ```
 
-That rewrites `src/data/payment-form.json` with the current fields, required flags,
-minimum amount, submit URL and button label — all of which our form renders from. If a
-field is renamed, the build fails with a message naming the field, rather than silently
-posting an incomplete submission.
+That rewrites `src/data/{payment,contact,newsletter}-form.json`. **Do this whenever a form
+is edited** — Tweeble's field ids change when fields are added, removed or renamed. Field
+ids are never hard-coded; they are resolved from the snapshot **by label**, so a renamed
+field fails the build with a message naming it rather than silently posting an incomplete
+submission.
 
-To point the site at a different Tweeble form, set `TWEEBLE_PAYMENT_FORM_URL` and re-run
-the sync.
+### The request shape
 
-> **Note:** "Invoice or job number" is marked **required** in Tweeble, so our form requires
-> it too, with a hint suggesting the property address for payers who have no invoice. To
-> make it optional, change it in Tweeble and re-run the sync.
->
-> **Unused alternative:** `netlify/functions/create-checkout-session.mts` (at
-> `/api/checkout`) is a complete Stripe Checkout implementation from before Tweeble was
-> chosen. Nothing calls it. Keep it if Stripe may return; otherwise it and its redirect in
-> `netlify.toml` can be deleted. `/pay/complete` is likewise only used by that path —
-> Tweeble handles its own post-payment page.
+Every form uses the same contract:
 
-See [`.env.example`](.env.example) for the full list of variables.
+```jsonc
+// POST <submitUrl>
+{
+  "f_7566ac9b": "Jordan",              // one key per field id
+  "website_url": "",                   // honeypot — must stay empty
+  "sourceUrl": "https://…/contact",
+  "amount": 1249.50                    // payments only, in DOLLARS not cents
+}
+// 2xx → { message } | { checkoutUrl }   4xx → { error }  (shown to the user verbatim)
+```
+
+### The payment flow
+
+Submitting creates a checkout session and opens Tweeble's secure card form **in a modal on
+`/pay`** — the payer never leaves the site. Tweeble's checkout posts back to us:
+
+```js
+{ type: "tweeble:purchase", status: "cancelled" | …, sessionId }
+```
+
+`cancelled` closes the modal and returns the payer to their still-filled form; anything else
+shows a success panel in place, with the session id as a reference. The listener checks
+`event.origin` against Tweeble's, so a forged message from another page is ignored.
+
+The modal header carries **Gridless Global** branding and both the modal and the form say
+"Payments powered by Tweeble". A "Trouble paying? Open in a new tab" link is always present,
+because a card form inside a nested frame can be restricted in some browsers — the payer is
+never trapped.
+
+> **The "Tweeble" wordmark at the top of the checkout card is rendered by Tweeble's own
+> page**, so it cannot be changed from this repo. Our modal header supplies the Gridless
+> Global branding above it, and the line item already reads "Make a payment — Gridless
+> Global". To replace that wordmark, set the account branding in Tweeble.
+
+> **Unused Stripe leftovers:** `netlify/functions/create-checkout-session.mts`
+> (`/api/checkout`), `netlify/functions/submit-form.mts` (`/api/forms`) and `/pay/complete`
+> predate Tweeble. Nothing calls them. Keep them only if you may switch providers.
+
+See [`.env.example`](.env.example) for the remaining variables.
 
 ---
 
@@ -147,7 +131,7 @@ public/images/               Generated, web-optimised brand assets
 scripts/
   prepare-assets.mjs         Derives every brand asset from Context/
   measure-map.mjs            Re-measures the services map hotspots
-  sync-payment-form.mjs      Snapshots the live Tweeble payment form
+  sync-tweeble-forms.mjs     Snapshots the live Tweeble form definitions
   check-links.mjs            Post-build audit of dist/
 src/
   components/                UI components (Header, Footer, ServicesMap, forms, …)
@@ -158,8 +142,10 @@ src/
     services-energy.ts       Energy and advisory services
     services-trades.ts       Trades and construction services
     services.ts              Assembles the above + map hotspot geometry
-    payments.ts              Tweeble payment config and field mapping
-    payment-form.json        Committed snapshot of the live payment form
+    payments.ts              Payment config and field mapping
+    contact.ts               Contact form config and field mapping
+    newsletter.ts            Subscribe form config
+    *-form.json              Committed snapshots of the live Tweeble forms
   layouts/                   BaseLayout, LegalLayout
   lib/form-client.ts         Shared form validation and submission runtime
   pages/                     Routes; services/[slug].astro generates 25 pages

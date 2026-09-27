@@ -48,6 +48,7 @@ export const tradeServices: Service[] = [
       { value: 'Licensed', label: 'Never subcontracted' },
       { value: '400A+', label: 'Residential service capacity' },
     ],
+    freeOffer: true,
     related: ['ev-charging', 'backup-power', 'solar-installation', 'residential'],
   },
 
@@ -94,6 +95,7 @@ export const tradeServices: Service[] = [
       { value: 'Annual', label: 'Service and load testing' },
       { value: 'Load study', label: 'Sizing based on measurement' },
     ],
+    freeOffer: true,
     related: ['energy-storage', 'electrical', 'smart-microgrid', 'residential'],
   },
 
@@ -140,6 +142,7 @@ export const tradeServices: Service[] = [
       { value: '6 systems', label: 'Roofing types installed' },
       { value: 'Solar-ready', label: 'Detailed for future arrays' },
     ],
+    freeOffer: true,
     related: ['solar-removal-reinstall', 'siding', 'solar-installation', 'construction'],
   },
 
@@ -186,6 +189,7 @@ export const tradeServices: Service[] = [
       { value: 'Open wall', label: 'Best moment for insulation' },
       { value: 'Full detail', label: 'Barrier and flashing corrected' },
     ],
+    freeOffer: true,
     related: ['roofing', 'construction', 'energy-analysis', 'handyman'],
   },
 
@@ -232,6 +236,7 @@ export const tradeServices: Service[] = [
       { value: '5-10x', label: 'Cost of retrofitting later' },
       { value: 'One super', label: 'Accountable on every site' },
     ],
+    freeOffer: true,
     related: ['roofing', 'siding', 'electrical', 'eco-smart-living'],
   },
 

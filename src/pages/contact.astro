@@ -78,13 +78,11 @@ const channels: { icon: IconName; label: string; value: string; href?: string; n
         </ul>
 
         <div class="panel mt-6 rounded-3xl p-6">
-          <p class="eyebrow">Office</p>
-          <address class="mt-4 not-italic text-[0.93rem] leading-relaxed text-ink-muted">
-            {site.address.line1}<br />
-            {site.address.line2}<br />
-            {site.address.city}, {site.address.region} {site.address.postal}<br />
-            {site.address.country}
-          </address>
+          <p class="eyebrow">Where we are</p>
+          <p class="mt-4 flex items-start gap-2.5 text-[0.93rem] leading-relaxed text-ink-muted">
+            <Icon name="map-pin" size={17} class="mt-px shrink-0 text-gold-400" />
+            {site.location.label}
+          </p>
           <div class="rule my-5"></div>
           <p class="flex items-start gap-2.5 text-[0.88rem] text-ink-muted">
             <Icon name="clock" size={17} class="mt-px shrink-0 text-signal-400" />

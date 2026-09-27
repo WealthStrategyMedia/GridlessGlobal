@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import ServicesMap from '~/components/ServicesMap.astro';
+import SpinningGlobe from '~/components/SpinningGlobe.astro';
+import FreeOffer from '~/components/FreeOffer.astro';
 import Button from '~/components/Button.astro';
 import Icon from '~/components/Icon.astro';
 import Faq from '~/components/Faq.astro';
@@ -171,20 +173,13 @@ const segments = [
           >
           </div>
 
-          <img
-            src="/images/logo-mark.png"
-            alt=""
-            aria-hidden="true"
-            width="280"
-            height="248"
-            class="animate-float mx-auto w-40 drop-shadow-[0_0_70px_rgba(63,208,106,.35)] sm:w-52 lg:w-56"
-          />
+          <SpinningGlobe class="mx-auto w-40 sm:w-52 lg:w-56" />
 
           <div class="panel relative mt-8 rounded-4xl p-6 sm:p-7">
             <p class="eyebrow">Headline capability</p>
             <ul class="mt-5 space-y-3.5">
               {
-                ['solar-power-plant', 'energy-storage', 'smart-microgrid', 'residential', 'commercial'].map(
+                ['residential', 'commercial', 'solar-power-plant', 'energy-storage', 'smart-microgrid'].map(
                   (slug, i) => {
                     const service = requireService(slug);
                     return (
@@ -234,8 +229,11 @@ const segments = [
     </div>
   </section>
 
+  <!-- ================= Free analysis / consultation ================= -->
+  <FreeOffer class="pt-16 lg:pt-24" />
+
   <!-- ================= Services map ================= -->
-  <div class="shell py-16 lg:py-24">
+  <div class="shell py-16 lg:py-20">
     <ServicesMap />
   </div>
 

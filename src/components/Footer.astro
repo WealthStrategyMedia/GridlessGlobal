@@ -29,13 +29,19 @@ const badges = [
         </p>
 
         <ul class="mt-7 space-y-3 text-[0.9rem] text-ink-muted">
-          <li>
-            <a href={site.phoneHref} class="flex items-center gap-3 transition-colors hover:text-ink">
-              <span class="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
-                <Icon name="phone" size={16} class="text-signal-400" />
-              </span>
-              {site.phone}
-            </a>
+          <li class="flex items-start gap-3">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
+              <Icon name="phone" size={16} class="text-signal-400" />
+            </span>
+            <span class="flex flex-col gap-0.5">
+              {
+                site.phones.map((entry) => (
+                  <a href={entry.href} class="transition-colors hover:text-ink">
+                    {entry.number}
+                  </a>
+                ))
+              }
+            </span>
           </li>
           <li>
             <a href={`mailto:${site.email}`} class="flex items-center gap-3 transition-colors hover:text-ink">
@@ -49,10 +55,7 @@ const badges = [
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
               <Icon name="map-pin" size={16} class="text-gold-400" />
             </span>
-            <span>
-              {site.address.line1}, {site.address.line2}<br />
-              {site.address.city}, {site.address.region} {site.address.postal}
-            </span>
+            <span>{site.location.label}</span>
           </li>
         </ul>
 
@@ -116,7 +119,20 @@ const badges = [
     <div class="rule my-10"></div>
 
     <div class="flex flex-col gap-4 text-[0.8rem] text-ink-faint sm:flex-row sm:items-center sm:justify-between">
-      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+      <div class="flex flex-col gap-1.5">
+        <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+        <p>
+          Powered by
+          <a
+            href="https://tweeble.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-brand-300 underline underline-offset-2 transition-colors hover:text-brand-200"
+          >
+            Tweeble
+          </a>
+        </p>
+      </div>
       <div class="flex flex-wrap gap-x-7 gap-y-2">
         <a href="/privacy" class="transition-colors hover:text-ink">Privacy Policy</a>
         <a href="/terms" class="transition-colors hover:text-ink">Terms of Service</a>

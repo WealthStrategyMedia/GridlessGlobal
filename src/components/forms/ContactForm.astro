@@ -1,11 +1,20 @@
 ---
-import FormShell from './FormShell.astro';
 import Field from './Field.astro';
-import Button from '~/components/Button.astro';
-import { services } from '~/data/services';
+import Icon from '~/components/Icon.astro';
+import { contactForm, contactFields, SERVICE_FIELD_LABEL, serviceOption } from '~/data/contact';
+import { getService } from '~/data/services';
 
+/**
+ * Contact form, wired to the live Tweeble contact form.
+ *
+ * Our own markup, posting straight to Tweeble's submit endpoint - their API
+ * allows cross-origin requests, so no server hop is needed. Fields, labels,
+ * options, required flags and the button text all come from the committed
+ * snapshot in src/data/contact-form.json, so editing the form in Tweeble and
+ * running `npm run sync:forms` is enough to change this form.
+ */
 interface Props {
-  /** Pre-selects the service dropdown on a service detail page. */
+  /** A service slug; preselects the matching option in "What can we help with?" */
   defaultService?: string;
   title?: string;
   class?: string;
@@ -13,77 +22,296 @@ interface Props {
 
 const { defaultService, title = 'Send us a message', class: className = '' } = Astro.props;
 
-const serviceOptions = [
-  { value: '', label: 'Not sure yet - help me work it out' },
-  ...services.map((s) => ({ value: s.slug, label: s.title })),
-];
+const service = defaultService ? getService(defaultService) : undefined;
+const preselected = service ? serviceOption(service.slug, service.title) : undefined;
+
+// Short fields pair up; selects and long text take a full row.
+const layoutFor = (field: (typeof contactFields)[number]) =>
+  field.fullWidth ? 'sm:col-span-2' : '';
 ---
-<div class={`panel rounded-4xl p-7 sm:p-9 ${className}`}>
-  <h2 class="font-display text-2xl font-bold sm:text-3xl">{title}</h2>
-  <p class="mt-2 text-[0.92rem] text-ink-muted">
-    Tell us what you are working on and we will come back within one business day.
-  </p>
+<div class={`panel rounded-4xl p-7 sm:p-9 ${className}`} data-contact-root>
+  <div data-contact-pane="form">
+    <h2 class="font-display text-2xl font-bold sm:text-3xl">{title}</h2>
+    <p class="mt-2 text-[0.92rem] text-ink-muted">
+      Tell us what you are working on and we will come back within one business day.
+    </p>
 
-  <FormShell kind="contact" class="mt-7">
-    <div class="grid gap-5 sm:grid-cols-2">
-      <Field name="firstName" label="First name" required autocomplete="given-name" placeholder="Jordan" />
-      <Field name="lastName" label="Last name" required autocomplete="family-name" placeholder="Rivera" />
-      <Field name="email" label="Email" type="email" required autocomplete="email" placeholder="you@example.com" />
-      <Field name="phone" label="Phone" type="tel" autocomplete="tel" placeholder="(555) 123-4567" />
+    <form
+      class="mt-7"
+      novalidate
+      data-contact-form
+      data-submit-url={contactForm.submitUrl}
+      data-submit-label={contactForm.submitLabel}
+    >
+      <div class="grid gap-5 sm:grid-cols-2">
+        {
+          contactFields.map((field) => (
+            <Field
+              name={field.id}
+              label={field.label}
+              type={
+                field.type === 'select'
+                  ? 'select'
+                  : field.type === 'textarea'
+                    ? 'textarea'
+                    : field.type === 'email'
+                      ? 'email'
+                      : field.type === 'tel'
+                        ? 'tel'
+                        : 'text'
+              }
+              required={field.required}
+              placeholder={field.placeholder}
+              options={(field.options ?? []).map((option) => ({ value: option, label: option }))}
+              value={field.label === SERVICE_FIELD_LABEL ? preselected : undefined}
+              autocomplete={
+                field.preset === 'first_name'
+                  ? 'given-name'
+                  : field.preset === 'last_name'
+                    ? 'family-name'
+                    : field.preset === 'email'
+                      ? 'email'
+                      : field.preset === 'phone'
+                        ? 'tel'
+                        : undefined
+              }
+              class={layoutFor(field)}
+            />
+          ))
+        }
 
-      <Field
-        name="propertyType"
-        label="Property type"
-        type="select"
-        class="sm:col-span-2"
-        options={[
-          { value: 'residential', label: 'Residential' },
-          { value: 'commercial', label: 'Commercial' },
-          { value: 'community', label: 'Community or multifamily' },
-          { value: 'utility', label: 'Utility or developer' },
-        ]}
-      />
-
-      <div class="sm:col-span-2">
-        <Field
-          name="service"
-          label="What can we help with?"
-          type="select"
-          placeholder="Choose a service"
-          options={serviceOptions}
-          value={defaultService}
-        />
+        <div class="sm:col-span-2">
+          {/* Local consent gate. Tweeble has no field for this, so it is not
+              transmitted - it exists so nobody sends us details without seeing
+              the privacy policy. */}
+          <Field name="consent" label="Consent" type="checkbox" required>
+            I agree to be contacted about this enquiry and accept the
+            <a href="/privacy" class="text-brand-300 underline underline-offset-2">privacy policy</a>.
+          </Field>
+        </div>
       </div>
 
-      <div class="sm:col-span-2">
-        <Field
-          name="message"
-          label="Your message"
-          type="textarea"
-          required
-          minLength={10}
-          placeholder="Tell us about your property, timeline and what you are hoping to achieve."
-        />
+      <!-- Honeypot. Tweeble rejects a submission where this is filled in. -->
+      <div class="gg-honeypot" aria-hidden="true">
+        <label>
+          Do not fill this in
+          <input type="text" name="website_url" data-honeypot tabindex="-1" autocomplete="off" />
+        </label>
       </div>
 
-      <div class="sm:col-span-2">
-        <Field name="consent" label="Consent" type="checkbox" required>
-          I agree to be contacted about this enquiry and accept the
-          <a href="/privacy" class="text-brand-300 underline underline-offset-2">privacy policy</a>.
-        </Field>
-      </div>
-    </div>
+      <div data-contact-status class="hidden"></div>
 
-    <Button type="submit" variant="gold" size="lg" class="mt-7" icon="arrow-right">Send message</Button>
-  </FormShell>
+      <button
+        type="submit"
+        class="mt-7 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 px-8 py-4 font-display text-base font-semibold text-navy-950 transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_46px_-12px_rgba(248,184,40,.95)] disabled:pointer-events-none disabled:opacity-50 sm:w-auto"
+      >
+        <span data-contact-submit-text>{contactForm.submitLabel}</span>
+        <Icon name="arrow-right" size={18} />
+      </button>
+
+      <p class="mt-4 flex items-center gap-1.5 text-[0.78rem] text-ink-faint">
+        Forms powered by
+        <a
+          href="https://tweeble.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-semibold text-brand-300 underline underline-offset-2 hover:text-brand-200"
+        >
+          Tweeble
+        </a>
+      </p>
+    </form>
+  </div>
+
+  <!-- Success, shown in place of the form -->
+  <div data-contact-pane="success" class="hidden text-center" tabindex="-1">
+    <span class="mx-auto flex h-18 w-18 items-center justify-center rounded-full border border-signal-500/40 bg-signal-500/12 text-signal-400">
+      <Icon name="check-circle" size={36} />
+    </span>
+    <h2 class="mt-6 font-display text-2xl font-bold" data-contact-success-message>
+      {contactForm.successMessage}
+    </h2>
+    <p class="mx-auto mt-3 max-w-md text-[0.93rem] leading-relaxed text-ink-muted">
+      A member of the team will be in touch within one business day.
+    </p>
+    <button
+      type="button"
+      data-contact-reset
+      class="mt-7 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-6 py-3 font-display text-[0.88rem] font-semibold text-ink transition-colors hover:border-brand-400/60"
+    >
+      Send another message
+    </button>
+  </div>
 </div>
 
+<style>
+  .h-18 { height: 4.5rem; }
+  .w-18 { width: 4.5rem; }
+</style>
+
 <script>
-  // Honour a ?service= query so links from a service page arrive pre-filled.
-  const preset = new URLSearchParams(window.location.search).get('service');
-  if (preset) {
-    document.querySelectorAll<HTMLSelectElement>('select[name="service"]').forEach((select) => {
-      if (Array.from(select.options).some((o) => o.value === preset)) select.value = preset;
+  document.querySelectorAll<HTMLElement>('[data-contact-root]').forEach((root) => {
+    const form = root.querySelector<HTMLFormElement>('[data-contact-form]');
+    if (!form) return;
+
+    const statusBox = root.querySelector<HTMLElement>('[data-contact-status]');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const submitText = form.querySelector<HTMLElement>('[data-contact-submit-text]');
+    const formPane = root.querySelector<HTMLElement>('[data-contact-pane="form"]');
+    const successPane = root.querySelector<HTMLElement>('[data-contact-pane="success"]');
+    const successMessage = root.querySelector<HTMLElement>('[data-contact-success-message]');
+
+    const loadedAt = Date.now();
+
+    function show(kind: 'error' | 'info', title: string, body?: string) {
+      if (!statusBox) return;
+      const palette = {
+        error: 'border-red-400/40 bg-red-500/10 text-red-200',
+        info: 'border-gold-500/40 bg-gold-500/10 text-gold-200',
+      };
+      statusBox.className = `mt-5 rounded-2xl border px-5 py-4 text-sm ${palette[kind]}`;
+      statusBox.innerHTML = '';
+      const h = document.createElement('p');
+      h.className = 'font-display font-semibold';
+      h.textContent = title;
+      statusBox.appendChild(h);
+      if (body) {
+        const p = document.createElement('p');
+        p.className = 'mt-1 leading-relaxed opacity-90';
+        p.textContent = body;
+        statusBox.appendChild(p);
+      }
+      statusBox.setAttribute('role', 'alert');
+    }
+    const clearStatus = () => {
+      if (statusBox) {
+        statusBox.className = 'hidden';
+        statusBox.innerHTML = '';
+      }
+    };
+
+    function setFieldError(input: Element, message: string | null) {
+      const wrap = input.closest('[data-field]');
+      const target = wrap?.querySelector('[data-error]') as HTMLElement | null;
+      if (target) {
+        target.textContent = message ?? '';
+        target.classList.toggle('hidden', !message);
+      }
+      wrap?.classList.toggle('is-invalid', Boolean(message));
+      if (message) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    }
+
+    const controls = () =>
+      Array.from(
+        form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+          '[name]:not([data-honeypot])'
+        )
+      );
+
+    function validate() {
+      let firstInvalid: HTMLElement | null = null;
+      for (const el of controls()) {
+        const value = (el.value ?? '').trim();
+        let message: string | null = null;
+
+        if (el instanceof HTMLInputElement && el.type === 'checkbox') {
+          if (el.hasAttribute('required') && !el.checked) message = `${el.dataset.label || 'This'} is required.`;
+        } else if (el.hasAttribute('required') && !value) {
+          message = `${el.dataset.label || 'This field'} is required.`;
+        } else if (el.getAttribute('type') === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+          message = 'Enter a valid email address.';
+        } else if (el.getAttribute('type') === 'tel' && value && !/^[+()\-.\s\d]{7,}$/.test(value)) {
+          message = 'Enter a valid phone number.';
+        }
+
+        setFieldError(el, message);
+        if (message && !firstInvalid) firstInvalid = el;
+      }
+      return firstInvalid;
+    }
+
+    controls().forEach((el) => {
+      const revalidate = () => {
+        if (el.getAttribute('aria-invalid')) validate();
+      };
+      el.addEventListener('input', revalidate);
+      el.addEventListener('change', revalidate);
     });
-  }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const firstInvalid = validate();
+      if (firstInvalid) {
+        firstInvalid.focus();
+        show('error', 'Check the highlighted fields', 'A few details still need attention before this can be sent.');
+        return;
+      }
+
+      const honeypot = form.querySelector<HTMLInputElement>('[data-honeypot]');
+      if (honeypot?.value || Date.now() - loadedAt < 1500) {
+        // A bot gets no signal about why it failed.
+        formPane?.classList.add('hidden');
+        successPane?.classList.remove('hidden');
+        return;
+      }
+
+      // Tweeble keys every answer by its field id. `consent` is ours alone.
+      const payload: Record<string, unknown> = {
+        website_url: honeypot?.value ?? '',
+        sourceUrl: window.location.href,
+      };
+      controls().forEach((el) => {
+        if (!el.name.startsWith('f_')) return;
+        payload[el.name] = el.value.trim();
+      });
+
+      if (submit) submit.disabled = true;
+      if (submitText) submitText.textContent = 'Sending...';
+      clearStatus();
+
+      try {
+        const response = await fetch(form.dataset.submitUrl!, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json().catch(() => ({}) as Record<string, string>);
+
+        if (response.ok) {
+          if (successMessage && result.message) successMessage.textContent = result.message;
+          formPane?.classList.add('hidden');
+          successPane?.classList.remove('hidden');
+          successPane?.focus();
+          root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          form.reset();
+          return;
+        }
+
+        show(
+          'error',
+          'That did not go through',
+          result.error || 'Something went wrong sending your details. Please try again, or call us.'
+        );
+      } catch {
+        show(
+          'error',
+          'We could not reach the server',
+          'Check your connection and try again. If it persists, please call us and we will take your details over the phone.'
+        );
+      } finally {
+        if (submit) submit.disabled = false;
+        if (submitText) submitText.textContent = form.dataset.submitLabel ?? 'Send Message';
+      }
+    });
+
+    root.querySelector('[data-contact-reset]')?.addEventListener('click', () => {
+      successPane?.classList.add('hidden');
+      formPane?.classList.remove('hidden');
+      clearStatus();
+      form.querySelectorAll('[data-field]').forEach((f) => f.classList.remove('is-invalid'));
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
 </script>
